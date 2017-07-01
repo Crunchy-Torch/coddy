@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  node1:
+    build: ./es
+    ports:
+      - 9200:9200
+      - 9300:9300
