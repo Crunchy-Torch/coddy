@@ -7,6 +7,17 @@
     <groupId>org.superdev</groupId>
     <artifactId>coddy</artifactId>
     <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.4.RELEASE</version>
+    </parent>
+
+    <properties>
+        <spring.version>1.5.4.RELEASE</spring.version>
+    </properties>
 
     <modules>
         <module>back</module>

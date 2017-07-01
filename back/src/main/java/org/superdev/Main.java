@@ -1,12 +1,24 @@
 package org.superdev;
 
-/**
- * Created by david on 01/07/2017.
- */
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.stereotype.Controller;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+
+@Controller
+@EnableAutoConfiguration
 public class Main {
 
-    public static void main(String[] args) {
+    @GET
+    @Path("/")
+    String home() {
 
-        System.out.println("Hello coddy!");
+        return "Hello coddy!";
+    }
+
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(Main.class, args);
     }
 }
