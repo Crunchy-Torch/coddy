@@ -18,6 +18,7 @@
     <properties>
         <java.version>1.8</java.version>
         <coddy.spring.version>1.5.4.RELEASE</coddy.spring.version>
+        <elasticsearch.version>2.4.5</elasticsearch.version>
     </properties>
 
     <modules>
