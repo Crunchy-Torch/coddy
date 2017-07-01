@@ -1,2 +1,4 @@
 {"index":{"_index":"account","_type":"users","_id":"1" }}
 {"login":"augustin","password":"toto","salting":"AfRgIufs"}
+{"index":{"_index":"account","_type":"users","_id":"1" }}
+{"login":"david","password":"toto","salting":"AfRgIufs"}
