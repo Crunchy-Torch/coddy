@@ -16,7 +16,8 @@
     </parent>
 
     <properties>
-        <spring.version>1.5.4.RELEASE</spring.version>
+        <java.version>1.8</java.version>
+        <coddy.spring.version>1.5.4.RELEASE</coddy.spring.version>
     </properties>
 
     <modules>
