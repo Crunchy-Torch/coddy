@@ -1,4 +1,4 @@
-package org.superdev;
+package org.superdev.cody;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
