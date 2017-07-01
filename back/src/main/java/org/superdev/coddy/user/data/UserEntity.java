@@ -1,10 +1,7 @@
 package org.superdev.coddy.user.data;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldIndex;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.*;
 
 import java.io.Serializable;
 
@@ -14,13 +11,10 @@ public class UserEntity implements Serializable {
     @Id
     private String id;
 
-    @Field(type = FieldType.String, index = FieldIndex.not_analyzed)
     private String login;
 
-    @Field(type = FieldType.String, index = FieldIndex.not_analyzed)
     private byte[] password;
 
-    @Field(type = FieldType.String, index = FieldIndex.not_analyzed)
     private String salting;
 
     private String[] permissions;
