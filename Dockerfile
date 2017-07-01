@@ -4,6 +4,12 @@ FROM openjdk:8
 # Install maven
 RUN apt-get update
 RUN apt-get install -y maven
+# Install nodejs
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs
+
+# Expose angular port
+EXPOSE 4200
 
 # Define default command.
 CMD ["bash"]
