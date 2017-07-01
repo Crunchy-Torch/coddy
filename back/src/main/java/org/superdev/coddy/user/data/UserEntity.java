@@ -1,11 +1,15 @@
 package org.superdev.coddy.user.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 
 import java.io.Serializable;
 
 @Document(indexName = "account", type = "users")
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserEntity implements Serializable {
 
     @Id
