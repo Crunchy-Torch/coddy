@@ -18,7 +18,7 @@ public class User {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/{login}")
+    @Path("{login}")
     public UserEntity getUserByLogin(@PathParam("login") String login) {
         return this.service.getUserByLogin(login);
     }
