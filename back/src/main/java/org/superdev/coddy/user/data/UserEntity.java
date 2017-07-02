@@ -15,12 +15,16 @@ public class UserEntity implements Serializable {
     @Id
     private String id;
 
+    @Field(type = FieldType.String, index = FieldIndex.not_analyzed)
     private String login;
 
+    @Field(type = FieldType.String, index = FieldIndex.not_analyzed)
     private byte[] password;
 
+    @Field(type = FieldType.String, index = FieldIndex.no)
     private String salting;
 
+    @Field(type = FieldType.String)
     private String[] permissions;
 
     public String getId() {
