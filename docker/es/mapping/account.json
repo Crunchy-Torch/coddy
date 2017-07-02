@@ -1,0 +1,23 @@
+{
+  "mappings": {
+    "user": {
+      "properties": {
+        "login": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "password": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "salting" : {
+          "type": "string",
+          "index": "no"
+        },
+        "permissions":{
+          "type" : "string"
+        }
+      }
+    }
+  }
+}
