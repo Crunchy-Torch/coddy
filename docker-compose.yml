@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  es:
+    build: ./docker/es
+    ports:
+      - 9200:9200
+      - 9300:9300
+  coddy-back:
+    build: ./docker/java
+    environment:
+      - PROJECT_DIRECTORY=/var/workspace/coddy
+    ports:
+      - 8080:8080
+    volumes:
+      - $CODDY_DIR:/var/workspace/coddy
+      - $HOME/.m2:/root/.m2/
+    depends_on:
+      - es
