@@ -5,7 +5,7 @@ if [[ ! -d "$PROJECT_DIRECTORY" ]]; then
     exit 1
 fi
 
-cd ${PROJECT_DIRECTORY} && mvn --batch-mode clean package
+cd ${PROJECT_DIRECTORY}/back && mvn --batch-mode clean package -Dmaven.test.skip=true
 
 # Execute every command from user or from CMD Docker directive
 exec "$@"
