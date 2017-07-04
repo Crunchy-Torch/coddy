@@ -25,5 +25,5 @@ front/src/package-lock.json
 .DS_Store
 Thumbs.db
 
-# docker filel
+# docker files
 docker-compose.yml
