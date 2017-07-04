@@ -10,7 +10,7 @@ target
 front/src/dist
 front/src/tmp
 front/src/out-tsc
-front/src/node_modules
+front/src/node_modules/
 front/src/.sass-cache
 front/src/connect.lock
 front/src/coverage
@@ -20,7 +20,7 @@ front/src/testem.log
 front/src/typings
 front/src/e2e/*.js
 front/src/e2e/*.map
-
+front/src/package-lock.json
 # System Files
 .DS_Store
 Thumbs.db
