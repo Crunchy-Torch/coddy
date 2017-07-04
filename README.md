@@ -1,6 +1,6 @@
 # coddy
 
-## Développement
+## Development
 
 If you want to develop this project or just test it, a `docker-compose.dev.yml` is provided in order to start locally all necessary server.
 
