@@ -24,3 +24,6 @@ front/src/e2e/*.map
 # System Files
 .DS_Store
 Thumbs.db
+
+# docker filel
+docker-compose.yml
