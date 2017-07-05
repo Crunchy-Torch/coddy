@@ -2,7 +2,7 @@ package org.superdev.coddy.user.elasticsearch.repository;
 
 
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
-import org.superdev.coddy.user.data.UserEntity;
+import org.superdev.coddy.user.elasticsearch.entity.UserEntity;
 
 public interface UserRepository extends ElasticsearchRepository<UserEntity, String> {
 

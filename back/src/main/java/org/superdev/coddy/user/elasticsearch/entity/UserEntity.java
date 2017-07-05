@@ -1,4 +1,4 @@
-package org.superdev.coddy.user.data;
+package org.superdev.coddy.user.elasticsearch.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -7,7 +7,7 @@ import org.springframework.data.elasticsearch.annotations.*;
 
 import java.io.Serializable;
 
-@Document(indexName = "account", type = "users")
+@Document(indexName = "account", type = "user")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserEntity implements Serializable {
@@ -22,7 +22,16 @@ public class UserEntity implements Serializable {
     private byte[] password;
 
     @Field(type = FieldType.String, index = FieldIndex.no)
-    private String salting;
+    private String firstName;
+
+    @Field(type = FieldType.String, index = FieldIndex.no)
+    private String lastName;
+
+    @Field(type = FieldType.String, index = FieldIndex.no)
+    private String email;
+
+    @Field(type = FieldType.String, index = FieldIndex.no)
+    private String salt;
 
     @Field(type = FieldType.String)
     private String[] permissions;
@@ -51,12 +60,36 @@ public class UserEntity implements Serializable {
         this.password = password;
     }
 
-    public String getSalting() {
-        return salting;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setSalting(String salting) {
-        this.salting = salting;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public String[] getPermissions() {

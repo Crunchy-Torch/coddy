@@ -2,7 +2,7 @@ package org.superdev.coddy.user.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.superdev.coddy.user.data.UserEntity;
+import org.superdev.coddy.user.elasticsearch.entity.UserEntity;
 import org.superdev.coddy.user.service.UserService;
 
 import javax.ws.rs.*;
