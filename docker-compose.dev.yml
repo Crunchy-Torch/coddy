@@ -1,27 +1,27 @@
-version: '2'
+version: '3'
 
 services:
   es:
-    build: ./docker/es
+    image: elasticsearch:2.4.5
     ports:
       - 9200:9200
       - 9300:9300
   back:
     build: ./docker/back
     environment:
-      - PROJECT_DIRECTORY=/var/workspace/coddy
+      - PROJECT_DIRECTORY=${DOCKER_PROJECT_DIRECTORY}
     ports:
       - 8080:8080
     volumes:
-      - $CODDY_DIR:/var/workspace/coddy
+      - $CODDY_DIR:${DOCKER_PROJECT_DIRECTORY}
       - $HOME/.m2:/root/.m2/
     depends_on:
       - es
   front:
     build: ./docker/front
     environment:
-      - PROJECT_DIRECTORY=/var/workspace/coddy
+      - PROJECT_DIRECTORY=${DOCKER_PROJECT_DIRECTORY}
     ports:
       - 4200:4200
     volumes:
-      - $CODDY_DIR:/var/workspace/coddy
+      - $CODDY_DIR:${DOCKER_PROJECT_DIRECTORY}
