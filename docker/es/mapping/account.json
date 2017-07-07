@@ -10,7 +10,15 @@
           "type": "string",
           "index": "not_analyzed"
         },
-        "salting" : {
+        "firstName": {
+          "type": "string",
+          "index": "no"
+        },
+        "lastName": {
+          "type": "string",
+          "index": "no"
+        },
+        "salt" : {
           "type": "string",
           "index": "no"
         },
