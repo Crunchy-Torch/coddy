@@ -1,0 +1,4 @@
+{"index":{"_index":"account","_type":"user","_id":"1"}}
+{"login":"napoleon","password":"toto","salt":"AfRgIufs","email":"napoleon.bonaparte@emperor.fr","firstName":"Napoléon","lastName":"Bonaparte"}
+{"index":{"_index":"account","_type":"user","_id":"2"}}
+{"login":"ciceron","password":"toto","salt":"AfRgIufs","email":"ciceron@emperor.it","firstName":"Marcus","lastName":"Cicero"}

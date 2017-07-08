@@ -4,7 +4,7 @@ package org.superdev.coddy.user.elasticsearch.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.superdev.coddy.application.elasticsearch.dao.IDAO;
-import org.superdev.coddy.user.data.UserEntity;
+import org.superdev.coddy.user.elasticsearch.entity.UserEntity;
 import org.superdev.coddy.user.elasticsearch.repository.UserRepository;
 
 @Service
