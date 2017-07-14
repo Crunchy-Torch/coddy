@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-public',
-    templateUrl: 'public.component.html'
+    template: '<router-outlet></router-outlet>'
 })
 
 export class PublicComponent {
