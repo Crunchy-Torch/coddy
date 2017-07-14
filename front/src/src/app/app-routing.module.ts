@@ -1,3 +1,4 @@
+import { PrivateGuard } from './../template/private/private.guard';
 import { PrivateComponent } from './../template/private/private.component';
 import { PublicComponent } from './../template/public/public.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -15,7 +16,7 @@ const PRIVATE_ROUTES: Routes = [
 
 const APP_ROUTES: Routes = [
     { path: '', component: PublicComponent, children: PUBLIC_ROUTES },
-    { path: '', component: PrivateComponent, children: PRIVATE_ROUTES }
+    { path: '', component: PrivateComponent, children: PRIVATE_ROUTES, canActivate: [ PrivateGuard ] }
 ];
 
 @NgModule({

@@ -1,3 +1,4 @@
+import { PrivateGuard } from './../template/private/private.guard';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -23,7 +24,8 @@ import { HomeComponent } from './home/home.component';
     AppRoutingModule
   ],
   providers: [
-    AppService
+    AppService,
+    PrivateGuard
   ],
   bootstrap: [AppComponent]
 })
