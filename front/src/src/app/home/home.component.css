@@ -52,6 +52,10 @@ i.icon.code:before {
   animation: bounce 2s infinite;
 }
 
+i.big.icon {
+    font-size: 3em;
+}
+
 .image.segment {
     background-repeat: no-repeat;
 }
