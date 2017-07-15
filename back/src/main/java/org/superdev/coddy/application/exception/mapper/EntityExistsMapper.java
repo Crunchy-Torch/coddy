@@ -1,6 +1,6 @@
-package org.superdev.coddy.user.exception.mapper;
+package org.superdev.coddy.application.exception.mapper;
 
-import org.superdev.coddy.user.exception.EntityExistsException;
+import org.superdev.coddy.application.exception.EntityExistsException;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

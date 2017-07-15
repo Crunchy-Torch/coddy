@@ -1,4 +1,4 @@
-package org.superdev.coddy.user.exception;
+package org.superdev.coddy.application.exception;
 
 public class EntityExistsException extends RuntimeException {
 
