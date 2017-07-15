@@ -2,10 +2,15 @@ package org.superdev.coddy.user.elasticsearch.dao;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.superdev.coddy.application.elasticsearch.dao.IDAO;
 import org.superdev.coddy.user.elasticsearch.entity.UserEntity;
 import org.superdev.coddy.user.elasticsearch.repository.UserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserDAO implements IDAO<UserEntity> {
@@ -21,6 +26,16 @@ public class UserDAO implements IDAO<UserEntity> {
     @Override
     public UserEntity find(String id) {
         return this.userRepository.findOne(id);
+    }
+
+    @Override
+    public List<UserEntity> findAll(final int from, final int size) {
+
+        Pageable page = new PageRequest(from, size);
+
+        List<UserEntity> list = new ArrayList<>();
+        this.userRepository.findAll(page).forEach(list::add);
+        return list;
     }
 
     public UserEntity findByLogin(String login) {
