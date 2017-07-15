@@ -24,6 +24,14 @@ public class User {
         return this.service.create(credential);
     }
 
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{login}")
+    public void delete(@PathParam("login") final String login){
+        this.service.delete(login);
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -36,7 +44,7 @@ public class User {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{login}")
-    public UserEntity getUserByLogin(@PathParam("login") String login) {
+    public UserEntity getUserByLogin(@PathParam("login") final String login) {
         return this.service.getUserByLogin(login);
     }
 }

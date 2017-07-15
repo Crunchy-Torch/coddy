@@ -6,6 +6,8 @@ public interface IDAO<T> {
 
     T create(T entity);
 
+    void delete(T entity);
+
     T find(String id);
 
     List<T> findAll(final int from, final int size);

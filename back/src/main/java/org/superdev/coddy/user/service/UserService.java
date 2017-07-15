@@ -2,10 +2,11 @@ package org.superdev.coddy.user.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.superdev.coddy.application.exception.EntityNotFoundException;
 import org.superdev.coddy.user.data.Credential;
 import org.superdev.coddy.user.elasticsearch.entity.UserEntity;
 import org.superdev.coddy.user.elasticsearch.dao.UserDAO;
-import org.superdev.coddy.user.exception.EntityExistsException;
+import org.superdev.coddy.application.exception.EntityExistsException;
 import org.superdev.coddy.user.utils.SecurityUtils;
 
 import java.util.List;
@@ -32,6 +33,10 @@ public class UserService {
         return this.userDAO.create(entity);
     }
 
+    public void delete(final String login) {
+        this.userDAO.delete(this.getUserByLogin(login));
+    }
+
 
     public List<UserEntity> getUsers(final int from, final int size) {
         return this.userDAO.findAll(from, size);
@@ -39,8 +44,16 @@ public class UserService {
 
     public UserEntity getUserByLogin(String login) {
         UserEntity entity = this.userDAO.findByLogin(login);
+
+        if (entity == null) {
+            throw new EntityNotFoundException("user with the login : " + login + " not found");
+        }
+
         //remove password before send it to the consumer in order to not send how a password looks like
         entity.setPassword(null);
+        entity.setSalt(null);
+
+
         return entity;
     }
 }

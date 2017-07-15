@@ -23,6 +23,10 @@ public class UserDAO implements IDAO<UserEntity> {
         return this.userRepository.save(entity);
     }
 
+    public void delete(UserEntity entity){
+        this.userRepository.delete(entity);
+    }
+
     @Override
     public UserEntity find(String id) {
         return this.userRepository.findOne(id);
