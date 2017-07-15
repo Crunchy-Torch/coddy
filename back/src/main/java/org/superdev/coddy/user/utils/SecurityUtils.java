@@ -6,6 +6,7 @@ import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
 import java.util.Random;
 
 public class SecurityUtils {
@@ -20,13 +21,17 @@ public class SecurityUtils {
     }
 
     public static byte[] hash(char[] password, byte[] salt) {
+        final PBEKeySpec spec = new PBEKeySpec(password, salt, SecurityUtils.ITERATIONS, SecurityUtils.KEY_LENGTH);
+
         try {
             SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(SecurityUtils.ALGORITHM);
-            PBEKeySpec spec = new PBEKeySpec(password, salt, SecurityUtils.ITERATIONS, SecurityUtils.KEY_LENGTH);
             SecretKey key = secretKeyFactory.generateSecret(spec);
             return key.getEncoded();
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new SecurityException(e);
+        } finally {
+            // erase the password in the char array in order to not retrieve it in the java memory
+            spec.clearPassword();
         }
     }
 
@@ -35,6 +40,31 @@ public class SecurityUtils {
         byte[] salt = new byte[SecurityUtils.SALT_SIZE];
         r.nextBytes(salt);
         return salt;
+    }
+
+    public static boolean isExpectedPassword(char[] password, byte[] salt, byte[] expectedHash) {
+        if (password == null) {
+            return false;
+        }
+        final byte[] pwdHash = SecurityUtils.hash(password, salt);
+        final int length = pwdHash.length;
+
+        // erase the password in the char array in order to not retrieve it in the java memory
+        Arrays.fill(password, Character.MIN_VALUE);
+
+        if (length != expectedHash.length) {
+            return false;
+        }
+
+        int i = 0;
+        boolean result = true;
+
+        while ((i < length) && result) {
+            result = pwdHash[i] == expectedHash[i];
+            i++;
+        }
+
+        return result;
     }
 
 }
