@@ -9,6 +9,8 @@ import org.superdev.coddy.application.exception.mapper.EntityExistsMapper;
 import org.superdev.coddy.user.exception.mapper.AuthenticationMapper;
 import org.superdev.coddy.user.exception.mapper.ForbiddenMapper;
 import org.superdev.coddy.user.exception.mapper.NotAuthorizedMapper;
+import org.superdev.coddy.user.filter.AuthorizationRequestFilter;
+import org.superdev.coddy.user.filter.TokenResponseFilter;
 
 @Component
 public class JerseyConfig extends ResourceConfig {
@@ -24,5 +26,9 @@ public class JerseyConfig extends ResourceConfig {
         register(NotAuthorizedMapper.class);
         register(EntityExistsMapper.class);
         register(EntityNotFoundMapper.class);
+
+        //filter
+        register(AuthorizationRequestFilter.class);
+        register(TokenResponseFilter.class);
     }
 }
