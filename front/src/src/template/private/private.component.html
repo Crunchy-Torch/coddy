@@ -1,2 +1,58 @@
-<p>SIDEBAR</p>
-<router-outlet></router-outlet>
+<div class="ui bottom attached segment pushable">
+  <div [hidden]="" class="ui visible inverted left vertical sidebar menu">
+
+    <a class="item">
+      <span>
+        <i class="circular large ui icon inverted teal code icon"></i>
+      </span>
+      <b>Coddy</b>
+    </a>
+
+    <div class="item">
+      <div class="header">David LEVAYER</div>
+      <div class="header">
+        <div class="ui blue mini label">Read</div>
+        <div class="ui green mini label">Write</div>
+        <div class="ui orange mini label">Admin</div>
+      </div>
+    </div>
+    
+    <div class="item">
+      <div class="ui icon input">
+        <input type="text" placeholder="Search...">
+        <i class="search icon"></i>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="header">Snipplets</div>
+      <div class="menu">
+        <a class="item">
+          Favorites
+          <div class="ui orange left pointing label">16</div>
+        </a>
+        <a class="item">Browse database</a>
+        <a class="item">Add a new snipplet</a>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="header">Settings</div>
+      <div class="menu">
+        <a class="item">Profil</a>
+        <a class="item">Preferences</a>
+      </div>
+    </div>
+
+    <a class="item">
+      <i class="sign out icon"></i>
+      <b>Logout</b>
+    </a>
+  </div>
+
+  <div class="pusher">
+    <div class="ui basic segment">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
