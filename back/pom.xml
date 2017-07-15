@@ -42,6 +42,11 @@
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
             <version>${coddy.spring.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.7.0</version>
+        </dependency>
     </dependencies>
 
     <build>
