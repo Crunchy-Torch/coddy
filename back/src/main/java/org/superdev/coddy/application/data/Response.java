@@ -9,16 +9,17 @@ public class Response implements Serializable {
 
     public static final String INTERNAL_ERROR = "internal error";
 
+    public static final String WRONG_CREDENTIAL = "wrong credential";
+
     private static final long serialVersionUID = -836303086510094002L;
 
     private String message;
 
-    public Response(){
+    public Response() {
         // this blank constructor is needed by the library jackson
     }
 
     /**
-     *
      * @param message : the error message
      */
     public Response(final String message) {

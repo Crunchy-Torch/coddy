@@ -3,6 +3,7 @@ package org.superdev.coddy.user.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.superdev.coddy.user.data.Credential;
+import org.superdev.coddy.user.data.Token;
 import org.superdev.coddy.user.elasticsearch.entity.UserEntity;
 import org.superdev.coddy.user.service.UserService;
 
@@ -16,6 +17,27 @@ public class User {
 
     @Autowired
     private UserService service;
+
+    /**
+     * return a token in json format if the user has enter correct credentials
+     *
+     * @param credential : user login and password in json format
+     *                   <p>
+     *                   {@code
+     *                   {
+     *                   "login": "jdoh",
+     *                   "password": "U54dcS"
+     *                   }
+     *                   }
+     *                   </p>
+     */
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/auth")
+    public Token authentication(final Credential credential) {
+        return this.service.authenticate(credential);
+    }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
