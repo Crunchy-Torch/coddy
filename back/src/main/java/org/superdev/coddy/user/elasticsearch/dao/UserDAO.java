@@ -41,4 +41,8 @@ public class UserDAO implements IDAO<UserEntity> {
     public UserEntity findByLogin(String login) {
         return this.userRepository.findByLogin(login);
     }
+
+    public boolean isExist(String login) {
+        return this.findByLogin(login) != null;
+    }
 }

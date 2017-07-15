@@ -19,7 +19,7 @@ public class UserEntity implements Serializable {
     private String login;
 
     @Field(type = FieldType.String, index = FieldIndex.not_analyzed)
-    private char[] password;
+    private byte[] password;
 
     @Field(type = FieldType.String, index = FieldIndex.no)
     private String firstName;
@@ -52,11 +52,11 @@ public class UserEntity implements Serializable {
         this.login = login;
     }
 
-    public char[] getPassword() {
+    public byte[] getPassword() {
         return password;
     }
 
-    public void setPassword(char[] password) {
+    public void setPassword(byte[] password) {
         this.password = password;
     }
 
