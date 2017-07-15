@@ -31,7 +31,7 @@ public class UserEntity implements Serializable {
     private String email;
 
     @Field(type = FieldType.String, index = FieldIndex.no)
-    private String salt;
+    private byte[] salt;
 
     @Field(type = FieldType.String)
     private String[] permissions;
@@ -84,11 +84,11 @@ public class UserEntity implements Serializable {
         this.email = email;
     }
 
-    public String getSalt() {
+    public byte[] getSalt() {
         return salt;
     }
 
-    public void setSalt(String salt) {
+    public void setSalt(byte[] salt) {
         this.salt = salt;
     }
 
