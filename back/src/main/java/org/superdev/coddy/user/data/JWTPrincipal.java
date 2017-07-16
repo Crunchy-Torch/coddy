@@ -22,7 +22,7 @@ public class JWTPrincipal implements Principal, IUser {
         this.firstName = firstName;
         this.lastName = lastName;
         this.permissions = permissions;
-        this.beginActivationSession = beginActivationSession;
+        this.beginActivationSession = beginActivationSession != null ? (Date) beginActivationSession.clone() : null;
     }
 
     @Override
@@ -48,6 +48,6 @@ public class JWTPrincipal implements Principal, IUser {
     }
 
     public Date getBeginActivationSession() {
-        return this.beginActivationSession;
+        return this.beginActivationSession != null ? (Date) this.beginActivationSession.clone() : null;
     }
 }

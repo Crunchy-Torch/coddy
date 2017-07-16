@@ -56,11 +56,11 @@ public class UserEntity implements Serializable, IUser {
     }
 
     public byte[] getPassword() {
-        return password;
+        return password != null ? password.clone() : null;
     }
 
     public void setPassword(byte[] password) {
-        this.password = password;
+        this.password = password != null ? password.clone() : null;
     }
 
     @Override
@@ -90,11 +90,11 @@ public class UserEntity implements Serializable, IUser {
     }
 
     public byte[] getSalt() {
-        return salt;
+        return salt != null ? salt.clone() : null;
     }
 
     public void setSalt(byte[] salt) {
-        this.salt = salt;
+        this.salt = salt != null ? salt.clone() : null;
     }
 
     @Override

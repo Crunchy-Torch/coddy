@@ -14,7 +14,7 @@ public class Credential implements Serializable {
 
     public Credential(final String login, final char[] password) {
         this.login = login;
-        this.password = password;
+        this.password = password != null ? password.clone() : null;
     }
 
     public Credential() {
@@ -26,6 +26,6 @@ public class Credential implements Serializable {
     }
 
     public char[] getPassword() {
-        return password;
+        return password != null ? password.clone() : null;
     }
 }
