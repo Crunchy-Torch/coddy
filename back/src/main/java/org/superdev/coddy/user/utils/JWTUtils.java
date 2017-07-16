@@ -51,23 +51,6 @@ public class JWTUtils {
     }
 
     /**
-     * define the personal property which will set and get in the request context {@link javax.ws.rs.container.ContainerRequestContext}
-     */
-    public enum RequestProperty {
-        PRINCIPAL("principal");
-
-        private final String property;
-
-        RequestProperty(String property) {
-            this.property = property;
-        }
-
-        public String getProperty() {
-            return property;
-        }
-    }
-
-    /**
      * @return a random key with 512 characters
      */
     public static byte[] generateSecret() {

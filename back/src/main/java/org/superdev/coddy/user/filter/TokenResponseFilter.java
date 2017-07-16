@@ -2,9 +2,7 @@ package org.superdev.coddy.user.filter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.superdev.coddy.user.data.JWTPrincipal;
-import org.superdev.coddy.user.data.Token;
 import org.superdev.coddy.user.service.JWTService;
-import org.superdev.coddy.user.utils.JWTUtils;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
@@ -30,11 +28,11 @@ public class TokenResponseFilter implements ContainerResponseFilter {
      */
     @Override
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
-        JWTPrincipal principal = (JWTPrincipal) requestContext.getProperty(JWTUtils.RequestProperty.PRINCIPAL.getProperty());
 
-        if (principal != null) {
-            responseContext.getHeaders().add(HttpHeaders.AUTHORIZATION, this.jwtService.generateToken(principal).getToken());
+        if (requestContext.getSecurityContext() != null && requestContext.getSecurityContext().getUserPrincipal() != null) {
+
+            responseContext.getHeaders().add(HttpHeaders.AUTHORIZATION,
+                    this.jwtService.generateToken((JWTPrincipal) requestContext.getSecurityContext().getUserPrincipal()).getToken());
         }
     }
-
 }

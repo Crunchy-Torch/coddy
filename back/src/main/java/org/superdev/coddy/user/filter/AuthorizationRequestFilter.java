@@ -1,19 +1,14 @@
 package org.superdev.coddy.user.filter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.superdev.coddy.user.data.JWTPrincipal;
 import org.superdev.coddy.user.service.JWTService;
-import org.superdev.coddy.user.utils.JWTUtils;
 
 import javax.annotation.Priority;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
@@ -22,12 +17,6 @@ import java.io.IOException;
 @AuthorizationFilter
 @Priority(Priorities.AUTHENTICATION)
 public class AuthorizationRequestFilter implements ContainerRequestFilter {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationRequestFilter.class);
-
-
-    @Context
-    private HttpServletRequest request;
 
     @Autowired
     private JWTService jwtService;
@@ -49,7 +38,6 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
      */
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        LOGGER.debug("enter in jwt token interceptor");
 
         String token = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
@@ -67,8 +55,5 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
 
         String scheme = requestContext.getUriInfo().getRequestUri().getScheme();
         requestContext.setSecurityContext(new JWTSecurityContext(principal, scheme));
-        requestContext.setProperty(JWTUtils.RequestProperty.PRINCIPAL.getProperty(), principal);
-        // set Principal inside the contact in order to be retrieved by the LoggerAspect
-        request.setAttribute(JWTUtils.RequestProperty.PRINCIPAL.getProperty(), principal);
     }
 }
