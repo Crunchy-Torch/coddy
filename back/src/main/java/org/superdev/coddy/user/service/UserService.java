@@ -23,6 +23,16 @@ public class UserService {
     @Autowired
     private JWTService jwtService;
 
+    /**
+     * This method will authenticate the user from the given {@link Credential credential}. To achieve this goal, there are three steps :
+     * 1. Check if the {@link UserEntity user} exists
+     * 2. Check if the user's password in the {@link Credential credential's object} is correct
+     * 3. Generate the token from the {@link UserEntity user information}
+     *
+     * @param credential the credential used to authenticate the {@link UserEntity user}
+     * @return a valid {@link Token token}
+     * @throws AuthenticationException if the user is not found or the password is wrong.
+     */
     public Token authenticate(Credential credential) {
         UserEntity entity = this.userDAO.findByLogin(credential.getLogin());
 
@@ -30,13 +40,21 @@ public class UserService {
             throw new AuthenticationException(Response.WRONG_CREDENTIAL);
         }
 
-        if(!SecurityUtils.isExpectedPassword(credential.getPassword(),entity.getSalt(), entity.getPassword())){
+        if (!SecurityUtils.isExpectedPassword(credential.getPassword(), entity.getSalt(), entity.getPassword())) {
             throw new AuthenticationException(Response.WRONG_CREDENTIAL);
         }
 
         return this.jwtService.generateToken(entity);
     }
 
+    /**
+     * This method will create the {@link UserEntity user} from the {@link Credential credentials}.
+     * Before creating it, the given password will be salted and hashed.
+     *
+     * @param credential the personnal information needed to create the associated user
+     * @return the {@link UserEntity user} created
+     * @throws EntityExistsException if the given user already exists
+     */
     public UserEntity create(Credential credential) {
         // check if the current login already exist
         if (this.userDAO.isExist(credential.getLogin())) {
@@ -53,6 +71,12 @@ public class UserService {
         return this.userDAO.create(entity);
     }
 
+    /**
+     * This method will delete the {@link UserEntity user} from the given login.
+     *
+     * @param login the user's login
+     * @throws EntityNotFoundException if the given login is not associated to a {@link UserEntity user}
+     */
     public void delete(final String login) {
         this.userDAO.delete(this.getUserByLogin(login));
     }

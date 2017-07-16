@@ -6,9 +6,6 @@ import org.slf4j.LoggerFactory;
 import javax.crypto.KeyGenerator;
 import java.security.NoSuchAlgorithmException;
 
-/**
- * All method and enum used inside the jwt package. This class cannot be instantiated
- */
 public class JWTUtils {
 
     private static final String ALGORITHM = "AES";
@@ -16,7 +13,7 @@ public class JWTUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(JWTUtils.class);
 
     private JWTUtils() {
-
+        // this is an utility class. You do not need to instantiate it.
     }
 
     /**
@@ -71,7 +68,7 @@ public class JWTUtils {
     }
 
     /**
-     * @return a random key with 256 characters
+     * @return a random key with 512 characters
      */
     public static byte[] generateSecret() {
         KeyGenerator keyGenerator;
@@ -82,7 +79,7 @@ public class JWTUtils {
             LOGGER.error("Intern algorithm to create secret key doesn't exist");
             return new byte[]{};
         }
-        keyGenerator.init(256);
+        keyGenerator.init(512);
         return keyGenerator.generateKey().getEncoded();
     }
 }

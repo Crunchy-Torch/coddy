@@ -11,6 +11,10 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
+/**
+ * This class is the endpoint api which contains all method in order to manage the {@link UserEntity users}
+ * All the business code is in the service part, especially in the class {@link UserService}.
+ */
 @Component
 @Path("/user")
 public class User {
@@ -19,7 +23,7 @@ public class User {
     private UserService service;
 
     /**
-     * return a token in json format if the user has enter correct credentials
+     * return a token in json format if the user has entered correct credentials
      *
      * @param credential : user login and password in json format
      *                   <p>
@@ -39,6 +43,13 @@ public class User {
         return this.service.authenticate(credential);
     }
 
+    /**
+     * This method will create a {@link UserEntity user} from the {@link Credential credentials}.
+     *
+     * @param credential the personnal information needed to create the associated user
+     * @return the {@link UserEntity user} created
+     * @throws org.superdev.coddy.application.exception.EntityExistsException if the given user already exists
+     */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -46,11 +57,17 @@ public class User {
         return this.service.create(credential);
     }
 
+    /**
+     * This method will delete the {@link UserEntity user} from the given login.
+     *
+     * @param login the user's login
+     * @throws org.superdev.coddy.application.exception.EntityNotFoundException if the given login is not associated to a {@link UserEntity user}
+     */
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{login}")
-    public void delete(@PathParam("login") final String login){
+    public void delete(@PathParam("login") final String login) {
         this.service.delete(login);
     }
 
@@ -62,6 +79,11 @@ public class User {
         return this.service.getUsers(from, size);
     }
 
+    /**
+     * @param login the user's login
+     * @return the {@link UserEntity user} associated to the given login. All critical information such as his password
+     * or the salt has been deleted previously
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

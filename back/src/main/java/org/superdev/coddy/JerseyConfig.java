@@ -16,6 +16,7 @@ import org.superdev.coddy.user.filter.TokenResponseFilter;
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
+        // register api endpoint
         register(Hello.class);
         register(User.class);
 
@@ -27,7 +28,7 @@ public class JerseyConfig extends ResourceConfig {
         register(EntityExistsMapper.class);
         register(EntityNotFoundMapper.class);
 
-        //filter
+        //register request and response filter
         register(AuthorizationRequestFilter.class);
         register(TokenResponseFilter.class);
     }

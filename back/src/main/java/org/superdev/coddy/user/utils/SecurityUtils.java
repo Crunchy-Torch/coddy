@@ -9,6 +9,9 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * All method used to check and generate the user's password. This class cannot be instantiated
+ */
 public class SecurityUtils {
 
     private static final int SALT_SIZE = 32;
@@ -17,9 +20,17 @@ public class SecurityUtils {
     private static final String ALGORITHM = "PBKDF2WithHmacSHA512";
 
     private SecurityUtils() {
-
+        // this is an utility class. You do not need to instantiate it.
     }
 
+    /**
+     * This method will hash the password and salt combination. Be careful, this method will erase the password after hashed it.
+     * You must be sure that you do not need it after using this method.
+     *
+     * @param password the password who needs to be hashed
+     * @param salt     some list of <code>byte</code> which will be included in the password
+     * @return a hash of the password and salting combination.
+     */
     public static byte[] hash(char[] password, byte[] salt) {
         final PBEKeySpec spec = new PBEKeySpec(password, salt, SecurityUtils.ITERATIONS, SecurityUtils.KEY_LENGTH);
 
@@ -35,6 +46,9 @@ public class SecurityUtils {
         }
     }
 
+    /**
+     * @return a random salt
+     */
     public static byte[] generateSalt() {
         final Random r = new SecureRandom();
         byte[] salt = new byte[SecurityUtils.SALT_SIZE];
@@ -42,6 +56,17 @@ public class SecurityUtils {
         return salt;
     }
 
+    /**
+     * This method will check the given password and compare it with the one stored in the database.
+     * Be careful, this method will erase the password passed in parameter, after tested it.
+     * You must be sure that you do not need it after using this method.
+     *
+     * @param password     the password to be tested
+     * @param salt         the salt previously retrieve in the database
+     * @param expectedHash the password expected after applying the {@link SecurityUtils#hash(char[], byte[]) hashing method}
+     * @return <code>true</code> if the password passed in parameter matched the hashing password stored in the database.
+     * <code>false</code> if not.
+     */
     public static boolean isExpectedPassword(char[] password, byte[] salt, byte[] expectedHash) {
         if (password == null) {
             return false;

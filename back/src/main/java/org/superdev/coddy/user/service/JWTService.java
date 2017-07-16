@@ -34,6 +34,7 @@ public class JWTService {
      * <p>
      * {@code
      * {
+     * "login": "jdoe",
      * "firstname": "John",
      * "nbf": 1479975670,
      * "permissions": ["write","read"],
@@ -64,7 +65,7 @@ public class JWTService {
 
     /**
      * if the token is valid, return a new instance of {@link JWTPrincipal} from JSON Web Token
-     * which is needed by {@link JWTSecurityContext}.
+     * which is needed by {@link org.superdev.coddy.user.filter.JWTSecurityContext}.
      *
      * @param token : the token to validate
      * @return a new instance of {@link JWTPrincipal} from JSON Web Token
