@@ -1,3 +1,6 @@
+import { Error } from './../shared/error';
+import { ActivatedRoute } from '@angular/router';
+import { SnippetService } from './snippet.service';
 import { Language, Link, LinkType, Snippet } from './snippet';
 
 import { Component, OnInit } from '@angular/core';
@@ -9,35 +12,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SnippetComponent implements OnInit {
 
+  isLoading: boolean;
+  id: string;
   snippet: Snippet;
+  error: Error;
 
-  constructor() {
-
-    this.snippet = new Snippet();
-    this.snippet.title = 'For loop';
-    let language: Language = new Language();
-    language.name = 'Java';
-    language.version = '1.8';
-    this.snippet.language = language;
-    this.snippet.keywords = ['Java', 'Object', 'Loop', 'For'];
-    this.snippet.content = 'for int i = 0\ntest';
-    this.snippet.description = 'Basic Java loop';
-    let link1: Link = new Link();
-    link1.type = LinkType.DOCUMENTATION;
-    link1.value = 'http://perdu.com';
-    link1.description = 'Perdu sur Internet ?';
-    let link2: Link = new Link();
-    link2.type = LinkType.STACK_OVERFLOW;
-    link2.value = 'http://stackoverflow.com';
-    link2.description = 'Forum stack';
-    this.snippet.associatedLinks = [link1, link2];
-    this.snippet.rate = 3;
-    this.snippet.author = 'David Levayer';
-    this.snippet.created = new Date();
-    this.snippet.lastModified = new Date();
+  constructor(private snippetService: SnippetService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
+    this.isLoading = true;
+    this.route.params.subscribe((params: {id: string}) => {
+      // Get route parameters
+      this.id = params.id;
+      this.getSnippet();
+    });
+  }
+
+  getSnippet() {
+    this.isLoading = true;
+    this.error = null;
+    this.snippet = null;
+    this.snippetService.getSnippet(this.id).finally(
+      () => this.isLoading = false
+    ).subscribe(
+      snippet => this.snippet = snippet,
+      error => this.error = error
+    );
   }
 
   linkTypeClass(linkType: LinkType): string {

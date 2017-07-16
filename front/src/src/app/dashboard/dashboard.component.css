@@ -1,0 +1,15 @@
+.inline {
+    display: inline;
+}
+
+.inline + button {
+    margin-left: 1em;
+}
+
+.attached.header > .icon {
+    opacity: inherit;
+    font-size: inherit;
+    padding-top: inherit;
+    vertical-align: inherit;
+}
+

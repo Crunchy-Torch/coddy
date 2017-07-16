@@ -13,7 +13,7 @@ const PUBLIC_ROUTES: Routes = [
 
 const PRIVATE_ROUTES: Routes = [
     { path: 'dashboard', component: DashboardComponent },
-    { path: 'snippet', component: SnippetComponent }
+    { path: 'snippet/:id', component: SnippetComponent }
 ];
 
 const APP_ROUTES: Routes = [

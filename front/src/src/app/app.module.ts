@@ -1,3 +1,5 @@
+import { ErrorComponent } from './shared/error/error.component';
+import { SnippetService } from './snippet/snippet.service';
 import { PrivateGuard } from './../template/private/private.guard';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,6 +18,7 @@ import { SnippetComponent } from './snippet/snippet.component';
     AppComponent,
     PublicComponent,
     PrivateComponent,
+    ErrorComponent,
     HomeComponent,
     DashboardComponent,
     SnippetComponent
@@ -27,6 +30,7 @@ import { SnippetComponent } from './snippet/snippet.component';
   ],
   providers: [
     AppService,
+    SnippetService,
     PrivateGuard
   ],
   bootstrap: [AppComponent]

@@ -8,8 +8,8 @@ export class Snippet {
     associatedLinks: Link[];
     rate: number;
     author: string;
-    created: Date;
-    lastModified: Date;
+    created: string;
+    lastModified: string;
 }
 
 export class Language {
