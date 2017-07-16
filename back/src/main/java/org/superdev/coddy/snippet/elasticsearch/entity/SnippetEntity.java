@@ -1,5 +1,6 @@
 package org.superdev.coddy.snippet.elasticsearch.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.annotation.Id;
@@ -42,9 +43,11 @@ public class SnippetEntity implements Serializable {
     private String author;
 
     @Field(type = FieldType.Date, index = FieldIndex.no)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd'T'HH:mm:ss'Z'")
     private Date created;
 
     @Field(type = FieldType.Date, index = FieldIndex.no)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd'T'HH:mm:ss'Z'")
     private Date lastModified;
 
     public String getId() {
