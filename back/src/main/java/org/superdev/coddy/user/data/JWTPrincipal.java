@@ -35,14 +35,17 @@ public class JWTPrincipal implements Principal, IUser {
         return this.firstName + " " + this.lastName;
     }
 
+    @Override
     public String getFirstName() {
         return firstName;
     }
 
+    @Override
     public String getLastName() {
         return lastName;
     }
 
+    @Override
     public List<String> getPermissions() {
         return this.permissions;
     }
