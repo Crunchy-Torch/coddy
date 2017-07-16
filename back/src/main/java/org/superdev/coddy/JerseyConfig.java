@@ -4,6 +4,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 import org.superdev.coddy.application.api.Hello;
 import org.superdev.coddy.application.exception.mapper.EntityNotFoundMapper;
+import org.superdev.coddy.application.exception.mapper.ExceptMapper;
 import org.superdev.coddy.user.api.User;
 import org.superdev.coddy.application.exception.mapper.EntityExistsMapper;
 import org.superdev.coddy.user.exception.mapper.AuthenticationMapper;
@@ -21,10 +22,13 @@ public class JerseyConfig extends ResourceConfig {
         register(User.class);
 
         //register mapper
+        // user mapper
         register(SecurityManager.class);
         register(AuthenticationMapper.class);
         register(ForbiddenMapper.class);
         register(NotAuthorizedMapper.class);
+        // generic mapper
+        register(ExceptMapper.class);
         register(EntityExistsMapper.class);
         register(EntityNotFoundMapper.class);
 
