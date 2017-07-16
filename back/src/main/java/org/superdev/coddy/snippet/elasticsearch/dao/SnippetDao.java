@@ -21,4 +21,8 @@ public class SnippetDao implements IDAO<SnippetEntity> {
     public SnippetEntity find(String id) {
         return snippetRepository.findOne(id);
     }
+
+    public Iterable<SnippetEntity> findAll() {
+        return snippetRepository.findAll();
+    }
 }

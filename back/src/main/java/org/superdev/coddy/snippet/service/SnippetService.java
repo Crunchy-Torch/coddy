@@ -11,6 +11,10 @@ public class SnippetService {
     @Autowired
     private SnippetDao snippetDao;
 
+    public Iterable<SnippetEntity> getSnippets() {
+        return snippetDao.findAll();
+    }
+
     public SnippetEntity getSnippet(String id) {
         return snippetDao.find(id);
     }

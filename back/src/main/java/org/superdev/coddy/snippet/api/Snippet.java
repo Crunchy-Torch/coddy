@@ -8,6 +8,8 @@ import org.superdev.coddy.snippet.service.SnippetService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Path("/snippet")
@@ -19,6 +21,16 @@ public class Snippet {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    public List<SnippetEntity> getSnippets() {
+        List<SnippetEntity> results = new ArrayList<>();
+        snippetService.getSnippets().forEach(results::add);
+        return results;
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{id}")
     public SnippetEntity getSnippet(@PathParam("id") String id) {
         return snippetService.getSnippet(id);
     }
