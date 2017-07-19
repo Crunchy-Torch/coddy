@@ -14,7 +14,10 @@ import org.superdev.coddy.user.exception.mapper.NotAuthorizedMapper;
 import org.superdev.coddy.user.filter.AuthorizationRequestFilter;
 import org.superdev.coddy.user.filter.TokenResponseFilter;
 
+import javax.ws.rs.ApplicationPath;
+
 @Component
+@ApplicationPath("/api/v1")
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
