@@ -9,6 +9,8 @@ public class Response implements Serializable {
 
     public static final String INTERNAL_ERROR = "internal error";
 
+    public static final String PAGE_NOT_FOUND = "page not found";
+
     public static final String WRONG_CREDENTIAL = "wrong credential";
 
     private static final long serialVersionUID = -836303086510094002L;
