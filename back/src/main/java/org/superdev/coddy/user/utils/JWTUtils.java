@@ -62,7 +62,7 @@ public class JWTUtils {
             LOGGER.error("Intern algorithm to create secret key doesn't exist");
             return new byte[]{};
         }
-        keyGenerator.init(512);
+        keyGenerator.init(256);
         return keyGenerator.generateKey().getEncoded();
     }
 }
