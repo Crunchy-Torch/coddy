@@ -9,7 +9,7 @@ import org.superdev.coddy.user.data.IUser;
 import org.superdev.coddy.user.data.JWTPrincipal;
 import org.superdev.coddy.user.data.Token;
 import org.superdev.coddy.user.elasticsearch.entity.UserEntity;
-import org.superdev.coddy.user.utils.JWTUtils;
+import org.superdev.coddy.user.utils.SecurityUtils;
 
 import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.NotAuthorizedException;
@@ -27,7 +27,7 @@ public class JWTService {
 
     private static final int DEFAULT_JWT_SESSION_TIMEOUT_MINUTE = 60 * 24;
 
-    private static final byte[] DEFAULT_JWT_SECRET = JWTUtils.generateSecret();
+    private static final byte[] DEFAULT_JWT_SECRET = SecurityUtils.generateSecret();
 
     /**
      * This method will generate the token with this payload :
@@ -52,10 +52,10 @@ public class JWTService {
      */
     public Token generateToken(IUser user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(JWTUtils.PayloadFields.LOGIN.getName(), user.getLogin());
-        claims.put(JWTUtils.PayloadFields.FIRST_NAME.getName(), user.getFirstName());
-        claims.put(JWTUtils.PayloadFields.LAST_NAME.getName(), user.getLastName());
-        claims.put(JWTUtils.PayloadFields.PERMISSIONS.getName(), user.getPermissions());
+        claims.put(SecurityUtils.PayloadFields.LOGIN.getName(), user.getLogin());
+        claims.put(SecurityUtils.PayloadFields.FIRST_NAME.getName(), user.getFirstName());
+        claims.put(SecurityUtils.PayloadFields.LAST_NAME.getName(), user.getLastName());
+        claims.put(SecurityUtils.PayloadFields.PERMISSIONS.getName(), user.getPermissions());
 
         Date notBefore = user instanceof UserEntity ? new Date() :
                 (((JWTPrincipal) user).getBeginActivationSession() != null ? ((JWTPrincipal) user).getBeginActivationSession() : new Date());
@@ -76,16 +76,16 @@ public class JWTService {
 
         try {
             Jws<Claims> parseClaimsJws = Jwts.parser()
-                    .requireSubject(JWTUtils.PayloadFields.LOGIN.getName())
-                    .requireSubject(JWTUtils.PayloadFields.PERMISSIONS.getName())
-                    .requireSubject(JWTUtils.PayloadFields.EXPIRATION.getName())
-                    .requireSubject(JWTUtils.PayloadFields.NOT_BEFORE.getName())
+                    .requireSubject(SecurityUtils.PayloadFields.LOGIN.getName())
+                    .requireSubject(SecurityUtils.PayloadFields.PERMISSIONS.getName())
+                    .requireSubject(SecurityUtils.PayloadFields.EXPIRATION.getName())
+                    .requireSubject(SecurityUtils.PayloadFields.NOT_BEFORE.getName())
                     .setSigningKey(JWTService.DEFAULT_JWT_SECRET).parseClaimsJws(token);
 
-            final String login = (String) parseClaimsJws.getBody().get(JWTUtils.PayloadFields.LOGIN.getName());
-            final String firstname = (String) parseClaimsJws.getBody().get(JWTUtils.PayloadFields.FIRST_NAME.getName());
-            final String lastname = (String) parseClaimsJws.getBody().get(JWTUtils.PayloadFields.LAST_NAME.getName());
-            List<String> permissions = (List<String>) parseClaimsJws.getBody().get(JWTUtils.PayloadFields.PERMISSIONS.getName());
+            final String login = (String) parseClaimsJws.getBody().get(SecurityUtils.PayloadFields.LOGIN.getName());
+            final String firstname = (String) parseClaimsJws.getBody().get(SecurityUtils.PayloadFields.FIRST_NAME.getName());
+            final String lastname = (String) parseClaimsJws.getBody().get(SecurityUtils.PayloadFields.LAST_NAME.getName());
+            List<String> permissions = (List<String>) parseClaimsJws.getBody().get(SecurityUtils.PayloadFields.PERMISSIONS.getName());
             Date notBefore = parseClaimsJws.getBody().getNotBefore();
 
             return new JWTPrincipal(login, firstname, lastname, permissions, notBefore);
