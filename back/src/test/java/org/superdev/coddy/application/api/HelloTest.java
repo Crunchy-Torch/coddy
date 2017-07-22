@@ -16,7 +16,6 @@ import org.superdev.coddy.application.utils.TestUtils;
         , classes = Main.class)
 public class HelloTest {
 
-
     private TestRestTemplate restTemplate = new TestRestTemplate();
 
     @Test
