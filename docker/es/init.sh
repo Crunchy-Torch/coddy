@@ -4,6 +4,7 @@ ES_HOST=localhost
 ES_PORT=9200
 
 ACCOUNT_INDEX=account
+CONTENT_INDEX=content
 
 
 function populateIndex(){
@@ -23,6 +24,7 @@ function populateIndex(){
 
 function populate {
     populateIndex ${ACCOUNT_INDEX}
+    populateIndex ${CONTENT_INDEX}
 }
 
 function createIndex {
