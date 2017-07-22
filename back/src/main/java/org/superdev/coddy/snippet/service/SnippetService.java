@@ -2,29 +2,27 @@ package org.superdev.coddy.snippet.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.superdev.coddy.snippet.elasticsearch.dao.SnippetDao;
+import org.superdev.coddy.application.exception.EntityNotFoundException;
+import org.superdev.coddy.application.service.AbstractService;
 import org.superdev.coddy.snippet.elasticsearch.entity.SnippetEntity;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.superdev.coddy.snippet.elasticsearch.repository.SnippetRepository;
 
 @Service
-public class SnippetService {
+public class SnippetService extends AbstractService<SnippetEntity> {
 
     @Autowired
-    private SnippetDao snippetDao;
-
-    public List<SnippetEntity> getSnippets() {
-        List<SnippetEntity> results = new ArrayList<>();
-        snippetDao.findAll().forEach(results::add);
-        return results;
+    public SnippetService(SnippetRepository repository) {
+        super(repository);
     }
 
     public SnippetEntity getSnippet(String id) {
-        return snippetDao.find(id);
+        SnippetEntity entity = this.repository.findOne(id);
+
+        if (entity == null) {
+            throw new EntityNotFoundException("snippet with the id : " + id + " not found");
+        }
+
+        return entity;
     }
 
-    public void createSnippet(SnippetEntity snippet) {
-        snippetDao.create(snippet);
-    }
 }

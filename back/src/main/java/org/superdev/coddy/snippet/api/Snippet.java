@@ -19,8 +19,9 @@ public class Snippet {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public List<SnippetEntity> getSnippets() {
-        return snippetService.getSnippets();
+    public List<SnippetEntity> getSnippets(@DefaultValue("0") @QueryParam("from") final int from,
+                                           @DefaultValue("10") @QueryParam("size") final int size) {
+        return snippetService.getEntity(from, size);
     }
 
     @GET
@@ -34,7 +35,7 @@ public class Snippet {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public void createSnippet(SnippetEntity snippet) {
-        snippetService.createSnippet(snippet);
+    public void create(SnippetEntity snippet) {
+        snippetService.create(snippet);
     }
 }

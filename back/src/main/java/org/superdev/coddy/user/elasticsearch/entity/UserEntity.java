@@ -4,13 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
+import org.superdev.coddy.user.data.IUser;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Document(indexName = "account", type = "user")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserEntity implements Serializable {
+public class UserEntity implements Serializable, IUser {
 
     @Id
     private String id;
@@ -31,10 +33,10 @@ public class UserEntity implements Serializable {
     private String email;
 
     @Field(type = FieldType.String, index = FieldIndex.no)
-    private String salt;
+    private byte[] salt;
 
     @Field(type = FieldType.String)
-    private String[] permissions;
+    private List<String> permissions;
 
     public String getId() {
         return id;
@@ -44,6 +46,7 @@ public class UserEntity implements Serializable {
         this.id = id;
     }
 
+    @Override
     public String getLogin() {
         return login;
     }
@@ -53,13 +56,14 @@ public class UserEntity implements Serializable {
     }
 
     public byte[] getPassword() {
-        return password;
+        return password != null ? password.clone() : null;
     }
 
     public void setPassword(byte[] password) {
-        this.password = password;
+        this.password = password != null ? password.clone() : null;
     }
 
+    @Override
     public String getFirstName() {
         return firstName;
     }
@@ -68,6 +72,7 @@ public class UserEntity implements Serializable {
         this.firstName = firstName;
     }
 
+    @Override
     public String getLastName() {
         return lastName;
     }
@@ -84,19 +89,20 @@ public class UserEntity implements Serializable {
         this.email = email;
     }
 
-    public String getSalt() {
-        return salt;
+    public byte[] getSalt() {
+        return salt != null ? salt.clone() : null;
     }
 
-    public void setSalt(String salt) {
-        this.salt = salt;
+    public void setSalt(byte[] salt) {
+        this.salt = salt != null ? salt.clone() : null;
     }
 
-    public String[] getPermissions() {
+    @Override
+    public List<String> getPermissions() {
         return permissions;
     }
 
-    public void setPermissions(String[] permissions) {
+    public void setPermissions(List<String> permissions) {
         this.permissions = permissions;
     }
 }
