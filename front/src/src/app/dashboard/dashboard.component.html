@@ -29,7 +29,7 @@
           </td>
           <td>
             <div class="ui orange label" tabindex="0">{{snippet.language.name}}</div>
-            <div class="ui basic left pointing label">{{snippet.language.version}}</div>
+            <div class="ui basic left pointing label" *ngIf="snippet.language.version">{{snippet.language.version}}</div>
           </td>
           <td>{{snippet.author}}</td>
         </tr>    
