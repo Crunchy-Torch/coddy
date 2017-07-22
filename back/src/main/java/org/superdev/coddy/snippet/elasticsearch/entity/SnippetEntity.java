@@ -36,17 +36,17 @@ public class SnippetEntity implements Serializable {
     @Field(type = FieldType.Nested, index = FieldIndex.no)
     private List<LinkEntity> associatedLinks;
 
-    @Field(type = FieldType.Float, index = FieldIndex.no)
+    @Field(type = FieldType.Float)
     private float rate;
 
     @Field(type = FieldType.String, index = FieldIndex.not_analyzed)
     private String author;
 
-    @Field(type = FieldType.Date, index = FieldIndex.no)
+    @Field(type = FieldType.Date)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd'T'HH:mm:ss'Z'")
     private Date created;
 
-    @Field(type = FieldType.Date, index = FieldIndex.no)
+    @Field(type = FieldType.Date)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd'T'HH:mm:ss'Z'")
     private Date lastModified;
 
