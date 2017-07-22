@@ -76,7 +76,7 @@ public class User {
     @Consumes(MediaType.APPLICATION_JSON)
     public List<UserEntity> getUsers(@DefaultValue("0") @QueryParam("from") final int from,
                                      @DefaultValue("10") @QueryParam("size") final int size) {
-        return this.service.getUsers(from, size);
+        return this.service.getEntity(from, size);
     }
 
     /**

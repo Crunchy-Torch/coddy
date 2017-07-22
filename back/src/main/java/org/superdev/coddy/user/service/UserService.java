@@ -4,24 +4,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.superdev.coddy.application.data.Response;
 import org.superdev.coddy.application.exception.EntityNotFoundException;
+import org.superdev.coddy.application.service.AbstractService;
 import org.superdev.coddy.user.data.Credential;
 import org.superdev.coddy.user.data.Token;
 import org.superdev.coddy.user.elasticsearch.entity.UserEntity;
-import org.superdev.coddy.user.elasticsearch.dao.UserDAO;
 import org.superdev.coddy.application.exception.EntityExistsException;
+import org.superdev.coddy.user.elasticsearch.repository.UserRepository;
 import org.superdev.coddy.user.exception.AuthenticationException;
 import org.superdev.coddy.user.utils.SecurityUtils;
 
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService extends AbstractService<UserEntity> {
+
+    private final JWTService jwtService;
 
     @Autowired
-    private UserDAO userDAO;
-
-    @Autowired
-    private JWTService jwtService;
+    public UserService(UserRepository userRepository, JWTService jwtService) {
+        super(userRepository);
+        this.jwtService = jwtService;
+    }
 
     /**
      * This method will authenticate the user from the given {@link Credential credential}. To achieve this goal, there are three steps :
@@ -34,7 +37,7 @@ public class UserService {
      * @throws AuthenticationException if the user is not found or the password is wrong.
      */
     public Token authenticate(Credential credential) {
-        UserEntity entity = this.userDAO.findByLogin(credential.getLogin());
+        UserEntity entity = UserRepository.class.cast(this.repository).findByLogin(credential.getLogin());
 
         if (entity == null) {
             throw new AuthenticationException(Response.WRONG_CREDENTIAL);
@@ -57,7 +60,7 @@ public class UserService {
      */
     public UserEntity create(Credential credential) {
         // check if the current login already exist
-        if (this.userDAO.isExist(credential.getLogin())) {
+        if (this.isExist(credential.getLogin())) {
             throw new EntityExistsException("user with login : " + credential.getLogin() + " already exists");
         }
 
@@ -68,7 +71,12 @@ public class UserService {
         byte[] password = SecurityUtils.hash(credential.getPassword(), salt);
         entity.setSalt(salt);
         entity.setPassword(password);
-        return this.userDAO.create(entity);
+
+        entity = super.create(entity);
+        //remove password before send it to the consumer in order to not send how a password looks like
+        entity.setPassword(null);
+        entity.setSalt(null);
+        return entity;
     }
 
     /**
@@ -78,16 +86,11 @@ public class UserService {
      * @throws EntityNotFoundException if the given login is not associated to a {@link UserEntity user}
      */
     public void delete(final String login) {
-        this.userDAO.delete(this.getUserByLogin(login));
-    }
-
-
-    public List<UserEntity> getUsers(final int from, final int size) {
-        return this.userDAO.findAll(from, size);
+        super.delete(this.getUserByLogin(login));
     }
 
     public UserEntity getUserByLogin(String login) {
-        UserEntity entity = this.userDAO.findByLogin(login);
+        UserEntity entity = UserRepository.class.cast(this.repository).findByLogin(login);
 
         if (entity == null) {
             throw new EntityNotFoundException("user with the login : " + login + " not found");
@@ -99,5 +102,9 @@ public class UserService {
 
 
         return entity;
+    }
+
+    private boolean isExist(String login) {
+        return UserRepository.class.cast(this.repository).findByLogin(login) != null;
     }
 }
