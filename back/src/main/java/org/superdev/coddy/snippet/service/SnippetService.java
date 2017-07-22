@@ -5,14 +5,19 @@ import org.springframework.stereotype.Service;
 import org.superdev.coddy.snippet.elasticsearch.dao.SnippetDao;
 import org.superdev.coddy.snippet.elasticsearch.entity.SnippetEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class SnippetService {
 
     @Autowired
     private SnippetDao snippetDao;
 
-    public Iterable<SnippetEntity> getSnippets() {
-        return snippetDao.findAll();
+    public List<SnippetEntity> getSnippets() {
+        List<SnippetEntity> results = new ArrayList<>();
+        snippetDao.findAll().forEach(results::add);
+        return results;
     }
 
     public SnippetEntity getSnippet(String id) {
