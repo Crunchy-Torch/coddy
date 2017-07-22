@@ -2,9 +2,13 @@ package org.superdev.coddy.user.service;
 
 
 import io.jsonwebtoken.*;
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.superdev.coddy.application.utils.AppUtils;
 import org.superdev.coddy.user.data.IUser;
 import org.superdev.coddy.user.data.JWTPrincipal;
 import org.superdev.coddy.user.data.Token;
@@ -30,6 +34,12 @@ public class JWTService {
     private static final byte[] DEFAULT_JWT_SECRET = SecurityUtils.generateSecret();
 
     private static final String JWT_TOKEN_ERROR = "Invalid JWT token";
+
+    @Value("${" + AppUtils.JWT_SECRET + ":}")
+    private byte[] jwtSecret;
+
+    @Value("${" + AppUtils.JWT_SESSION_TIMEOUT_MINUTE + ":}")
+    private String jwtTimeOut;
 
     /**
      * This method will generate the token with this payload :
@@ -76,9 +86,15 @@ public class JWTService {
      */
     public JWTPrincipal validateToken(String token) {
 
+        byte[] secret = DEFAULT_JWT_SECRET;
+
+        if (!ArrayUtils.isEmpty(this.jwtSecret)) {
+            secret = this.jwtSecret;
+        }
+
         try {
             Jws<Claims> parseClaimsJws = Jwts.parser()
-                    .setSigningKey(JWTService.DEFAULT_JWT_SECRET)
+                    .setSigningKey(secret)
                     .parseClaimsJws(token);
             this.validateToken(parseClaimsJws);
 
@@ -135,15 +151,26 @@ public class JWTService {
 
     private Token generateToken(Map<String, Object> claims, Date notBefore) {
 
+        byte[] secret = DEFAULT_JWT_SECRET;
 
-        LocalDateTime expiration = LocalDateTime.now().plusMinutes(JWTService.DEFAULT_JWT_SESSION_TIMEOUT_MINUTE);
+        if (!ArrayUtils.isEmpty(this.jwtSecret)) {
+            secret = this.jwtSecret;
+        }
+
+        int sessionExpireMinutes = DEFAULT_JWT_SESSION_TIMEOUT_MINUTE;
+
+        if (NumberUtils.isDigits(this.jwtTimeOut)) {
+            sessionExpireMinutes = Integer.parseInt(this.jwtTimeOut);
+        }
+
+        LocalDateTime expiration = LocalDateTime.now().plusMinutes(sessionExpireMinutes);
 
         return new Token(Jwts.builder()
                 .setClaims(claims)
                 .setNotBefore(notBefore)
                 .setExpiration(Date.from(expiration.atZone(ZoneId.systemDefault()).toInstant()))
                 .compressWith(CompressionCodecs.DEFLATE)
-                .signWith(SignatureAlgorithm.HS512, JWTService.DEFAULT_JWT_SECRET)
+                .signWith(SignatureAlgorithm.HS512, secret)
                 .compact());
     }
 
