@@ -13,8 +13,6 @@ import org.superdev.coddy.user.elasticsearch.repository.UserRepository;
 import org.superdev.coddy.user.exception.AuthenticationException;
 import org.superdev.coddy.user.utils.SecurityUtils;
 
-import java.util.List;
-
 @Service
 public class UserService extends AbstractService<UserEntity> {
 

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.superdev.coddy.user.data.Credential;
 import org.superdev.coddy.user.data.Token;
 import org.superdev.coddy.user.elasticsearch.entity.UserEntity;
+import org.superdev.coddy.user.filter.AuthorizationFilter;
 import org.superdev.coddy.user.service.UserService;
 
 import javax.ws.rs.*;
@@ -67,6 +68,7 @@ public class User {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{login}")
+    @AuthorizationFilter
     public void delete(@PathParam("login") final String login) {
         this.service.delete(login);
     }
@@ -74,6 +76,7 @@ public class User {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @AuthorizationFilter
     public List<UserEntity> getUsers(@DefaultValue("0") @QueryParam("from") final int from,
                                      @DefaultValue("10") @QueryParam("size") final int size) {
         return this.service.getEntity(from, size);
@@ -88,6 +91,7 @@ public class User {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{login}")
+    @AuthorizationFilter
     public UserEntity getUserByLogin(@PathParam("login") final String login) {
         return this.service.getUserByLogin(login);
     }
