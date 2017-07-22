@@ -28,7 +28,7 @@ public class SnippetEntity implements Serializable {
     private LanguageEntity language;
 
     @Field(type = FieldType.String)
-    private String[] keywords;
+    private List<String> keywords;
 
     @Field(type = FieldType.String)
     private String content;
@@ -82,11 +82,11 @@ public class SnippetEntity implements Serializable {
         this.language = language;
     }
 
-    public String[] getKeywords() {
+    public List<String> getKeywords() {
         return keywords;
     }
 
-    public void setKeywords(String[] keywords) {
+    public void setKeywords(List<String> keywords) {
         this.keywords = keywords;
     }
 
