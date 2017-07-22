@@ -6,6 +6,7 @@ import org.superdev.coddy.application.api.Hello;
 import org.superdev.coddy.application.exception.mapper.EntityNotFoundMapper;
 import org.superdev.coddy.application.exception.mapper.ExceptMapper;
 import org.superdev.coddy.application.exception.mapper.NotFoundMapper;
+import org.superdev.coddy.snippet.api.Snippet;
 import org.superdev.coddy.user.api.User;
 import org.superdev.coddy.application.exception.mapper.EntityExistsMapper;
 import org.superdev.coddy.user.exception.mapper.AuthenticationMapper;
@@ -24,6 +25,7 @@ public class JerseyConfig extends ResourceConfig {
         // register api endpoint
         register(Hello.class);
         register(User.class);
+        register(Snippet.class);
 
         //register mapper
         // user mapper

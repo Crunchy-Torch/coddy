@@ -1,0 +1,82 @@
+.masthead.segment {
+    min-height: 100%;
+    padding: 1em 0em;
+    background-color: #1d2626;
+    background-position: center;
+}
+
+.ui.text.container {
+    margin-top: 5em;
+}
+
+.icon.no.margin {
+    margin-right: 0 !important;
+}
+
+i.icon.code:before {
+    margin-left: -3px;
+}
+
+.field {
+    margin-bottom: 1em;
+}
+
+.column {
+    max-width: 450px;
+}
+
+.transparent.button {
+    border: none;
+    background-color: transparent;
+    color: white;
+}
+
+.transparent.button:focus {
+    outline: none;
+}
+
+.padding.segment {
+    padding: 5em 0 5em 0;
+}
+
+.image.logo {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.image.logo + .image.logo {
+    margin-left: 1em;
+}
+
+.bounce {
+  -moz-animation: bounce 2s infinite;
+  -webkit-animation: bounce 2s infinite;
+  animation: bounce 2s infinite;
+}
+
+i.big.icon {
+    font-size: 3em;
+}
+
+.image.segment {
+    background-repeat: no-repeat;
+}
+
+.scroll.button.container {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+}
+
+.scroll.button.container > .align {
+    position: relative;
+    left: -50%;
+}
+
+@media only screen and (max-width: 700px) {
+
+    .masthead.segment {
+        min-height: 250px;
+        padding: 1em 0em;
+    }
+}

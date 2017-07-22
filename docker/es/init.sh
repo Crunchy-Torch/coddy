@@ -4,6 +4,7 @@ ES_HOST=localhost
 ES_PORT=9200
 
 ACCOUNT_INDEX=account
+CONTENT_INDEX=content
 
 
 function populateIndex(){
@@ -13,6 +14,7 @@ function populateIndex(){
         echo "index ${local_index} exists, push corresponding data in this index"
 
         cd ./data/ && curl -XPOST http://${ES_HOST}:${ES_PORT}/_bulk --data-binary @${local_index}.bulk
+        cd ..
     else
         echo  "index ${local_index} doesn't exist, failed to push corresponding data in this index. Maybe you should considerate to create it with the command ./init.sh -c or ./init.sh --create"
         exit 1;
@@ -22,6 +24,7 @@ function populateIndex(){
 
 function populate {
     populateIndex ${ACCOUNT_INDEX}
+    populateIndex ${CONTENT_INDEX}
 }
 
 function createIndex {
