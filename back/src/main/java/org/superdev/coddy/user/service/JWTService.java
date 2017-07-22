@@ -29,6 +29,8 @@ public class JWTService {
 
     private static final byte[] DEFAULT_JWT_SECRET = SecurityUtils.generateSecret();
 
+    private static final String JWT_TOKEN_ERROR = "Invalid JWT token";
+
     /**
      * This method will generate the token with this payload :
      * <p>
@@ -76,11 +78,9 @@ public class JWTService {
 
         try {
             Jws<Claims> parseClaimsJws = Jwts.parser()
-                    .requireSubject(SecurityUtils.PayloadFields.LOGIN.getName())
-                    .requireSubject(SecurityUtils.PayloadFields.PERMISSIONS.getName())
-                    .requireSubject(SecurityUtils.PayloadFields.EXPIRATION.getName())
-                    .requireSubject(SecurityUtils.PayloadFields.NOT_BEFORE.getName())
-                    .setSigningKey(JWTService.DEFAULT_JWT_SECRET).parseClaimsJws(token);
+                    .setSigningKey(JWTService.DEFAULT_JWT_SECRET)
+                    .parseClaimsJws(token);
+            this.validateToken(parseClaimsJws);
 
             final String login = (String) parseClaimsJws.getBody().get(SecurityUtils.PayloadFields.LOGIN.getName());
             final String firstname = (String) parseClaimsJws.getBody().get(SecurityUtils.PayloadFields.FIRST_NAME.getName());
@@ -94,7 +94,7 @@ public class JWTService {
             LOGGER.debug(ex.getMessage(), ex);
             LOGGER.info("the current token {} is not valid", token);
 
-            throw new ForbiddenException("Invalid JWT token: " + token);
+            throw new ForbiddenException(JWTService.JWT_TOKEN_ERROR);
         } catch (ExpiredJwtException ex) {
             LOGGER.debug(ex.getMessage(), ex);
             LOGGER.debug("token session expired");
@@ -103,6 +103,34 @@ public class JWTService {
                     "Unauthorized: token expired");
         }
 
+    }
+
+    private void validateToken(Jws<Claims> claims) {
+
+        final String[] keys = new String[]{
+                SecurityUtils.PayloadFields.LOGIN.getName(),
+                SecurityUtils.PayloadFields.FIRST_NAME.getName(),
+                SecurityUtils.PayloadFields.LAST_NAME.getName(),
+                SecurityUtils.PayloadFields.EXPIRATION.getName(),
+                SecurityUtils.PayloadFields.NOT_BEFORE.getName(),
+                SecurityUtils.PayloadFields.PERMISSIONS.getName(),
+        };
+
+        this.validateKeys(claims, keys);
+    }
+
+    private void validateKeys(final Jws<Claims> claims, final String[] keys) {
+        for (String key : keys) {
+            validateKey(claims, key);
+        }
+    }
+
+    private void validateKey(final Jws<Claims> claims, final String key) {
+        if (!(claims.getBody().containsKey(key))) {
+            LOGGER.debug("In the body of the current token, the key {} doesn't match the type list", key);
+
+            throw new ForbiddenException(JWTService.JWT_TOKEN_ERROR);
+        }
     }
 
     private Token generateToken(Map<String, Object> claims, Date notBefore) {
@@ -114,6 +142,7 @@ public class JWTService {
                 .setClaims(claims)
                 .setNotBefore(notBefore)
                 .setExpiration(Date.from(expiration.atZone(ZoneId.systemDefault()).toInstant()))
+                .compressWith(CompressionCodecs.DEFLATE)
                 .signWith(SignatureAlgorithm.HS512, JWTService.DEFAULT_JWT_SECRET)
                 .compact());
     }

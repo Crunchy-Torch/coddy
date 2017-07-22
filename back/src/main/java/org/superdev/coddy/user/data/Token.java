@@ -8,6 +8,10 @@ public class Token implements Serializable {
 
     private String token;
 
+    public Token(){
+        // this blank constructor is needed by the library jackson
+    }
+
     public Token(String token) {
         this.token = token;
     }
