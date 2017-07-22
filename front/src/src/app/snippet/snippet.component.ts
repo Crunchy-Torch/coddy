@@ -42,7 +42,7 @@ export class SnippetComponent implements OnInit {
   }
 
   linkTypeClass(linkType: LinkType): string {
-
+    
     switch(linkType) {
       case LinkType.DOCUMENTATION: return 'book icon';
       case LinkType.STACK_OVERFLOW: return 'stack overflow icon';

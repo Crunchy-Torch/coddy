@@ -22,7 +22,7 @@ export class SnippetService extends BaseService {
 
     getSnippet(id: string): Observable<Snippet> {
         return this.http.get(serverUrl + this.snippetEndpoint + '/' + id)
-            .map(this.extractObject)
+            .map(res => Snippet.toObject(this.extractObject(res)))
             .catch(this.extractError);
     }
 }
