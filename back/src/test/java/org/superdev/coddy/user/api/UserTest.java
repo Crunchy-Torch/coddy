@@ -62,17 +62,33 @@ public class UserTest {
 
     @Test
     public void testGetUserWithToken() throws IOException {
-        Credential credential = new Credential("ciceron", "tutu".toCharArray());
-        Token token = restTemplate.postForEntity(TestUtils.getUrl(USER_ENDPOINT + "/auth"), credential, Token.class).getBody();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(javax.ws.rs.core.HttpHeaders.AUTHORIZATION, token.getToken());
-        headers.add(javax.ws.rs.core.HttpHeaders.CONTENT_TYPE, javax.ws.rs.core.MediaType.APPLICATION_JSON);
-        HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+        HttpEntity<String> entity = getHttpEntityWithToken("ciceron", "tutu");
 
         ResponseEntity<UserEntity> response = restTemplate.exchange(TestUtils.getUrl(USER_ENDPOINT + "/ciceron"), HttpMethod.GET, entity, UserEntity.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
         MatcherAssert.assertThat(response.getBody(), Matchers.sameBeanAs(TestUtils.getObjecFromJson("user/getUserWithTokenExpected.json", UserEntity.class)));
+    }
+
+    @Test
+    public void testDeleteUserWithToken() {
+        final String login = "ciceron";
+        HttpEntity<String> entity = getHttpEntityWithToken(login, "tutu");
+        ResponseEntity<String> response = restTemplate.exchange(TestUtils.getUrl(USER_ENDPOINT + "/ciceron"), HttpMethod.DELETE, entity, String.class);
+
+        Assert.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+
+        // check if the user is effectively deleted.
+        UserEntity user = repository.findByLogin(login);
+        Assert.assertEquals(user, null);
+    }
+
+    private HttpEntity<String> getHttpEntityWithToken(final String login, final String password) {
+        Credential credential = new Credential(login, password.toCharArray());
+        Token token = restTemplate.postForEntity(TestUtils.getUrl(USER_ENDPOINT + "/auth"), credential, Token.class).getBody();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(javax.ws.rs.core.HttpHeaders.AUTHORIZATION, token.getToken());
+        headers.add(javax.ws.rs.core.HttpHeaders.CONTENT_TYPE, javax.ws.rs.core.MediaType.APPLICATION_JSON);
+        return new HttpEntity<>("parameters", headers);
     }
 }
