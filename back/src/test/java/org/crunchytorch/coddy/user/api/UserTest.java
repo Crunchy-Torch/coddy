@@ -71,6 +71,17 @@ public class UserTest {
         MatcherAssert.assertThat(response.getBody(), Matchers.sameBeanAs(TestUtils.getObjecFromJson("user/getUserWithTokenExpected.json", UserEntity.class)));
     }
 
+    public void testCreateUser() {
+        final String login = "perlinpinpin";
+        Credential credential = new Credential(login, "ratata".toCharArray());
+        ResponseEntity<UserEntity> response = restTemplate.postForEntity(TestUtils.getUrl(USER_ENDPOINT), credential, UserEntity.class);
+
+        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assert.assertEquals(login, response.getBody().getLogin());
+        // test that the current user is effectively in the database
+        Assert.assertEquals(this.repository.findByLogin(login).getId(),response.getBody().getId());
+    }
+
     @Test
     public void testDeleteUserWithToken() {
         final String login = "ciceron";
