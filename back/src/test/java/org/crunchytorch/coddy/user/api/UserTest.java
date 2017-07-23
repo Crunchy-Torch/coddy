@@ -3,6 +3,7 @@ package org.crunchytorch.coddy.user.api;
 
 import com.shazam.shazamcrest.MatcherAssert;
 import com.shazam.shazamcrest.matcher.Matchers;
+import org.apache.commons.lang.StringUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -83,12 +84,54 @@ public class UserTest {
         Assert.assertEquals(user, null);
     }
 
+    @Test
+    public void testDeleteWithoutToken() {
+        ResponseEntity<Response> response =
+                restTemplate.exchange(TestUtils.getUrl(USER_ENDPOINT + "/napoleon"), HttpMethod.DELETE, null, Response.class);
+
+        Response expected = new Response("HTTP 401 Unauthorized");
+
+        Assert.assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+        MatcherAssert.assertThat(response.getBody(), Matchers.sameBeanAs(expected));
+    }
+
+    @Test
+    public void testAuthWithCorrectUser() {
+        ResponseEntity<Token> response = this.auth("ciceron", "tutu", Token.class);
+
+        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assert.assertEquals(true, response.getBody() != null && StringUtils.isNotEmpty(response.getBody().getToken()));
+    }
+
+    @Test
+    public void testAuthWithWrongCrendential() {
+        ResponseEntity<Response> response = this.auth("ciceron", "toto", Response.class);
+        Response expected = new Response(Response.WRONG_CREDENTIAL);
+
+        Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        MatcherAssert.assertThat(response.getBody(), Matchers.sameBeanAs(expected));
+    }
+
+    @Test
+    public void testAuthWithNonExistantUser() {
+        ResponseEntity<Response> response = this.auth("perlinpinpin", "toto", Response.class);
+        Response expected = new Response(Response.WRONG_CREDENTIAL);
+
+        Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        MatcherAssert.assertThat(response.getBody(), Matchers.sameBeanAs(expected));
+    }
+
     private HttpEntity<String> getHttpEntityWithToken(final String login, final String password) {
-        Credential credential = new Credential(login, password.toCharArray());
-        Token token = restTemplate.postForEntity(TestUtils.getUrl(USER_ENDPOINT + "/auth"), credential, Token.class).getBody();
+        Token token = this.auth(login, password, Token.class).getBody();
         HttpHeaders headers = new HttpHeaders();
         headers.add(javax.ws.rs.core.HttpHeaders.AUTHORIZATION, token.getToken());
         headers.add(javax.ws.rs.core.HttpHeaders.CONTENT_TYPE, javax.ws.rs.core.MediaType.APPLICATION_JSON);
         return new HttpEntity<>("parameters", headers);
+    }
+
+    private <T> ResponseEntity<T> auth(final String login, final String password, Class<T> responseType) {
+        Credential credential = new Credential(login, password.toCharArray());
+
+        return restTemplate.postForEntity(TestUtils.getUrl(USER_ENDPOINT + "/auth"), credential, responseType);
     }
 }
