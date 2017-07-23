@@ -15,7 +15,7 @@ public class ExceptMapper implements ExceptionMapper<Exception> {
 
     @Override
     public Response toResponse(Exception e) {
-        LOGGER.info(e.getMessage(), e);
+        LOGGER.debug(e.getMessage(), e);
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                 .entity(new org.crunchytorch.coddy.application.data.Response(org.crunchytorch.coddy.application.data.Response.INTERNAL_ERROR))
                 .type(MediaType.APPLICATION_JSON)
