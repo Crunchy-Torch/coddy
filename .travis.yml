@@ -1,0 +1,15 @@
+language: java
+
+jdk:
+  - oraclejdk8
+  - openjdk8
+
+before_install:
+  - cd back && mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+script:
+  - cd back && mvn test -B
+
+notifications:
+  email:
+    on_failure: change
