@@ -1,0 +1,18 @@
+
+
+${AnsiColor.BLUE}  ______    ______   _______   _______   __      __
+ /      \  /      \ /       \ /       \ /  \    /  |
+/$$$$$$  |/$$$$$$  |$$$$$$$  |$$$$$$$  |$$  \  /$$/
+$$ |  $$/ $$ |  $$ |$$ |  $$ |$$ |  $$ | $$  \/$$/
+$$ |      $$ |  $$ |$$ |  $$ |$$ |  $$ |  $$  $$/
+$$ |   __ $$ |  $$ |$$ |  $$ |$$ |  $$ |   $$$$/
+$$ \__/  |$$ \__$$ |$$ |__$$ |$$ |__$$ |    $$ |
+$$    $$/ $$    $$/ $$    $$/ $$    $$/     $$ |
+ $$$$$$/   $$$$$$/  $$$$$$$/  $$$$$$$/      $$/
+
+
+${AnsiColor.YELLOW}
+
+.: CODDY :. ${application.formatted-version} ${AnsiColor.DEFAULT} Running Spring Boot ${AnsiColor.CYAN} ${spring-boot.version}
+
+${AnsiColor.DEFAULT}
