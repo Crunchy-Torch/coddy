@@ -36,6 +36,7 @@ public class JerseyConfig extends ResourceConfig {
         register(NotSupportedMapper.class);
         register(EntityExistsMapper.class);
         register(EntityNotFoundMapper.class);
+        register(NotAllowedMapper.class);
 
         //register request and response filter
         register(AuthorizationRequestFilter.class);
