@@ -4,6 +4,7 @@ package org.crunchytorch.coddy.user.api;
 import com.shazam.shazamcrest.MatcherAssert;
 import com.shazam.shazamcrest.matcher.Matchers;
 import org.apache.commons.lang.StringUtils;
+import org.crunchytorch.coddy.user.data.SimpleUser;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -65,21 +66,21 @@ public class UserTest {
     public void testGetUserWithToken() throws IOException {
         HttpEntity<String> entity = getHttpEntityWithToken("ciceron", "tutu");
 
-        ResponseEntity<UserEntity> response = restTemplate.exchange(TestUtils.getUrl(USER_ENDPOINT + "/ciceron"), HttpMethod.GET, entity, UserEntity.class);
+        ResponseEntity<SimpleUser> response = restTemplate.exchange(TestUtils.getUrl(USER_ENDPOINT + "/ciceron"), HttpMethod.GET, entity, SimpleUser.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        MatcherAssert.assertThat(response.getBody(), Matchers.sameBeanAs(TestUtils.getObjecFromJson("user/getUserWithTokenExpected.json", UserEntity.class)));
+        MatcherAssert.assertThat(response.getBody(), Matchers.sameBeanAs(TestUtils.getObjecFromJson("user/getUserWithTokenExpected.json", SimpleUser.class)));
     }
 
     public void testCreateUser() {
         final String login = "perlinpinpin";
         Credential credential = new Credential(login, "ratata".toCharArray());
-        ResponseEntity<UserEntity> response = restTemplate.postForEntity(TestUtils.getUrl(USER_ENDPOINT), credential, UserEntity.class);
+        ResponseEntity<SimpleUser> response = restTemplate.postForEntity(TestUtils.getUrl(USER_ENDPOINT), credential, SimpleUser.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assert.assertEquals(login, response.getBody().getLogin());
         // test that the current user is effectively in the database
-        Assert.assertEquals(this.repository.findByLogin(login).getId(), response.getBody().getId());
+        Assert.assertEquals(this.repository.findByLogin(login).getLogin(), response.getBody().getLogin());
     }
 
     @Test
