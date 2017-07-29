@@ -79,7 +79,7 @@ public class UserTest {
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assert.assertEquals(login, response.getBody().getLogin());
         // test that the current user is effectively in the database
-        Assert.assertEquals(this.repository.findByLogin(login).getId(),response.getBody().getId());
+        Assert.assertEquals(this.repository.findByLogin(login).getId(), response.getBody().getId());
     }
 
     @Test
@@ -93,6 +93,34 @@ public class UserTest {
         // check if the user is effectively deleted.
         UserEntity user = repository.findByLogin(login);
         Assert.assertEquals(user, null);
+    }
+
+    @Test
+    public void testDeleteUserWithAdminPermission(){
+        final String login = "gulp";
+        final String userToDelete = "ciceron";
+        HttpEntity<String> entity = getHttpEntityWithToken(login, "toto");
+        ResponseEntity<String> response = restTemplate.exchange(TestUtils.getUrl(USER_ENDPOINT + "/" + userToDelete), HttpMethod.DELETE, entity, String.class);
+
+        Assert.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+
+        // check if the user is effectively deleted.
+        UserEntity user = repository.findByLogin(userToDelete);
+        Assert.assertEquals(user, null);
+    }
+
+    @Test
+    public void testDeleteUserUnauthorized() {
+        final String login = "napoleon";
+        final String userToDelete = "ciceron";
+        HttpEntity<String> entity = getHttpEntityWithToken(login, "toto");
+        ResponseEntity<String> response = restTemplate.exchange(TestUtils.getUrl(USER_ENDPOINT + "/" + userToDelete), HttpMethod.DELETE, entity, String.class);
+
+        Assert.assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+
+        // check if the user is effectively deleted.
+        UserEntity user = repository.findByLogin(userToDelete);
+        Assert.assertTrue(user != null);
     }
 
     @Test

@@ -2,5 +2,8 @@
   "id": "AV1qXmad6eSyqwhP6O-2",
   "login": "ciceron",
   "firstName": "Marcus",
-  "lastName": "Cicero"
+  "lastName": "Cicero",
+  "permissions": [
+    "personal_account"
+  ]
 }
