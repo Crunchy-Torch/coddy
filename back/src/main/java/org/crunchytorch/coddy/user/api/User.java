@@ -1,7 +1,9 @@
 package org.crunchytorch.coddy.user.api;
 
+import org.crunchytorch.coddy.application.data.ApiName;
 import org.crunchytorch.coddy.application.exception.EntityExistsException;
 import org.crunchytorch.coddy.application.exception.EntityNotFoundException;
+import org.crunchytorch.coddy.user.data.Permission;
 import org.crunchytorch.coddy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,6 +12,7 @@ import org.crunchytorch.coddy.user.data.Token;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.crunchytorch.coddy.user.filter.AuthorizationFilter;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -19,7 +22,7 @@ import java.util.List;
  * All the business code is in the service part, especially in the class {@link UserService}.
  */
 @Component
-@Path("/user")
+@Path(ApiName.USER)
 public class User {
 
     @Autowired
@@ -69,9 +72,10 @@ public class User {
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{login}")
+    @Path("{" + ApiName.USER_LOGIN_PATH_PARAM + "}")
     @AuthorizationFilter
-    public void delete(@PathParam("login") final String login) {
+    @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
+    public void delete(@PathParam(ApiName.USER_LOGIN_PATH_PARAM) final String login) {
         this.service.delete(login);
     }
 
@@ -79,6 +83,7 @@ public class User {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @AuthorizationFilter
+    @RolesAllowed(Permission.ADMIN)
     public List<UserEntity> getUsers(@DefaultValue("0") @QueryParam("from") final int from,
                                      @DefaultValue("10") @QueryParam("size") final int size) {
         return this.service.getEntity(from, size);
@@ -92,9 +97,10 @@ public class User {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{login}")
+    @Path("{" + ApiName.USER_LOGIN_PATH_PARAM + "}")
     @AuthorizationFilter
-    public UserEntity getUserByLogin(@PathParam("login") final String login) {
+    @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
+    public UserEntity getUserByLogin(@PathParam(ApiName.USER_LOGIN_PATH_PARAM) final String login) {
         return this.service.getUserByLogin(login);
     }
 }

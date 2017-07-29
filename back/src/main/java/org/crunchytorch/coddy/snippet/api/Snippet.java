@@ -1,5 +1,6 @@
 package org.crunchytorch.coddy.snippet.api;
 
+import org.crunchytorch.coddy.application.data.ApiName;
 import org.crunchytorch.coddy.snippet.service.SnippetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Component
-@Path("/snippet")
+@Path(ApiName.SNIPPET)
 public class Snippet {
 
     @Autowired
