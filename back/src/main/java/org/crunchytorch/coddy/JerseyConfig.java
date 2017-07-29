@@ -1,6 +1,7 @@
 package org.crunchytorch.coddy;
 
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.springframework.stereotype.Component;
 import org.crunchytorch.coddy.application.exception.mapper.*;
 import org.crunchytorch.coddy.user.api.User;
@@ -24,12 +25,16 @@ public class JerseyConfig extends ResourceConfig {
         register(User.class);
         register(Snippet.class);
 
+        //security
+        register(RolesAllowedDynamicFeature.class);
+
         //register mapper
         // user mapper
         register(SecurityManager.class);
         register(AuthenticationMapper.class);
         register(ForbiddenMapper.class);
         register(NotAuthorizedMapper.class);
+
         // generic mapper
         register(ExceptMapper.class);
         register(NotFoundMapper.class);
