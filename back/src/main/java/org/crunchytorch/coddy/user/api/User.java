@@ -3,13 +3,10 @@ package org.crunchytorch.coddy.user.api;
 import org.crunchytorch.coddy.application.data.ApiName;
 import org.crunchytorch.coddy.application.exception.EntityExistsException;
 import org.crunchytorch.coddy.application.exception.EntityNotFoundException;
-import org.crunchytorch.coddy.user.data.Permission;
-import org.crunchytorch.coddy.user.data.SimpleUser;
+import org.crunchytorch.coddy.user.data.*;
 import org.crunchytorch.coddy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.crunchytorch.coddy.user.data.Credential;
-import org.crunchytorch.coddy.user.data.Token;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.crunchytorch.coddy.user.filter.AuthorizationFilter;
 
@@ -62,6 +59,17 @@ public class User {
     @Consumes(MediaType.APPLICATION_JSON)
     public SimpleUser create(Credential credential) {
         return this.service.create(credential);
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{" + ApiName.USER_LOGIN_PATH_PARAM + "}")
+    @AuthorizationFilter
+    @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
+    public SimpleUser update(@PathParam(ApiName.USER_LOGIN_PATH_PARAM) final String login, final UpdateUser user) {
+        user.setLogin(login);
+        return this.service.update(user);
     }
 
     /**

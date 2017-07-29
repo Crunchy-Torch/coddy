@@ -3,6 +3,7 @@ package org.crunchytorch.coddy.user.elasticsearch.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.crunchytorch.coddy.user.data.IUser;
+import org.crunchytorch.coddy.user.utils.SecurityUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 
@@ -61,6 +62,11 @@ public class UserEntity implements Serializable, IUser {
 
     public void setPassword(byte[] password) {
         this.password = password != null ? password.clone() : null;
+    }
+
+    public void generatePasswordAndSalt(char[] password){
+        this.salt = SecurityUtils.generateSalt();
+        this.password = SecurityUtils.hash(password, this.salt);
     }
 
     @Override
