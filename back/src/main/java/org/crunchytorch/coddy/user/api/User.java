@@ -4,6 +4,7 @@ import org.crunchytorch.coddy.application.data.ApiName;
 import org.crunchytorch.coddy.application.exception.EntityExistsException;
 import org.crunchytorch.coddy.application.exception.EntityNotFoundException;
 import org.crunchytorch.coddy.user.data.Permission;
+import org.crunchytorch.coddy.user.data.SimpleUser;
 import org.crunchytorch.coddy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -59,7 +60,7 @@ public class User {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public UserEntity create(Credential credential) {
+    public SimpleUser create(Credential credential) {
         return this.service.create(credential);
     }
 
@@ -100,7 +101,7 @@ public class User {
     @Path("{" + ApiName.USER_LOGIN_PATH_PARAM + "}")
     @AuthorizationFilter
     @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
-    public UserEntity getUserByLogin(@PathParam(ApiName.USER_LOGIN_PATH_PARAM) final String login) {
+    public SimpleUser getUserByLogin(@PathParam(ApiName.USER_LOGIN_PATH_PARAM) final String login) {
         return this.service.getUserByLogin(login);
     }
 }
