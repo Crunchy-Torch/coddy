@@ -72,6 +72,7 @@ public class UserTest {
         MatcherAssert.assertThat(response.getBody(), Matchers.sameBeanAs(TestUtils.getObjecFromJson("user/getUserWithTokenExpected.json", SimpleUser.class)));
     }
 
+    @Test
     public void testCreateUser() {
         final String login = "perlinpinpin";
         Credential credential = new Credential(login, "ratata".toCharArray());
