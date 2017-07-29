@@ -54,6 +54,6 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
         JWTPrincipal principal = this.jwtService.validateToken(token);
 
         String scheme = requestContext.getUriInfo().getRequestUri().getScheme();
-        requestContext.setSecurityContext(new JWTSecurityContext(principal, scheme));
+        requestContext.setSecurityContext(new JWTSecurityContext(principal, scheme, requestContext.getUriInfo().getPathParameters()));
     }
 }
