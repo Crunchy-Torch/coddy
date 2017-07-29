@@ -13,6 +13,7 @@ import org.crunchytorch.coddy.user.filter.AuthorizationFilter;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -111,5 +112,18 @@ public class User {
     @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
     public SimpleUser getUserByLogin(@PathParam(ApiName.USER_LOGIN_PATH_PARAM) final String login) {
         return this.service.getUserByLogin(login);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/permission")
+    public List<String> getAvailablePermissions(){
+        return new ArrayList<String>(){{
+            add(Permission.ADMIN);
+            add(Permission.MODERATION);
+            add(Permission.PERSO_ACCOUNT);
+            add(Permission.PERSO_SNIPPET);
+        }};
     }
 }
