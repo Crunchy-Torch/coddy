@@ -1,0 +1,25 @@
+[
+  {
+    "id": "AV1p0NP4geDFwrWOOwkZ",
+    "login": "napoleon",
+    "email": "napoleon.bonaparte@emperor.fr",
+    "firstName": "Napoléon",
+    "lastName": "Bonaparte",
+    "password": "l8Re75RjKWTF5X3wfzBG5zs1DfrVE4U7cIKQKsWvUhUnq8LyOSNwESC7rXenggzEml6Bevn1N1RPZ/4hH2Cz5A==",
+    "salt": "jwW/7WuchDTP2fQYC1p5brpZEQdI4rRiHmAWJrhmVOg="
+  },
+  {
+    "id": "AV1qXmad6eSyqwhP6O-2",
+    "login": "ciceron",
+    "firstName": "Marcus",
+    "lastName": "Cicero",
+    "password": "MBcxOlqqArXC/pTGxqgBACkzw5tBseZVIjn5qziAnlXQ4ysu18FaUYswqwgUzmnH3yqcFtNJxhDiNbLYFPp4CA==",
+    "salt": "cKJlOx8I/bvTPRHgZ3l81xT/4mQ3WmN2b4giyZGAYiQ="
+  },
+  {
+    "id": "AV1qXfWP6eSyqwhP6O-1",
+    "login": "gulp",
+    "password": "nID7XauDOqujnAscKUaIU5M6RdKu4yLCP1vFxqFn19UVfNwhxt3QbPIay04c5QEkB7oDw7ApXPvMnqo8+4kWUA==",
+    "salt": "WLDzwSHy+lZeDaL/9zfHPzHaNbjonRBrrMxtSZGf1wM="
+  }
+]
