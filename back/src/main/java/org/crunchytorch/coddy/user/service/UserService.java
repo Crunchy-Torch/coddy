@@ -1,6 +1,9 @@
 package org.crunchytorch.coddy.user.service;
 
-import org.crunchytorch.coddy.user.data.*;
+import org.crunchytorch.coddy.user.data.in.Credential;
+import org.crunchytorch.coddy.user.data.in.UpdateUser;
+import org.crunchytorch.coddy.user.data.out.SimpleUser;
+import org.crunchytorch.coddy.user.data.security.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.crunchytorch.coddy.application.data.Response;
@@ -13,7 +16,6 @@ import org.crunchytorch.coddy.user.exception.AuthenticationException;
 import org.crunchytorch.coddy.user.utils.SecurityUtils;
 
 import javax.ws.rs.BadRequestException;
-import java.util.ArrayList;
 
 @Service
 public class UserService extends AbstractService<UserEntity> {
@@ -51,33 +53,27 @@ public class UserService extends AbstractService<UserEntity> {
     }
 
     /**
-     * This method will create the {@link UserEntity user} from the {@link Credential credentials}.
+     * This method will create the {@link UserEntity user} from the {@link UpdateUser credentials}.
      * Before creating it, the given password will be salted and hashed.
      *
-     * @param credential the personnal information needed to create the associated user
+     * @param user the personal information needed to create the associated user
      * @return the {@link SimpleUser user} created
      * @throws EntityExistsException if the given user already exists
      * @throws BadRequestException   if the given user has no login
      */
-    public SimpleUser create(Credential credential) {
+    public SimpleUser create(UpdateUser user) {
 
-        if (credential.getLogin() == null) {
-            throw new BadRequestException("login cannot be null");
+        if (user.getLogin() == null || user.getPassword() == null) {
+            throw new BadRequestException("login and password cannot be null");
         }
 
         // check if the current login already exist
-        if (this.isExist(credential.getLogin())) {
-            throw new EntityExistsException("user with login : " + credential.getLogin() + " already exists");
+        if (this.isExist(user.getLogin())) {
+            throw new EntityExistsException("user with login : " + user.getLogin() + " already exists");
         }
 
         //generate entity, hash and salt the password
-        UserEntity entity = new UserEntity();
-        entity.setLogin(credential.getLogin());
-        entity.generatePasswordAndSalt(credential.getPassword());
-        entity.setPermissions(new ArrayList<String>() {{
-            add(Permission.PERSO_ACCOUNT);
-            add(Permission.PERSO_SNIPPET);
-        }});
+        UserEntity entity = new UserEntity(user);
 
         return new SimpleUser(super.create(entity));
     }
@@ -89,7 +85,6 @@ public class UserService extends AbstractService<UserEntity> {
      * @throws BadRequestException     if the given user has no login
      */
     public SimpleUser update(UpdateUser user) {
-        UserEntity entity = new UserEntity();
 
         if (user.getLogin() == null) {
             throw new BadRequestException("login cannot be null");
@@ -97,21 +92,7 @@ public class UserService extends AbstractService<UserEntity> {
 
         UserEntity oldEntity = this.getUserEntityByLogin(user.getLogin());
 
-        // the following data cannot be modified
-        entity.setId(oldEntity.getId());
-        entity.setLogin(oldEntity.getLogin());
-        entity.setPermissions(oldEntity.getPermissions());
-
-        // now the rest of the data can be updated
-        if (user.getPassword() != null) {
-            entity.generatePasswordAndSalt(user.getPassword());
-        } else {
-            entity.setPassword(oldEntity.getPassword());
-            entity.setSalt(oldEntity.getSalt());
-        }
-
-        entity.setFirstName(user.getFirstName() != null ? user.getFirstName() : oldEntity.getFirstName());
-        entity.setLastName(user.getLastName() != null ? user.getLastName() : oldEntity.getLastName());
+        UserEntity entity = new UserEntity(user, oldEntity);
 
         return new SimpleUser(super.create(entity));
     }

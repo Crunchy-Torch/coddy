@@ -1,10 +1,10 @@
-package org.crunchytorch.coddy.user.data;
+package org.crunchytorch.coddy.user.data.out;
 
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 
 import java.util.List;
 
-public class SimpleUser implements IUser {
+public class SimpleUser {
 
     private String login;
     private String firstName;
@@ -24,17 +24,14 @@ public class SimpleUser implements IUser {
         this.permissions = entity.getPermissions();
     }
 
-    @Override
     public String getLogin() {
         return login;
     }
 
-    @Override
     public String getFirstName() {
         return firstName;
     }
 
-    @Override
     public String getLastName() {
         return lastName;
     }
@@ -43,7 +40,6 @@ public class SimpleUser implements IUser {
         return email;
     }
 
-    @Override
     public List<String> getPermissions() {
         return permissions;
     }
