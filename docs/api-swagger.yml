@@ -15,6 +15,27 @@ tags:
   description: "Operations about user"
 schemes:
 - "http"
+responses:
+  Unauthorized:
+    description: "access unauthorized"
+    schema:
+      $ref: "#/definitions/ApiErrorResponse"
+  Forbidden:
+    description: "access forbidden"
+    schema:
+      $ref: "#/definitions/ApiErrorResponse"
+  MethodNotAllowed:
+    description: "method not allowed"
+    schema:
+      $ref: "#/definitions/ApiErrorResponse"
+  UnsupportedMediaType:
+    description: "unsupported media type"
+    schema:
+      $ref: "#/definitions/ApiErrorResponse"
+  InternalError:
+    description: "internal error"
+    schema:
+      $ref: "#/definitions/ApiErrorResponse"
 paths:
   /user:
     post:
@@ -38,6 +59,16 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/SimpleUser"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        409:
+          description: "conflict, user already exists"
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
     get:
       tags:
       - "user"
@@ -71,13 +102,15 @@ paths:
           schema:
             $ref: "#/definitions/SimpleUserList"
         401:
-          description: "access unauthorized"
-          schema:
-            $ref: "#/definitions/ApiErrorResponse"
+          $ref: "#/responses/Unauthorized"
         403:
-          description: "access forbidden"
-          schema:
-            $ref: "#/definitions/ApiErrorResponse"
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
 
   /user/auth:
     post:
@@ -104,6 +137,12 @@ paths:
           description: "Invalid login/password supplied"
           schema:
             $ref: "#/definitions/ApiErrorResponse"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
   /user/{login}:
     get:
       tags:
@@ -130,17 +169,19 @@ paths:
           schema:
             $ref: "#/definitions/SimpleUser"
         401:
-          description: "access unauthorized"
-          schema:
-            $ref: "#/definitions/ApiErrorResponse"
+          $ref: "#/responses/Unauthorized"
         403:
-          description: "access forbidden"
-          schema:
-            $ref: "#/definitions/ApiErrorResponse"
+          $ref: "#/responses/Forbidden"
         404:
           schema:
             $ref: "#/definitions/ApiErrorResponse"
           description: "User not found"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
     put:
       tags:
       - "user"
@@ -176,17 +217,19 @@ paths:
           schema:
             $ref: "#/definitions/ApiErrorResponse"
         401:
-          description: "access unauthorized"
-          schema:
-            $ref: "#/definitions/ApiErrorResponse"
+          $ref: "#/responses/Unauthorized"
         403:
-          description: "access forbidden"
-          schema:
-            $ref: "#/definitions/ApiErrorResponse"
+          $ref: "#/responses/Forbidden"
         404:
           description: "User not found"
           schema:
             $ref: "#/definitions/ApiErrorResponse"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
     delete:
       tags:
       - "user"
@@ -208,23 +251,25 @@ paths:
         type: "string"
       responses:
         204:
-          description: "successful operation with no content"
+          description: "The resource was deleted successfully"
         400:
           description: "Invalid username supplied"
           schema:
             $ref: "#/definitions/ApiErrorResponse"
         401:
-          description: "access unauthorized"
-          schema:
-            $ref: "#/definitions/ApiErrorResponse"
+          $ref: "#/responses/Unauthorized"
         403:
-          description: "access forbidden"
-          schema:
-            $ref: "#/definitions/ApiErrorResponse"
+          $ref: "#/responses/Forbidden"
         404:
           description: "User not found"
           schema:
             $ref: "#/definitions/ApiErrorResponse"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
 definitions:
   Credential:
     type: "object"
