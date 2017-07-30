@@ -78,10 +78,10 @@ paths:
         description: "The login that needs to be fetched."
         required: true
         type: "string"
-      - name: "Authorization",
-        in: "header",
-        description: "the jwt token needed to authenticate the user and check permission",
-        required": true,
+      - name: "Authorization"
+        in: "header"
+        description: "the jwt token needed to authenticate the user and check permission"
+        required: true
         type: "string"
       responses:
         200:
@@ -106,10 +106,10 @@ paths:
         description: "name that need to be updated"
         required: true
         type: "string"
-      - name: "Authorization",
-        in: "header",
-        description: "the jwt token needed to authenticate the user and check permission",
-        required": true,
+      - name: "Authorization"
+        in: "header"
+        description: "the jwt token needed to authenticate the user and check permission"
+        required: true
         type: "string"
       - in: "body"
         name: "body"
@@ -130,8 +130,6 @@ paths:
           description: "User not found"
           schema:
             $ref: "#/definitions/ApiErrorResponse"
-      security:
-      - coddy_auth
     delete:
       tags:
       - "user"
@@ -146,10 +144,10 @@ paths:
         description: "The name that needs to be deleted"
         required: true
         type: "string"
-      - name: "Authorization",
-        in: "header",
-        description: "the jwt token needed to authenticate the user and check permission",
-        required": true,
+      - name: "Authorization"
+        in: "header"
+        description: "the jwt token needed to authenticate the user and check permission"
+        required: true
         type: "string"
       responses:
         204:
@@ -158,8 +156,6 @@ paths:
           description: "Invalid username supplied"
         404:
           description: "User not found"
-      security:
-      - coddy_auth
 definitions:
   Credential:
     type: "object"
