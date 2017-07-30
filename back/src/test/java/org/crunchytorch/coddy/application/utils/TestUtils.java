@@ -17,6 +17,10 @@ public class TestUtils {
 
     }
 
+    /**
+     * @param endpoint the endpoint you want to request
+     * @return the built url with the given endpoint
+     */
     public static String getUrl(final String endpoint) {
         return "http://" + SERVER_HOST + ":" + SERVER_PORT + API_PREFIX + endpoint;
     }
