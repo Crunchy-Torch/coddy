@@ -1,6 +1,6 @@
 package org.crunchytorch.coddy.user.filter;
 
-import org.crunchytorch.coddy.application.data.ApiName;
+import org.crunchytorch.coddy.application.utils.AppUtils;
 import org.crunchytorch.coddy.user.data.security.JWTPrincipal;
 import org.crunchytorch.coddy.user.data.security.Permission;
 
@@ -47,8 +47,9 @@ public class JWTSecurityContext implements SecurityContext {
         }
 
         if (Permission.PERSO_ACCOUNT.equals(role)) {
-            return this.pathParameter.containsKey(ApiName.USER_LOGIN_PATH_PARAM)
-                    && jwtPrincipal.getLogin().equals(this.pathParameter.getFirst(ApiName.USER_LOGIN_PATH_PARAM));
+            // in that case, we need to verify that the access to the account is done by the owner and not by anyone else.
+            return this.pathParameter.containsKey(AppUtils.API_USER_LOGIN_PATH_PARAM)
+                    && jwtPrincipal.getLogin().equals(this.pathParameter.getFirst(AppUtils.API_USER_LOGIN_PATH_PARAM));
         }
 
         return true;

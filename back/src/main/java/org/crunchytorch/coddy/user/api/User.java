@@ -1,8 +1,8 @@
 package org.crunchytorch.coddy.user.api;
 
-import org.crunchytorch.coddy.application.data.ApiName;
 import org.crunchytorch.coddy.application.exception.EntityExistsException;
 import org.crunchytorch.coddy.application.exception.EntityNotFoundException;
+import org.crunchytorch.coddy.application.utils.AppUtils;
 import org.crunchytorch.coddy.user.data.in.Credential;
 import org.crunchytorch.coddy.user.data.in.UpdateUser;
 import org.crunchytorch.coddy.user.data.out.SimpleUser;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  * All the business code is in the service part, especially in the class {@link UserService}.
  */
 @Component
-@Path(ApiName.USER)
+@Path("/user")
 public class User {
 
     @Autowired
@@ -70,10 +70,9 @@ public class User {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{" + ApiName.USER_LOGIN_PATH_PARAM + "}")
     @AuthorizationFilter
     @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
-    public SimpleUser update(@PathParam(ApiName.USER_LOGIN_PATH_PARAM) final String login, final UpdateUser user) {
+    public SimpleUser update(@PathParam(AppUtils.API_USER_LOGIN_PATH_PARAM) final String login, final UpdateUser user) {
         user.setLogin(login);
         return this.service.update(user);
     }
@@ -87,10 +86,9 @@ public class User {
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{" + ApiName.USER_LOGIN_PATH_PARAM + "}")
     @AuthorizationFilter
     @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
-    public void delete(@PathParam(ApiName.USER_LOGIN_PATH_PARAM) final String login) {
+    public void delete(@PathParam(AppUtils.API_USER_LOGIN_PATH_PARAM) final String login) {
         this.service.delete(login);
     }
 
@@ -112,10 +110,9 @@ public class User {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{" + ApiName.USER_LOGIN_PATH_PARAM + "}")
     @AuthorizationFilter
     @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
-    public SimpleUser getUserByLogin(@PathParam(ApiName.USER_LOGIN_PATH_PARAM) final String login) {
+    public SimpleUser getUserByLogin(@PathParam(AppUtils.API_USER_LOGIN_PATH_PARAM) final String login) {
         return this.service.getUserByLogin(login);
     }
 
