@@ -70,6 +70,7 @@ public class User {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{"+AppUtils.API_USER_LOGIN_PATH_PARAM+"}")
     @AuthorizationFilter
     @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
     public SimpleUser update(@PathParam(AppUtils.API_USER_LOGIN_PATH_PARAM) final String login, final UpdateUser user) {
@@ -86,6 +87,7 @@ public class User {
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{"+AppUtils.API_USER_LOGIN_PATH_PARAM+"}")
     @AuthorizationFilter
     @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
     public void delete(@PathParam(AppUtils.API_USER_LOGIN_PATH_PARAM) final String login) {
@@ -110,6 +112,7 @@ public class User {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{"+AppUtils.API_USER_LOGIN_PATH_PARAM+"}")
     @AuthorizationFilter
     @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
     public SimpleUser getUserByLogin(@PathParam(AppUtils.API_USER_LOGIN_PATH_PARAM) final String login) {
