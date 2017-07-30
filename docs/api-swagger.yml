@@ -134,6 +134,25 @@ paths:
           $ref: "#/responses/UnsupportedMediaType"
         500:
           $ref: "#/responses/InternalError"
+  /user/permission:
+    get:
+      tags:
+      - "user"
+      summary: "get all available permission"
+      operationId: "getPermissions"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
   /user/{login}:
     get:
       tags:
