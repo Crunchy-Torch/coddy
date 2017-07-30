@@ -47,10 +47,10 @@ paths:
       parameters:
       - in: "body"
         name: "body"
-        description: "Created user object"
+        description: "Created user object. Only the login and the password are required in this case"
         required: true
         schema:
-          $ref: "#/definitions/Credential"
+          $ref: "#/definitions/UpdateUser"
       responses:
         200:
           description: "successful operation"
