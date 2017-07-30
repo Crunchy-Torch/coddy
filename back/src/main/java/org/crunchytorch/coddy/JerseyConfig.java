@@ -25,7 +25,7 @@ public class JerseyConfig extends ResourceConfig {
         register(User.class);
         register(Snippet.class);
 
-        //security
+        //allow to use RolesAllowed annotation
         register(RolesAllowedDynamicFeature.class);
 
         //register mapper
