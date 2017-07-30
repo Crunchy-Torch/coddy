@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.*;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldIndex;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -24,7 +27,7 @@ public class SnippetEntity implements Serializable {
     @Field(type = FieldType.String)
     private String description;
 
-    @Field( type = FieldType.Nested, index = FieldIndex.not_analyzed)
+    @Field(type = FieldType.Nested, index = FieldIndex.not_analyzed)
     private LanguageEntity language;
 
     @Field(type = FieldType.String)
@@ -43,11 +46,11 @@ public class SnippetEntity implements Serializable {
     private String author;
 
     @Field(type = FieldType.Date)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd'T'HH:mm:ss'Z'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private Date created;
 
     @Field(type = FieldType.Date)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd'T'HH:mm:ss'Z'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private Date lastModified;
 
     public String getId() {

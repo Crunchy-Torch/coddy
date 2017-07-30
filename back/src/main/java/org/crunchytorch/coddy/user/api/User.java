@@ -8,11 +8,11 @@ import org.crunchytorch.coddy.user.data.in.UpdateUser;
 import org.crunchytorch.coddy.user.data.out.SimpleUser;
 import org.crunchytorch.coddy.user.data.security.Permission;
 import org.crunchytorch.coddy.user.data.security.Token;
+import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
+import org.crunchytorch.coddy.user.filter.AuthorizationFilter;
 import org.crunchytorch.coddy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
-import org.crunchytorch.coddy.user.filter.AuthorizationFilter;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
@@ -70,7 +70,7 @@ public class User {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{"+AppUtils.API_USER_LOGIN_PATH_PARAM+"}")
+    @Path("{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}")
     @AuthorizationFilter
     @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
     public SimpleUser update(@PathParam(AppUtils.API_USER_LOGIN_PATH_PARAM) final String login, final UpdateUser user) {
@@ -87,7 +87,7 @@ public class User {
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{"+AppUtils.API_USER_LOGIN_PATH_PARAM+"}")
+    @Path("{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}")
     @AuthorizationFilter
     @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
     public void delete(@PathParam(AppUtils.API_USER_LOGIN_PATH_PARAM) final String login) {
@@ -112,7 +112,7 @@ public class User {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{"+AppUtils.API_USER_LOGIN_PATH_PARAM+"}")
+    @Path("{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}")
     @AuthorizationFilter
     @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
     public SimpleUser getUserByLogin(@PathParam(AppUtils.API_USER_LOGIN_PATH_PARAM) final String login) {
@@ -123,8 +123,8 @@ public class User {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/permission")
-    public List<String> getAvailablePermissions(){
-        return new ArrayList<String>(){{
+    public List<String> getAvailablePermissions() {
+        return new ArrayList<String>() {{
             add(Permission.ADMIN);
             add(Permission.MODERATION);
             add(Permission.PERSO_ACCOUNT);

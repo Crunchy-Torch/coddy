@@ -1,17 +1,17 @@
 package org.crunchytorch.coddy;
 
+import org.crunchytorch.coddy.application.api.Hello;
+import org.crunchytorch.coddy.application.exception.mapper.*;
+import org.crunchytorch.coddy.snippet.api.Snippet;
+import org.crunchytorch.coddy.user.api.User;
+import org.crunchytorch.coddy.user.exception.mapper.AuthenticationMapper;
+import org.crunchytorch.coddy.user.exception.mapper.ForbiddenMapper;
+import org.crunchytorch.coddy.user.exception.mapper.NotAuthorizedMapper;
+import org.crunchytorch.coddy.user.filter.AuthorizationRequestFilter;
+import org.crunchytorch.coddy.user.filter.TokenResponseFilter;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.springframework.stereotype.Component;
-import org.crunchytorch.coddy.application.exception.mapper.*;
-import org.crunchytorch.coddy.user.api.User;
-import org.crunchytorch.coddy.user.exception.mapper.AuthenticationMapper;
-import org.crunchytorch.coddy.user.exception.mapper.NotAuthorizedMapper;
-import org.crunchytorch.coddy.application.api.Hello;
-import org.crunchytorch.coddy.snippet.api.Snippet;
-import org.crunchytorch.coddy.user.exception.mapper.ForbiddenMapper;
-import org.crunchytorch.coddy.user.filter.AuthorizationRequestFilter;
-import org.crunchytorch.coddy.user.filter.TokenResponseFilter;
 
 import javax.ws.rs.ApplicationPath;
 

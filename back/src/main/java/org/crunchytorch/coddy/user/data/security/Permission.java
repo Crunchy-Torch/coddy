@@ -16,7 +16,7 @@ public class Permission {
      */
     public static final String PERSO_SNIPPET = "personal_snippet";
 
-    private Permission(){
+    private Permission() {
 
     }
 }

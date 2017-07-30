@@ -4,7 +4,14 @@ package org.crunchytorch.coddy.user.api;
 import com.shazam.shazamcrest.MatcherAssert;
 import com.shazam.shazamcrest.matcher.Matchers;
 import org.apache.commons.lang.StringUtils;
+import org.crunchytorch.coddy.Main;
+import org.crunchytorch.coddy.application.data.Response;
+import org.crunchytorch.coddy.application.utils.TestUtils;
+import org.crunchytorch.coddy.user.data.in.Credential;
 import org.crunchytorch.coddy.user.data.out.SimpleUser;
+import org.crunchytorch.coddy.user.data.security.Token;
+import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
+import org.crunchytorch.coddy.user.elasticsearch.repository.UserRepository;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,15 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
-import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.crunchytorch.coddy.Main;
-import org.crunchytorch.coddy.user.data.in.Credential;
-import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
-import org.crunchytorch.coddy.application.data.Response;
-import org.crunchytorch.coddy.application.utils.TestUtils;
-import org.crunchytorch.coddy.user.data.security.Token;
-import org.crunchytorch.coddy.user.elasticsearch.repository.UserRepository;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -98,7 +97,7 @@ public class UserTest {
     }
 
     @Test
-    public void testDeleteUserWithAdminPermission(){
+    public void testDeleteUserWithAdminPermission() {
         final String login = "gulp";
         final String userToDelete = "ciceron";
         HttpEntity<String> entity = getHttpEntityWithToken(login, "toto");

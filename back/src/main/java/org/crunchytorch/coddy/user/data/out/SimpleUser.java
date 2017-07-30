@@ -12,7 +12,7 @@ public class SimpleUser {
     private String email;
     private List<String> permissions;
 
-    public SimpleUser(){
+    public SimpleUser() {
         // this blank constructor is needed by the library jackson
     }
 
