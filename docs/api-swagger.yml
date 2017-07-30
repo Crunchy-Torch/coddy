@@ -3,9 +3,6 @@ info:
   description: "this is the complete swagger which provide all endpoint currently available"
   version: "1.0.0"
   title: "Swagger Coddy"
-  license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 host: "coddy.crunchy-torch.io"
 basePath: "/api/v1"
 tags:
