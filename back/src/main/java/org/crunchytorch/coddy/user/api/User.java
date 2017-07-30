@@ -15,6 +15,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This class is the endpoint api which contains all method in order to manage the {@link UserEntity users}
@@ -94,9 +95,9 @@ public class User {
     @Consumes(MediaType.APPLICATION_JSON)
     @AuthorizationFilter
     @RolesAllowed(Permission.ADMIN)
-    public List<UserEntity> getUsers(@DefaultValue("0") @QueryParam("from") final int from,
+    public List<SimpleUser> getUsers(@DefaultValue("0") @QueryParam("from") final int from,
                                      @DefaultValue("10") @QueryParam("size") final int size) {
-        return this.service.getEntity(from, size);
+        return this.service.getEntity(from, size).stream().map(SimpleUser::new).collect(Collectors.toList());
     }
 
     /**
