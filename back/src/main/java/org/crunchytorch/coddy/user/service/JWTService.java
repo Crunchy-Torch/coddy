@@ -36,10 +36,10 @@ public class JWTService {
 
     private static final String JWT_TOKEN_ERROR = "Invalid JWT token";
 
-    @Value("${" + AppUtils.JWT_SECRET + ":}")
+    @Value("${" + AppUtils.CONF_JWT_SECRET + ":}")
     private byte[] jwtSecret;
 
-    @Value("${" + AppUtils.JWT_SESSION_TIMEOUT_MINUTE + ":}")
+    @Value("${" + AppUtils.CONF_JWT_SESSION_TIMEOUT_MINUTE + ":}")
     private String jwtTimeOut;
 
     /**
