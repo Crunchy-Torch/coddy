@@ -38,6 +38,47 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/SimpleUser"
+    get:
+      tags:
+      - "user"
+      summary: "Get all users"
+      operationId: "getUsers"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        description: "the jwt token needed to authenticate the user and check permission"
+        required: true
+        type: "string"
+      - name: "from"
+        in: "query"
+        required: false
+        description: "the offset from the first result you want to fetch"
+        type: integer
+        default: 0
+      - name: "size"
+        in: "query"
+        required: false
+        description: "allows you to configure the maximum amount of hits to be returned."
+        type: integer
+        default: 10
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/SimpleUserList"
+        401:
+          description: "access unauthorized"
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+        403:
+          description: "access forbidden"
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+
   /user/auth:
     post:
       tags:
@@ -88,6 +129,14 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/SimpleUser"
+        401:
+          description: "access unauthorized"
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+        403:
+          description: "access forbidden"
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
         404:
           schema:
             $ref: "#/definitions/ApiErrorResponse"
@@ -126,6 +175,14 @@ paths:
           description: "Invalid user supplied"
           schema:
             $ref: "#/definitions/ApiErrorResponse"
+        401:
+          description: "access unauthorized"
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+        403:
+          description: "access forbidden"
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
         404:
           description: "User not found"
           schema:
@@ -154,8 +211,20 @@ paths:
           description: "successful operation with no content"
         400:
           description: "Invalid username supplied"
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+        401:
+          description: "access unauthorized"
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+        403:
+          description: "access forbidden"
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
         404:
           description: "User not found"
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
 definitions:
   Credential:
     type: "object"
@@ -177,6 +246,8 @@ definitions:
         type: "string"
       permissions:
         type: "array"
+        items:
+          type: "string"
   UpdateUser:
     type: "object"
     properties:
@@ -190,6 +261,10 @@ definitions:
         type: "string"
       password:
         type: "string"
+  SimpleUserList:
+    type: "array"
+    items:
+      $ref: "#/definitions/SimpleUser"
   Token:
     type: "object"
     properties:
