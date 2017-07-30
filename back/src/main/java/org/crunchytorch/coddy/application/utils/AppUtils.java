@@ -18,4 +18,8 @@ public class AppUtils {
      * The path parameter used in the user api when an user account is accessed.
      */
     public static final String API_USER_LOGIN_PATH_PARAM = "login";
+
+    private AppUtils(){
+        // this is an utility class. You do not need to instantiate it.
+    }
 }
