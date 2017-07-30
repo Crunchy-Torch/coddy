@@ -50,8 +50,8 @@ public class UserEntity implements Serializable, IUser {
 
     public UserEntity(UpdateUser user) {
         this.login = user.getLogin();
-        this.salt = SecurityUtils.generateSalt();
         this.generatePasswordAndSalt(user.getPassword());
+        this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
         this.permissions = new ArrayList<String>() {{
@@ -76,6 +76,7 @@ public class UserEntity implements Serializable, IUser {
 
         this.firstName = user.getFirstName() != null ? user.getFirstName() : oldEntity.getFirstName();
         this.lastName = user.getLastName() != null ? user.getLastName() : oldEntity.getLastName();
+        this.email = user.getEmail() != null ? user.getEmail() : oldEntity.getEmail();
     }
 
     public String getId() {
