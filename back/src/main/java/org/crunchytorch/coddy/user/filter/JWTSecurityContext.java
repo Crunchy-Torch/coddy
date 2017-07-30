@@ -1,8 +1,8 @@
 package org.crunchytorch.coddy.user.filter;
 
 import org.crunchytorch.coddy.application.data.ApiName;
-import org.crunchytorch.coddy.user.data.JWTPrincipal;
-import org.crunchytorch.coddy.user.data.Permission;
+import org.crunchytorch.coddy.user.data.security.JWTPrincipal;
+import org.crunchytorch.coddy.user.data.security.Permission;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.SecurityContext;

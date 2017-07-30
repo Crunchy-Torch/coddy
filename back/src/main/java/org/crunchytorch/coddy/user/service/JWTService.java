@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.crunchytorch.coddy.application.utils.AppUtils;
-import org.crunchytorch.coddy.user.data.JWTPrincipal;
-import org.crunchytorch.coddy.user.data.Token;
+import org.crunchytorch.coddy.user.data.security.JWTPrincipal;
+import org.crunchytorch.coddy.user.data.security.Token;
 import org.crunchytorch.coddy.user.utils.SecurityUtils;
 
 import javax.ws.rs.ForbiddenException;

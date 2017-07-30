@@ -3,7 +3,11 @@ package org.crunchytorch.coddy.user.api;
 import org.crunchytorch.coddy.application.data.ApiName;
 import org.crunchytorch.coddy.application.exception.EntityExistsException;
 import org.crunchytorch.coddy.application.exception.EntityNotFoundException;
-import org.crunchytorch.coddy.user.data.*;
+import org.crunchytorch.coddy.user.data.in.Credential;
+import org.crunchytorch.coddy.user.data.in.UpdateUser;
+import org.crunchytorch.coddy.user.data.out.SimpleUser;
+import org.crunchytorch.coddy.user.data.security.Permission;
+import org.crunchytorch.coddy.user.data.security.Token;
 import org.crunchytorch.coddy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -52,15 +56,15 @@ public class User {
     /**
      * This method will create a {@link UserEntity user} from the {@link Credential credentials}.
      *
-     * @param credential the personnal information needed to create the associated user
+     * @param user the personnal information needed to create the associated user
      * @return the {@link UserEntity user} created
      * @throws EntityExistsException if the given user already exists
      */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public SimpleUser create(Credential credential) {
-        return this.service.create(credential);
+    public SimpleUser create(UpdateUser user) {
+        return this.service.create(user);
     }
 
     @PUT
