@@ -12,6 +12,10 @@ tags:
   description: "Operations about user"
 schemes:
 - "http"
+consumes:
+- "application/json"
+produces:
+- "application/json"
 responses:
   Unauthorized:
     description: "access unauthorized"
@@ -40,10 +44,6 @@ paths:
       - "user"
       summary: "Create user"
       operationId: "createUser"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
       parameters:
       - in: "body"
         name: "body"
@@ -71,10 +71,6 @@ paths:
       - "user"
       summary: "Get all users"
       operationId: "getUsers"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
       parameters:
       - name: "Authorization"
         in: "header"
@@ -115,10 +111,6 @@ paths:
       - "user"
       summary: "Logs user into the system"
       operationId: "loginUser"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
       parameters:
       - in: "body"
         name: "body"
@@ -147,8 +139,6 @@ paths:
       summary: "Get user by user login"
       description: ""
       operationId: "getUserByLogin"
-      produces:
-      - "application/json"
       parameters:
       - name: "login"
         in: "path"
@@ -185,8 +175,6 @@ paths:
       summary: "Updated user"
       description: "This can only be done by the logged in user."
       operationId: "updateUser"
-      produces:
-      - "application/json"
       parameters:
       - name: "login"
         in: "path"
@@ -233,8 +221,6 @@ paths:
       summary: "Delete user"
       description: "This can only be done by the logged in user."
       operationId: "deleteUser"
-      produces:
-      - "application/json"
       parameters:
       - name: "login"
         in: "path"
