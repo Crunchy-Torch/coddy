@@ -3,7 +3,7 @@
 
 ## API
 
-If you want to see all endpoint provide by our api, you can take a loot at [this swagger](./docs/api-swagger.yml), or you can access through the [swaggerHub](https://app.swaggerhub.com/apis/Nexucis/Coddy/1.0.0)
+If you want to see all endpoint provide by our api, you can take a look at [this swagger](./docs/api-swagger.yml), or you can access through the [swaggerHub](https://app.swaggerhub.com/apis/Nexucis/Coddy/1.0.0)
 
 ## Development
 
