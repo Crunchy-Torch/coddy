@@ -8,15 +8,21 @@ import serverUrl from '../../conf';
 @Injectable()
 export class UserService extends BaseService {
 
-    userEndpoint = '/user';
+  userEndpoint = '/user';
 
-    constructor(private http: Http) {
-        super();
-    }
+  constructor(private http: Http) {
+    super();
+  }
 
-    getUsers(): Observable<User[]> {
-        return this.http.get(serverUrl + this.userEndpoint)
-            .map(this.extractArray)
-            .catch(this.extractError)
-    }
+  getUsers(): Observable<User[]> {
+    return this.http.get(serverUrl + this.userEndpoint)
+      .map(this.extractArray)
+      .catch(this.extractError)
+  }
+
+  deleteUser(login: string) {
+    return this.http.delete(serverUrl + this.userEndpoint + "/" + login)
+      .map(this.extractObject)
+      .catch(this.extractError);
+  }
 }

@@ -19,14 +19,16 @@
             <td>{{user.lastName}}</td>
             <td>
                 <div class="ui tiny buttons">
-                    <button class="ui teal button">
+                    <button class="ui yellow button">
                         <i class="edit icon"></i>
-                        update
+                        Edit
                     </button>
                     <div class="or"></div>
-                    <button class="ui orange button">
-                        <i class="delete icon"></i>
-                        delete
+                    <button *ngIf="isDeleteLoading" class="ui loading red button">
+                        Loading</button>
+                    <button *ngIf="!isDeleteLoading" (click)="deleteUser(user.login)" class="ui red button">
+                        <i class="trash icon"></i>
+                        Delete
                     </button>
                 </div>
             </td>

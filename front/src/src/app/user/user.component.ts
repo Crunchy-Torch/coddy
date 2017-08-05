@@ -8,6 +8,7 @@ import { UserService } from './user.service';
 export class UserComponent implements OnInit {
 
   isLoading: boolean;
+  isDeleteLoading: boolean;
   users: User[];
   error: Error;
 
@@ -21,6 +22,7 @@ export class UserComponent implements OnInit {
 
   getUsers() {
     this.isLoading = true;
+    this.isDeleteLoading = false;
     this.users = null;
     this.error = null;
     this.userService.getUsers().finally(
@@ -30,5 +32,18 @@ export class UserComponent implements OnInit {
       error => this.error = error
     )
   };
+
+  deleteUser(login: string) {
+    this.isDeleteLoading = true;
+    this.error = null;
+    this.userService.deleteUser(login).finally(
+      () => {
+        this.isDeleteLoading = false;
+        this.users = this.users.filter(user => login != user.login);
+      }
+    ).subscribe(
+      error => this.error = error
+    )
+  }
 
 }
