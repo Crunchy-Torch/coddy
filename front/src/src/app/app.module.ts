@@ -12,6 +12,8 @@ import { AppService } from './app.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { SnippetComponent } from './snippet/snippet.component';
+import { UserComponent } from './user/user.component';
+import { UserService } from './user/user.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { SnippetComponent } from './snippet/snippet.component';
     ErrorComponent,
     HomeComponent,
     DashboardComponent,
-    SnippetComponent
+    SnippetComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -31,8 +34,10 @@ import { SnippetComponent } from './snippet/snippet.component';
   providers: [
     AppService,
     SnippetService,
+    UserService,
     PrivateGuard
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

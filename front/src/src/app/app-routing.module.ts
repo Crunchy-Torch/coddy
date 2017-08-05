@@ -6,27 +6,30 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { UserComponent } from './user/user.component';
 
 const PUBLIC_ROUTES: Routes = [
-    { path: '', component: HomeComponent }
+  {path: '', component: HomeComponent}
 ];
 
 const PRIVATE_ROUTES: Routes = [
-    { path: 'dashboard', component: DashboardComponent },
-    { path: 'snippet/:id', component: SnippetComponent }
+  {path: 'dashboard', component: DashboardComponent},
+  {path: 'snippet/:id', component: SnippetComponent},
+  {path: 'user/admin', component: UserComponent}
 ];
 
 const APP_ROUTES: Routes = [
-    { path: '', component: PublicComponent, children: PUBLIC_ROUTES },
-    { path: '', component: PrivateComponent, children: PRIVATE_ROUTES, canActivate: [ PrivateGuard ] }
+  {path: '', component: PublicComponent, children: PUBLIC_ROUTES},
+  {path: '', component: PrivateComponent, children: PRIVATE_ROUTES, canActivate: [ PrivateGuard ]}
 ];
 
 @NgModule({
-    imports: [
-        RouterModule.forRoot(
-            APP_ROUTES
-        )
-    ],
-    exports: [ RouterModule ]
+  imports: [
+    RouterModule.forRoot(
+      APP_ROUTES
+    )
+  ],
+  exports: [ RouterModule ]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
