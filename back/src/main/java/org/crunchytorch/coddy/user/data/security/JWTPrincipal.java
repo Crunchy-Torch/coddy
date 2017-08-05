@@ -1,4 +1,6 @@
-package org.crunchytorch.coddy.user.data;
+package org.crunchytorch.coddy.user.data.security;
+
+import org.crunchytorch.coddy.user.data.IUser;
 
 import java.security.Principal;
 import java.util.Date;

@@ -3,10 +3,17 @@ package org.crunchytorch.coddy.user.elasticsearch.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.crunchytorch.coddy.user.data.IUser;
+import org.crunchytorch.coddy.user.data.in.UpdateUser;
+import org.crunchytorch.coddy.user.data.security.Permission;
+import org.crunchytorch.coddy.user.utils.SecurityUtils;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.*;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldIndex;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(indexName = "account", type = "user")
@@ -37,6 +44,40 @@ public class UserEntity implements Serializable, IUser {
 
     @Field(type = FieldType.String)
     private List<String> permissions;
+
+    public UserEntity() {
+    }
+
+    public UserEntity(UpdateUser user) {
+        this.login = user.getLogin();
+        this.generatePasswordAndSalt(user.getPassword());
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
+        this.permissions = new ArrayList<String>() {{
+            add(Permission.PERSO_ACCOUNT);
+            add(Permission.PERSO_SNIPPET);
+        }};
+    }
+
+    public UserEntity(UpdateUser user, UserEntity oldEntity) {
+        // the following data cannot be modified
+        this.id = oldEntity.getId();
+        this.login = oldEntity.getLogin();
+        this.permissions = oldEntity.getPermissions();
+
+        // now the rest of the data can be updated
+        if (user.getPassword() != null) {
+            this.generatePasswordAndSalt(user.getPassword());
+        } else {
+            this.password = oldEntity.getPassword();
+            this.salt = oldEntity.getSalt();
+        }
+
+        this.firstName = user.getFirstName() != null ? user.getFirstName() : oldEntity.getFirstName();
+        this.lastName = user.getLastName() != null ? user.getLastName() : oldEntity.getLastName();
+        this.email = user.getEmail() != null ? user.getEmail() : oldEntity.getEmail();
+    }
 
     public String getId() {
         return id;
@@ -104,5 +145,10 @@ public class UserEntity implements Serializable, IUser {
 
     public void setPermissions(List<String> permissions) {
         this.permissions = permissions;
+    }
+
+    private void generatePasswordAndSalt(char[] password) {
+        this.salt = SecurityUtils.generateSalt();
+        this.password = SecurityUtils.hash(password, this.salt);
     }
 }

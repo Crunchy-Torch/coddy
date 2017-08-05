@@ -1,17 +1,21 @@
 package org.crunchytorch.coddy.user.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.crunchytorch.coddy.application.data.Response;
+import org.crunchytorch.coddy.application.exception.EntityExistsException;
 import org.crunchytorch.coddy.application.exception.EntityNotFoundException;
 import org.crunchytorch.coddy.application.service.AbstractService;
-import org.crunchytorch.coddy.user.data.Credential;
-import org.crunchytorch.coddy.user.data.Token;
+import org.crunchytorch.coddy.user.data.in.Credential;
+import org.crunchytorch.coddy.user.data.in.UpdateUser;
+import org.crunchytorch.coddy.user.data.out.SimpleUser;
+import org.crunchytorch.coddy.user.data.security.Token;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
-import org.crunchytorch.coddy.application.exception.EntityExistsException;
 import org.crunchytorch.coddy.user.elasticsearch.repository.UserRepository;
 import org.crunchytorch.coddy.user.exception.AuthenticationException;
 import org.crunchytorch.coddy.user.utils.SecurityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.ws.rs.BadRequestException;
 
 @Service
 public class UserService extends AbstractService<UserEntity> {
@@ -49,32 +53,48 @@ public class UserService extends AbstractService<UserEntity> {
     }
 
     /**
-     * This method will create the {@link UserEntity user} from the {@link Credential credentials}.
+     * This method will create the {@link UserEntity user} from the {@link UpdateUser credentials}.
      * Before creating it, the given password will be salted and hashed.
      *
-     * @param credential the personnal information needed to create the associated user
-     * @return the {@link UserEntity user} created
+     * @param user the personal information needed to create the associated user
+     * @return the {@link SimpleUser user} created
      * @throws EntityExistsException if the given user already exists
+     * @throws BadRequestException   if the given user has no login
      */
-    public UserEntity create(Credential credential) {
+    public SimpleUser create(UpdateUser user) {
+
+        if (user.getLogin() == null || user.getPassword() == null) {
+            throw new BadRequestException("login and password cannot be null");
+        }
+
         // check if the current login already exist
-        if (this.isExist(credential.getLogin())) {
-            throw new EntityExistsException("user with login : " + credential.getLogin() + " already exists");
+        if (this.isExist(user.getLogin())) {
+            throw new EntityExistsException("user with login : " + user.getLogin() + " already exists");
         }
 
         //generate entity, hash and salt the password
-        UserEntity entity = new UserEntity();
-        entity.setLogin(credential.getLogin());
-        byte[] salt = SecurityUtils.generateSalt();
-        byte[] password = SecurityUtils.hash(credential.getPassword(), salt);
-        entity.setSalt(salt);
-        entity.setPassword(password);
+        UserEntity entity = new UserEntity(user);
 
-        entity = super.create(entity);
-        //remove password before send it to the consumer in order to not send how a password looks like
-        entity.setPassword(null);
-        entity.setSalt(null);
-        return entity;
+        return new SimpleUser(super.create(entity));
+    }
+
+    /**
+     * @param user
+     * @return the {@link SimpleUser user} updated
+     * @throws EntityNotFoundException if the given user is not found
+     * @throws BadRequestException     if the given user has no login
+     */
+    public SimpleUser update(UpdateUser user) {
+
+        if (user.getLogin() == null) {
+            throw new BadRequestException("login cannot be null");
+        }
+
+        UserEntity oldEntity = this.getUserEntityByLogin(user.getLogin());
+
+        UserEntity entity = new UserEntity(user, oldEntity);
+
+        return new SimpleUser(super.create(entity));
     }
 
     /**
@@ -84,20 +104,19 @@ public class UserService extends AbstractService<UserEntity> {
      * @throws EntityNotFoundException if the given login is not associated to a {@link UserEntity user}
      */
     public void delete(final String login) {
-        super.delete(this.getUserByLogin(login));
+        super.delete(this.getUserEntityByLogin(login));
     }
 
-    public UserEntity getUserByLogin(String login) {
+    public SimpleUser getUserByLogin(String login) {
+        return new SimpleUser(this.getUserEntityByLogin(login));
+    }
+
+    private UserEntity getUserEntityByLogin(final String login) {
         UserEntity entity = UserRepository.class.cast(this.repository).findByLogin(login);
 
         if (entity == null) {
             throw new EntityNotFoundException("user with the login : " + login + " not found");
         }
-
-        //remove password before send it to the consumer in order to not send how a password looks like
-        entity.setPassword(null);
-        entity.setSalt(null);
-
 
         return entity;
     }

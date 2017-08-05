@@ -2,17 +2,24 @@ package org.crunchytorch.coddy.user.api;
 
 import org.crunchytorch.coddy.application.exception.EntityExistsException;
 import org.crunchytorch.coddy.application.exception.EntityNotFoundException;
+import org.crunchytorch.coddy.application.utils.AppUtils;
+import org.crunchytorch.coddy.user.data.in.Credential;
+import org.crunchytorch.coddy.user.data.in.UpdateUser;
+import org.crunchytorch.coddy.user.data.out.SimpleUser;
+import org.crunchytorch.coddy.user.data.security.Permission;
+import org.crunchytorch.coddy.user.data.security.Token;
+import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
+import org.crunchytorch.coddy.user.filter.AuthorizationFilter;
 import org.crunchytorch.coddy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.crunchytorch.coddy.user.data.Credential;
-import org.crunchytorch.coddy.user.data.Token;
-import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
-import org.crunchytorch.coddy.user.filter.AuthorizationFilter;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This class is the endpoint api which contains all method in order to manage the {@link UserEntity users}
@@ -49,15 +56,26 @@ public class User {
     /**
      * This method will create a {@link UserEntity user} from the {@link Credential credentials}.
      *
-     * @param credential the personnal information needed to create the associated user
+     * @param user the personnal information needed to create the associated user
      * @return the {@link UserEntity user} created
      * @throws EntityExistsException if the given user already exists
      */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public UserEntity create(Credential credential) {
-        return this.service.create(credential);
+    public SimpleUser create(UpdateUser user) {
+        return this.service.create(user);
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}")
+    @AuthorizationFilter
+    @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
+    public SimpleUser update(@PathParam(AppUtils.API_USER_LOGIN_PATH_PARAM) final String login, final UpdateUser user) {
+        user.setLogin(login);
+        return this.service.update(user);
     }
 
     /**
@@ -69,9 +87,10 @@ public class User {
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{login}")
+    @Path("{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}")
     @AuthorizationFilter
-    public void delete(@PathParam("login") final String login) {
+    @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
+    public void delete(@PathParam(AppUtils.API_USER_LOGIN_PATH_PARAM) final String login) {
         this.service.delete(login);
     }
 
@@ -79,9 +98,10 @@ public class User {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @AuthorizationFilter
-    public List<UserEntity> getUsers(@DefaultValue("0") @QueryParam("from") final int from,
+    @RolesAllowed(Permission.ADMIN)
+    public List<SimpleUser> getUsers(@DefaultValue("0") @QueryParam("from") final int from,
                                      @DefaultValue("10") @QueryParam("size") final int size) {
-        return this.service.getEntity(from, size);
+        return this.service.getEntity(from, size).stream().map(SimpleUser::new).collect(Collectors.toList());
     }
 
     /**
@@ -92,9 +112,23 @@ public class User {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{login}")
+    @Path("{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}")
     @AuthorizationFilter
-    public UserEntity getUserByLogin(@PathParam("login") final String login) {
+    @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
+    public SimpleUser getUserByLogin(@PathParam(AppUtils.API_USER_LOGIN_PATH_PARAM) final String login) {
         return this.service.getUserByLogin(login);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/permission")
+    public List<String> getAvailablePermissions() {
+        return new ArrayList<String>() {{
+            add(Permission.ADMIN);
+            add(Permission.MODERATION);
+            add(Permission.PERSO_ACCOUNT);
+            add(Permission.PERSO_SNIPPET);
+        }};
     }
 }

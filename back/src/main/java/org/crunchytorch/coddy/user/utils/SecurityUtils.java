@@ -82,7 +82,7 @@ public class SecurityUtils {
             SecretKey key = secretKeyFactory.generateSecret(spec);
             return key.getEncoded();
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            LOGGER.debug(e.getMessage(),e);
+            LOGGER.debug(e.getMessage(), e);
             throw new SecurityException(e);
         } finally {
             // erase the password in the char array in order to not retrieve it in the java memory

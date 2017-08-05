@@ -1,6 +1,10 @@
 # coddy
 [![Build Status](https://travis-ci.org/Crunchy-Torch/coddy.svg?branch=master)](https://travis-ci.org/Crunchy-Torch/coddy)
 
+## API
+
+If you want to see all endpoint provide by our api, you can take a look at [this swagger](./docs/api-swagger.yml), or you can access through the [swaggerHub](https://app.swaggerhub.com/apis/Nexucis/Coddy/1.0.0)
+
 ## Development
 
 If you want to develop this project or just test it, a `docker-compose.dev.yml` is provided in order to start locally all necessary server.

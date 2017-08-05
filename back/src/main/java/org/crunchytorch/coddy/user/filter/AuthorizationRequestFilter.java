@@ -1,6 +1,6 @@
 package org.crunchytorch.coddy.user.filter;
 
-import org.crunchytorch.coddy.user.data.JWTPrincipal;
+import org.crunchytorch.coddy.user.data.security.JWTPrincipal;
 import org.crunchytorch.coddy.user.service.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -54,6 +54,6 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
         JWTPrincipal principal = this.jwtService.validateToken(token);
 
         String scheme = requestContext.getUriInfo().getRequestUri().getScheme();
-        requestContext.setSecurityContext(new JWTSecurityContext(principal, scheme));
+        requestContext.setSecurityContext(new JWTSecurityContext(principal, scheme, requestContext.getUriInfo().getPathParameters()));
     }
 }

@@ -1,19 +1,23 @@
 package org.crunchytorch.coddy.user.filter;
 
-import org.crunchytorch.coddy.user.data.JWTPrincipal;
+import org.crunchytorch.coddy.application.utils.AppUtils;
+import org.crunchytorch.coddy.user.data.security.JWTPrincipal;
+import org.crunchytorch.coddy.user.data.security.Permission;
 
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.SecurityContext;
 import java.security.Principal;
-import java.util.List;
 
 public class JWTSecurityContext implements SecurityContext {
 
-    private JWTPrincipal jwtPrincipal;
-    private String scheme;
+    private final JWTPrincipal jwtPrincipal;
+    private final String scheme;
+    private final MultivaluedMap<String, String> pathParameter;
 
-    public JWTSecurityContext(JWTPrincipal jwtPrincipal, String scheme) {
+    public JWTSecurityContext(final JWTPrincipal jwtPrincipal, final String scheme, final MultivaluedMap<String, String> pathParameter) {
         this.jwtPrincipal = jwtPrincipal;
         this.scheme = scheme;
+        this.pathParameter = pathParameter;
     }
 
     @Override
@@ -32,19 +36,23 @@ public class JWTSecurityContext implements SecurityContext {
      */
     @Override
     public boolean isUserInRole(String role) {
-        boolean result = false;
-        final List<String> permissions = jwtPrincipal.getPermissions();
-
-        if (permissions != null) {
-            final int length = permissions.size();
-            int i = 0;
-
-            while ((i < length) && !result) {
-                result = result || permissions.get(i).equals(role);
-                i++;
-            }
+        if (jwtPrincipal.getPermissions() == null) {
+            return false;
         }
-        return result;
+
+        boolean result = jwtPrincipal.getPermissions().contains(role);
+
+        if (!result) {
+            return false;
+        }
+
+        if (Permission.PERSO_ACCOUNT.equals(role)) {
+            // in that case, we need to verify that the access to the account is done by the owner and not by anyone else.
+            return this.pathParameter.containsKey(AppUtils.API_USER_LOGIN_PATH_PARAM)
+                    && jwtPrincipal.getLogin().equals(this.pathParameter.getFirst(AppUtils.API_USER_LOGIN_PATH_PARAM));
+        }
+
+        return true;
     }
 
     @Override

@@ -4,6 +4,14 @@ package org.crunchytorch.coddy.user.api;
 import com.shazam.shazamcrest.MatcherAssert;
 import com.shazam.shazamcrest.matcher.Matchers;
 import org.apache.commons.lang.StringUtils;
+import org.crunchytorch.coddy.Main;
+import org.crunchytorch.coddy.application.data.Response;
+import org.crunchytorch.coddy.application.utils.TestUtils;
+import org.crunchytorch.coddy.user.data.in.Credential;
+import org.crunchytorch.coddy.user.data.out.SimpleUser;
+import org.crunchytorch.coddy.user.data.security.Token;
+import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
+import org.crunchytorch.coddy.user.elasticsearch.repository.UserRepository;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,15 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
-import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.crunchytorch.coddy.Main;
-import org.crunchytorch.coddy.user.data.Credential;
-import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
-import org.crunchytorch.coddy.application.data.Response;
-import org.crunchytorch.coddy.application.utils.TestUtils;
-import org.crunchytorch.coddy.user.data.Token;
-import org.crunchytorch.coddy.user.elasticsearch.repository.UserRepository;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -65,21 +65,22 @@ public class UserTest {
     public void testGetUserWithToken() throws IOException {
         HttpEntity<String> entity = getHttpEntityWithToken("ciceron", "tutu");
 
-        ResponseEntity<UserEntity> response = restTemplate.exchange(TestUtils.getUrl(USER_ENDPOINT + "/ciceron"), HttpMethod.GET, entity, UserEntity.class);
+        ResponseEntity<SimpleUser> response = restTemplate.exchange(TestUtils.getUrl(USER_ENDPOINT + "/ciceron"), HttpMethod.GET, entity, SimpleUser.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        MatcherAssert.assertThat(response.getBody(), Matchers.sameBeanAs(TestUtils.getObjecFromJson("user/getUserWithTokenExpected.json", UserEntity.class)));
+        MatcherAssert.assertThat(response.getBody(), Matchers.sameBeanAs(TestUtils.getObjecFromJson("user/getUserWithTokenExpected.json", SimpleUser.class)));
     }
 
+    @Test
     public void testCreateUser() {
         final String login = "perlinpinpin";
         Credential credential = new Credential(login, "ratata".toCharArray());
-        ResponseEntity<UserEntity> response = restTemplate.postForEntity(TestUtils.getUrl(USER_ENDPOINT), credential, UserEntity.class);
+        ResponseEntity<SimpleUser> response = restTemplate.postForEntity(TestUtils.getUrl(USER_ENDPOINT), credential, SimpleUser.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assert.assertEquals(login, response.getBody().getLogin());
         // test that the current user is effectively in the database
-        Assert.assertEquals(this.repository.findByLogin(login).getId(),response.getBody().getId());
+        Assert.assertEquals(this.repository.findByLogin(login).getLogin(), response.getBody().getLogin());
     }
 
     @Test
@@ -93,6 +94,34 @@ public class UserTest {
         // check if the user is effectively deleted.
         UserEntity user = repository.findByLogin(login);
         Assert.assertEquals(user, null);
+    }
+
+    @Test
+    public void testDeleteUserWithAdminPermission() {
+        final String login = "gulp";
+        final String userToDelete = "ciceron";
+        HttpEntity<String> entity = getHttpEntityWithToken(login, "toto");
+        ResponseEntity<String> response = restTemplate.exchange(TestUtils.getUrl(USER_ENDPOINT + "/" + userToDelete), HttpMethod.DELETE, entity, String.class);
+
+        Assert.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+
+        // check if the user is effectively deleted.
+        UserEntity user = repository.findByLogin(userToDelete);
+        Assert.assertEquals(user, null);
+    }
+
+    @Test
+    public void testDeleteUserUnauthorized() {
+        final String login = "napoleon";
+        final String userToDelete = "ciceron";
+        HttpEntity<String> entity = getHttpEntityWithToken(login, "toto");
+        ResponseEntity<String> response = restTemplate.exchange(TestUtils.getUrl(USER_ENDPOINT + "/" + userToDelete), HttpMethod.DELETE, entity, String.class);
+
+        Assert.assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+
+        // check if the user is effectively deleted.
+        UserEntity user = repository.findByLogin(userToDelete);
+        Assert.assertTrue(user != null);
     }
 
     @Test

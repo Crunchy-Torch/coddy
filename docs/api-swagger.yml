@@ -1,0 +1,322 @@
+swagger: "2.0"
+info:
+  description: "this is the complete swagger which provide all endpoint currently available"
+  version: "1.0.0"
+  title: "Swagger Coddy"
+host: "coddy.crunchy-torch.io"
+basePath: "/api/v1"
+tags:
+- name: "snippet"
+  description: "Operation about snippet"
+- name: "user"
+  description: "Operations about user"
+schemes:
+- "http"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+responses:
+  Unauthorized:
+    description: "access unauthorized"
+    schema:
+      $ref: "#/definitions/ApiErrorResponse"
+  Forbidden:
+    description: "access forbidden"
+    schema:
+      $ref: "#/definitions/ApiErrorResponse"
+  MethodNotAllowed:
+    description: "method not allowed"
+    schema:
+      $ref: "#/definitions/ApiErrorResponse"
+  UnsupportedMediaType:
+    description: "unsupported media type"
+    schema:
+      $ref: "#/definitions/ApiErrorResponse"
+  InternalError:
+    description: "internal error"
+    schema:
+      $ref: "#/definitions/ApiErrorResponse"
+paths:
+  /user:
+    post:
+      tags:
+      - "user"
+      summary: "Create user"
+      operationId: "createUser"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created user object. Only the login and the password are required in this case"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdateUser"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/SimpleUser"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        409:
+          description: "conflict, user already exists"
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
+    get:
+      tags:
+      - "user"
+      summary: "Get all users"
+      operationId: "getUsers"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        description: "the jwt token needed to authenticate the user and check permission"
+        required: true
+        type: "string"
+      - name: "from"
+        in: "query"
+        required: false
+        description: "the offset from the first result you want to fetch"
+        type: integer
+        default: 0
+      - name: "size"
+        in: "query"
+        required: false
+        description: "allows you to configure the maximum amount of hits to be returned."
+        type: integer
+        default: 10
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/SimpleUser"
+        401:
+          $ref: "#/responses/Unauthorized"
+        403:
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
+
+  /user/auth:
+    post:
+      tags:
+      - "user"
+      summary: "Logs user into the system"
+      operationId: "loginUser"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Credential"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Token"
+        400:
+          description: "Invalid login/password supplied"
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
+  /user/permission:
+    get:
+      tags:
+      - "user"
+      summary: "get all available permission"
+      operationId: "getPermissions"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
+  /user/{login}:
+    get:
+      tags:
+      - "user"
+      summary: "Get user by user login"
+      description: ""
+      operationId: "getUserByLogin"
+      parameters:
+      - name: "login"
+        in: "path"
+        description: "The login that needs to be fetched."
+        required: true
+        type: "string"
+      - name: "Authorization"
+        in: "header"
+        description: "the jwt token needed to authenticate the user and check permission"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/SimpleUser"
+        401:
+          $ref: "#/responses/Unauthorized"
+        403:
+          $ref: "#/responses/Forbidden"
+        404:
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+          description: "User not found"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
+    put:
+      tags:
+      - "user"
+      summary: "Updated user"
+      description: "This can only be done by the logged in user."
+      operationId: "updateUser"
+      parameters:
+      - name: "login"
+        in: "path"
+        description: "name that need to be updated"
+        required: true
+        type: "string"
+      - name: "Authorization"
+        in: "header"
+        description: "the jwt token needed to authenticate the user and check permission"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Updated user object"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdateUser"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/SimpleUser"
+        400:
+          description: "Invalid user supplied"
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+        401:
+          $ref: "#/responses/Unauthorized"
+        403:
+          $ref: "#/responses/Forbidden"
+        404:
+          description: "User not found"
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
+    delete:
+      tags:
+      - "user"
+      summary: "Delete user"
+      description: "This can only be done by the logged in user."
+      operationId: "deleteUser"
+      parameters:
+      - name: "login"
+        in: "path"
+        description: "The name that needs to be deleted"
+        required: true
+        type: "string"
+      - name: "Authorization"
+        in: "header"
+        description: "the jwt token needed to authenticate the user and check permission"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "The resource was deleted successfully"
+        400:
+          description: "Invalid username supplied"
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+        401:
+          $ref: "#/responses/Unauthorized"
+        403:
+          $ref: "#/responses/Forbidden"
+        404:
+          description: "User not found"
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
+definitions:
+  Credential:
+    type: "object"
+    properties:
+      login:
+        type: "string"
+      password:
+        type: "string"
+  SimpleUser:
+    type: "object"
+    properties:
+      login:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      email:
+        type: "string"
+      permissions:
+        type: "array"
+        items:
+          type: "string"
+  UpdateUser:
+    type: "object"
+    properties:
+      login:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+  Token:
+    type: "object"
+    properties:
+      token:
+        type: "string"
+  ApiErrorResponse:
+    type: "object"
+    properties:
+      message:
+        type: "string"
