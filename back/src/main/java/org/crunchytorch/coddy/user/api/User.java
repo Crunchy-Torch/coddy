@@ -8,7 +8,6 @@ import org.crunchytorch.coddy.user.data.in.UpdateUser;
 import org.crunchytorch.coddy.user.data.out.SimpleUser;
 import org.crunchytorch.coddy.user.data.security.Permission;
 import org.crunchytorch.coddy.user.data.security.Token;
-import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.crunchytorch.coddy.user.filter.AuthorizationFilter;
 import org.crunchytorch.coddy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * This class is the endpoint api which contains all method in order to manage the {@link UserEntity users}
+ * This class is the endpoint api which contains all method in order to manage the {@link org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity users}
  * All the business code is in the service part, especially in the class {@link UserService}.
  */
 @Component
@@ -54,10 +53,10 @@ public class User {
     }
 
     /**
-     * This method will create a {@link UserEntity user} from the {@link Credential credentials}.
+     * This method will create a {@link org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity user} from the {@link Credential credentials}.
      *
      * @param user the personnal information needed to create the associated user
-     * @return the {@link UserEntity user} created
+     * @return the {@link SimpleUser user} created
      * @throws EntityExistsException if the given user already exists
      */
     @POST
@@ -79,10 +78,10 @@ public class User {
     }
 
     /**
-     * This method will delete the {@link UserEntity user} from the given login.
+     * This method will delete the {@link org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity user} from the given login.
      *
      * @param login the user's login
-     * @throws EntityNotFoundException if the given login is not associated to a {@link UserEntity user}
+     * @throws EntityNotFoundException if the given login is not associated to a {@link SimpleUser user}
      */
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
@@ -114,7 +113,7 @@ public class User {
 
     /**
      * @param login the user's login
-     * @return the {@link UserEntity user} associated to the given login. All critical information such as his password
+     * @return the {@link SimpleUser user} associated to the given login. All critical information such as his password
      * or the salt has been deleted previously
      */
     @GET
