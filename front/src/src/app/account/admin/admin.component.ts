@@ -8,31 +8,60 @@ import { UserService } from '../user/user.service';
 })
 export class AdminComponent implements OnInit {
 
-  isLoading: boolean;
+  isFirstLoading: boolean;
   isDeleteLoading: boolean;
+  isUserLoading: boolean;
   users: User[];
   error: Error;
+  nbUser: number;
+  paginationSize: number;
+  paginationArray: number [];
+  pageNumber: number;
 
   constructor(private adminService: AdminService, private userService: UserService) {
-
+    this.nbUser = -1;
+    this.paginationSize = 10;
+    this.pageNumber = 1;
   }
 
   ngOnInit(): void {
-    this.getUsers();
+    this.getUsersFirstLoading();
+    this.countUser();
   }
 
-  getUsers() {
-    this.isLoading = true;
+  getUsersFirstLoading() {
+    this.isFirstLoading = true;
+    this.isUserLoading = true;
     this.isDeleteLoading = false;
     this.users = null;
     this.error = null;
     this.adminService.getUsers().finally(
-      () => this.isLoading = false
+      () => {
+        this.isFirstLoading = false;
+        this.isUserLoading = false;
+      }
     ).subscribe(
       users => this.users = users,
       error => this.error = error
     )
   };
+
+  getUsers(pageNumber?: number) {
+    if (pageNumber) {
+      this.pageNumber = pageNumber;
+    }
+    this.isUserLoading = true;
+    this.error = null;
+
+    this.adminService.getUsers(pageNumber, this.paginationSize)
+      .finally(
+        () => this.isUserLoading = false
+      )
+      .subscribe(
+        users => this.users = users,
+        error => this.error = error
+      )
+  }
 
   deleteUser(login: string) {
     this.isDeleteLoading = true;
@@ -41,9 +70,27 @@ export class AdminComponent implements OnInit {
       () => {
         this.isDeleteLoading = false;
         this.users = this.users.filter(user => login != user.login);
+        this.countUser();
       }
     ).subscribe(
       error => this.error = error
+    )
+  }
+
+  countUser() {
+    this.adminService.count().finally(
+      () => {
+        let x = 1;
+        let y = 1;
+        this.paginationArray = [];
+        while (x <= this.nbUser) {
+          this.paginationArray.push(y);
+          y++;
+          x = this.paginationSize + x;
+        }
+      }
+    ).subscribe(
+      nbUser => this.nbUser = nbUser
     )
   }
 

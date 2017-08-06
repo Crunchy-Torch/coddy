@@ -12,9 +12,15 @@ export class AdminService extends BaseService {
     super();
   }
 
-  getUsers(): Observable<User[]> {
-    return this.http.get(this.buildUrl(UserService.userEndpoint))
+  getUsers(from = 0, size = 10): Observable<User[]> {
+    return this.http.get(this.buildUrl(UserService.userEndpoint) + "?from=" + from + "&size=" + size)
       .map(this.extractArray)
+      .catch(this.extractError)
+  }
+
+  count(): Observable<number> {
+    return this.http.get(this.buildUrl(UserService.userEndpoint + "/count"))
+      .map(this.extractObject)
       .catch(this.extractError)
   }
 }
