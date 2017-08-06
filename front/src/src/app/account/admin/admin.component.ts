@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from './user';
-import { UserService } from './user.service';
+import { User } from '../user/user';
+import { AdminService } from './admin.service';
+import { UserService } from '../user/user.service';
 
 @Component({
-  templateUrl: './user.component.html'
+  templateUrl: './admin.component.html'
 })
-export class UserComponent implements OnInit {
+export class AdminComponent implements OnInit {
 
   isLoading: boolean;
   isDeleteLoading: boolean;
   users: User[];
   error: Error;
 
-  constructor(private userService: UserService) {
+  constructor(private adminService: AdminService, private userService: UserService) {
 
   }
 
@@ -25,7 +26,7 @@ export class UserComponent implements OnInit {
     this.isDeleteLoading = false;
     this.users = null;
     this.error = null;
-    this.userService.getUsers().finally(
+    this.adminService.getUsers().finally(
       () => this.isLoading = false
     ).subscribe(
       users => this.users = users,

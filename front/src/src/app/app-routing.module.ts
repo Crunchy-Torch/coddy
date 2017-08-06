@@ -6,7 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserComponent } from './user/user.component';
+import { AdminComponent } from './account/admin/admin.component';
 
 const PUBLIC_ROUTES: Routes = [
   {path: '', component: HomeComponent}
@@ -15,7 +15,7 @@ const PUBLIC_ROUTES: Routes = [
 const PRIVATE_ROUTES: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path: 'snippet/:id', component: SnippetComponent},
-  {path: 'user/admin', component: UserComponent}
+  {path: 'admin', component: AdminComponent}
 ];
 
 const APP_ROUTES: Routes = [

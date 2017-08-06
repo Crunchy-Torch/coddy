@@ -12,8 +12,9 @@ import { AppService } from './app.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { SnippetComponent } from './snippet/snippet.component';
-import { UserComponent } from './user/user.component';
-import { UserService } from './user/user.service';
+import { AdminComponent } from './account/admin/admin.component';
+import { UserService } from './account/user/user.service';
+import { AdminService } from './account/admin/admin.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { UserService } from './user/user.service';
     HomeComponent,
     DashboardComponent,
     SnippetComponent,
-    UserComponent
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +36,7 @@ import { UserService } from './user/user.service';
     AppService,
     SnippetService,
     UserService,
+    AdminService,
     PrivateGuard
   ],
   bootstrap: [AppComponent]
