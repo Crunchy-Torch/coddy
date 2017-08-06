@@ -1,9 +1,15 @@
 package org.crunchytorch.coddy.user.data.out;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 
+import java.util.Date;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SimpleUser {
 
     private String login;
@@ -11,6 +17,10 @@ public class SimpleUser {
     private String lastName;
     private String email;
     private List<String> permissions;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+    private Date createDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+    private Date updateDate;
 
     public SimpleUser() {
         // this blank constructor is needed by the library jackson
@@ -22,6 +32,8 @@ public class SimpleUser {
         this.lastName = entity.getLastName();
         this.email = entity.getEmail();
         this.permissions = entity.getPermissions();
+        this.createDate = entity.getCreateDate();
+        this.updateDate = entity.getUpdateDate();
     }
 
     public String getLogin() {
@@ -42,5 +54,13 @@ public class SimpleUser {
 
     public List<String> getPermissions() {
         return permissions;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
     }
 }
