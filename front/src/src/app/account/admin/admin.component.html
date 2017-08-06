@@ -11,6 +11,7 @@
             <th>Last name</th>
             <th>Creation date</th>
             <th>Update date</th>
+            <th>Permissions</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -22,6 +23,9 @@
             <td>{{user.lastName}}</td>
             <td>{{user.createDate}}</td>
             <td>{{user.updateDate}}</td>
+            <td>
+                <div *ngFor="let permission of user.permissions" class="ui large label">{{permission}}</div>
+            </td>
             <td>
                 <div class="ui tiny buttons">
                     <button class="ui yellow button">
