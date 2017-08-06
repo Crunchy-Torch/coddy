@@ -40,11 +40,11 @@
         <tr>
             <th colspan="3">
                 <div class="ui right floated pagination menu">
-                    <a class="icon item">
+                    <a (click)="previousPage()" class="icon item">
                         <i class="left chevron icon"></i>
                     </a>
-                    <a *ngFor="let i of paginationArray" (click)="getUsers(i-1)" class="item">{{i}}</a>
-                    <a class="icon item">
+                    <a *ngFor="let i of paginationArray" (click)="getUsers(i)" class="item">{{i}}</a>
+                    <a (click)="nextPage()" class="icon item">
                         <i class="right chevron icon"></i>
                     </a>
                 </div>

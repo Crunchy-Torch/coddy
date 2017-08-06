@@ -53,7 +53,7 @@ export class AdminComponent implements OnInit {
     this.isUserLoading = true;
     this.error = null;
 
-    this.adminService.getUsers(pageNumber, this.paginationSize)
+    this.adminService.getUsers(this.pageNumber - 1, this.paginationSize)
       .finally(
         () => this.isUserLoading = false
       )
@@ -61,6 +61,24 @@ export class AdminComponent implements OnInit {
         users => this.users = users,
         error => this.error = error
       )
+  }
+
+  previousPage() {
+    if (this.pageNumber - 1 <= 1) {
+      return;
+    }
+
+    this.pageNumber--;
+    this.getUsers();
+  }
+
+  nextPage() {
+    if (this.pageNumber + 1 > this.paginationArray[ this.paginationArray.length - 1 ]) {
+      return;
+    }
+
+    this.pageNumber++;
+    this.getUsers();
   }
 
   deleteUser(login: string) {
