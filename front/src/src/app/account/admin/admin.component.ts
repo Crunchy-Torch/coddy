@@ -64,7 +64,7 @@ export class AdminComponent implements OnInit {
   }
 
   previousPage() {
-    if (this.pageNumber - 1 <= 1) {
+    if (this.pageNumber - 1 < 1) {
       return;
     }
 
