@@ -107,6 +107,10 @@ public class UserService extends AbstractService<UserEntity> {
         super.delete(this.getUserEntityByLogin(login));
     }
 
+    public long count(){
+        return this.repository.count();
+    }
+
     public SimpleUser getUserByLogin(String login) {
         return new SimpleUser(this.getUserEntityByLogin(login));
     }

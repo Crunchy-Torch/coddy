@@ -97,6 +97,14 @@ public class User {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/count")
+    public long count(){
+        return this.service.count();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     @AuthorizationFilter
     @RolesAllowed(Permission.ADMIN)
     public List<SimpleUser> getUsers(@DefaultValue("0") @QueryParam("from") final int from,
