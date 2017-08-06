@@ -8,12 +8,10 @@ import org.crunchytorch.coddy.user.data.in.UpdateUser;
 import org.crunchytorch.coddy.user.data.out.SimpleUser;
 import org.crunchytorch.coddy.user.data.security.Permission;
 import org.crunchytorch.coddy.user.data.security.Token;
-import org.crunchytorch.coddy.user.filter.AuthorizationFilter;
 import org.crunchytorch.coddy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
@@ -97,7 +95,7 @@ public class User {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/count")
-    public long count(){
+    public long count() {
         return this.service.count();
     }
 
@@ -109,6 +107,16 @@ public class User {
     public List<SimpleUser> getUsers(@DefaultValue("0") @QueryParam("from") final int from,
                                      @DefaultValue("10") @QueryParam("size") final int size) {
         return this.service.getEntity(from, size).stream().map(SimpleUser::new).collect(Collectors.toList());
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/search")
+    public List<SimpleUser> search(@QueryParam("login") final String loginToSearch,
+                                   @DefaultValue("0") @QueryParam("from") final int from,
+                                   @DefaultValue("10") @QueryParam("size") final int size) {
+        return this.service.search(loginToSearch, from, size);
     }
 
     /**

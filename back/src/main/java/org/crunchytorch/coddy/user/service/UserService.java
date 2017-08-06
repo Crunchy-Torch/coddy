@@ -12,10 +12,15 @@ import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.crunchytorch.coddy.user.elasticsearch.repository.UserRepository;
 import org.crunchytorch.coddy.user.exception.AuthenticationException;
 import org.crunchytorch.coddy.user.utils.SecurityUtils;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.BadRequestException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService extends AbstractService<UserEntity> {
@@ -107,8 +112,16 @@ public class UserService extends AbstractService<UserEntity> {
         super.delete(this.getUserEntityByLogin(login));
     }
 
-    public long count(){
+    public long count() {
         return this.repository.count();
+    }
+
+    public List<SimpleUser> search(final String loginToSearch, final int from, final int size) {
+        final Pageable page = new PageRequest(from, size);
+        final List<SimpleUser> list = new ArrayList<>();
+        this.repository.search(QueryBuilders.regexpQuery("login", ".*" + loginToSearch + ".*"), page)
+                .forEach(entity -> list.add(new SimpleUser(entity)));
+        return list;
     }
 
     public SimpleUser getUserByLogin(String login) {
