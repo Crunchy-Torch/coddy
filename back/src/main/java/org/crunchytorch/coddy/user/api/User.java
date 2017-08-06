@@ -70,8 +70,8 @@ public class User {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}")
-    @AuthorizationFilter
-    @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
+    //@AuthorizationFilter
+    //@RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
     public SimpleUser update(@PathParam(AppUtils.API_USER_LOGIN_PATH_PARAM) final String login, final UpdateUser user) {
         user.setLogin(login);
         return this.service.update(user);
@@ -87,8 +87,8 @@ public class User {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}")
-    @AuthorizationFilter
-    @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
+    //@AuthorizationFilter
+    //@RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
     public void delete(@PathParam(AppUtils.API_USER_LOGIN_PATH_PARAM) final String login) {
         this.service.delete(login);
     }
@@ -104,8 +104,8 @@ public class User {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @AuthorizationFilter
-    @RolesAllowed(Permission.ADMIN)
+    //@AuthorizationFilter
+    //@RolesAllowed(Permission.ADMIN)
     public List<SimpleUser> getUsers(@DefaultValue("0") @QueryParam("from") final int from,
                                      @DefaultValue("10") @QueryParam("size") final int size) {
         return this.service.getEntity(from, size).stream().map(SimpleUser::new).collect(Collectors.toList());
@@ -120,8 +120,8 @@ public class User {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}")
-    @AuthorizationFilter
-    @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
+    //@AuthorizationFilter
+    //@RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
     public SimpleUser getUserByLogin(@PathParam(AppUtils.API_USER_LOGIN_PATH_PARAM) final String login) {
         return this.service.getUserByLogin(login);
     }
