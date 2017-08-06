@@ -1,8 +1,22 @@
+<div class="ui segment">
+    <h1 class="ui center aligned header">Admin panel</h1>
+</div>
+
 <div *ngIf="isFirstLoading" class="ui active centered inline loader"></div>
 
 <app-error [error]="error"></app-error>
 
 <div *ngIf="!isFirstLoading && users" class="ui items">
+
+    <div class="ui right aligned header">
+        <div class="ui search">
+            <div class="ui icon input">
+                <input class="prompt" type="text" placeholder="Search user by login...">
+                <i class="search icon"></i>
+            </div>
+        </div>
+    </div>
+
     <table class="ui selectable very basic table">
         <thead>
         <tr>
