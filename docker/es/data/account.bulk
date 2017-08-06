@@ -2,3 +2,21 @@
 {"login":"napoleon","password":"toto","salt":"AfRgIufs","email":"napoleon.bonaparte@emperor.fr","firstName":"Napoléon","lastName":"Bonaparte"}
 {"index":{"_index":"account","_type":"user","_id":"2"}}
 {"login":"ciceron","password":"toto","salt":"AfRgIufs","email":"ciceron@emperor.it","firstName":"Marcus","lastName":"Cicero"}
+{"index":{"_index":"account","_type":"user","_id":"3"}}
+{"login":"romulus","password":"toto","salt":"AfRgIufs","email":"ciceron@emperor.it","firstName":"Marcus","lastName":"Cicero", "permissions":["admin", "personal_account","personal_snippet"], "createDate":1502023915565,"updateDate":1502023915580}
+{"index":{"_index":"account","_type":"user","_id":"4"}}
+{"login":"tartar","password":"toto","salt":"AfRgIufs","email":"ciceron@emperor.it"}
+{"index":{"_index":"account","_type":"user","_id":"5"}}
+{"login":"ratata","password":"toto","salt":"AfRgIufs","email":"ciceron@emperor.it","firstName":"Marcus","lastName":"Cicero"}
+{"index":{"_index":"account","_type":"user","_id":"6"}}
+{"login":"rubeon","password":"toto","salt":"AfRgIufs","email":"ciceron@emperor.it","firstName":"Marcus","lastName":"Cicero"}
+{"index":{"_index":"account","_type":"user","_id":"7"}}
+{"login":"turlututu","password":"toto","salt":"AfRgIufs","email":"ciceron@emperor.it","firstName":"Marcus","lastName":"Cicero", "createDate":1502023915565,"updateDate":1502023915580}
+{"index":{"_index":"account","_type":"user","_id":"8"}}
+{"login":"lol","password":"toto","salt":"AfRgIufs","email":"ciceron@emperor.it","firstName":"Marcus","lastName":"Cicero"}
+{"index":{"_index":"account","_type":"user","_id":"9"}}
+{"login":"tamaman","password":"toto","salt":"AfRgIufs","email":"ciceron@emperor.it","firstName":"Marcus","lastName":"Cicero"}
+{"index":{"_index":"account","_type":"user","_id":"10"}}
+{"login":"dsfezfzd","password":"toto","salt":"AfRgIufs","email":"ciceron@emperor.it","firstName":"Marcus","lastName":"Cicero"}
+{"index":{"_index":"account","_type":"user","_id":"11"}}
+{"login":"xdfsfzefz","password":"toto","salt":"AfRgIufs","email":"ciceron@emperor.it", "permissions":["admin", "personal_account","personal_snippet"]}
