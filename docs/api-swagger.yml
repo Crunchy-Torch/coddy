@@ -359,6 +359,12 @@ definitions:
         type: "array"
         items:
           type: "string"
+      createDate:
+        type: "string"
+        format: "date"
+      updateDate:
+        type: "string"
+        format: "date"
   UpdateUser:
     type: "object"
     properties:
