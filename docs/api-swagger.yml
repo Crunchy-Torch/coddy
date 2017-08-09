@@ -106,7 +106,6 @@ paths:
           $ref: "#/responses/UnsupportedMediaType"
         500:
           $ref: "#/responses/InternalError"
-
   /user/auth:
     post:
       tags:
@@ -147,6 +146,69 @@ paths:
             type: "array"
             items:
               type: "string"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
+  /user/search:
+    get:
+      tags:
+      - "user"
+      summary: "search user by login"
+      operationId: "search"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        description: "the jwt token needed to authenticate the user and check permission"
+        required: true
+        type: "string"
+      - name: "login"
+        in: "query"
+        required: true
+        description: "the login to search"
+        type: "string"
+      - name: "from"
+        in: "query"
+        required: false
+        description: "the offset from the first result you want to fetch"
+        type: integer
+        default: 0
+      - name: "size"
+        in: "query"
+        required: false
+        description: "allows you to configure the maximum amount of hits to be returned."
+        type: integer
+        default: 10
+      responses:
+        200:
+          description: "Returns all users who have a login that starts or ends with the one in the query parameter"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/SimpleUser"
+        401:
+          $ref: "#/responses/Unauthorized"
+        403:
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
+  /user/count:
+    get:
+      tags:
+      - "user"
+      summary: "give the number of user in the database"
+      operationId: "count"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "integer"
         405:
           $ref: "#/responses/MethodNotAllowed"
         415:
