@@ -1,4 +1,4 @@
-<div *ngIf="error">
+<div class="container" *ngIf="error">
   <div class="ui red icon message">
     <div *ngIf="hasStatus()" class="icon">{{error.status}}</div>
     <i *ngIf="!hasStatus()" class="warning icon"></i>
