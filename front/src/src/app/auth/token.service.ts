@@ -4,13 +4,12 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class TokenService {
 
-  private tokenName = 'authToken';
   private token: Token = null;
 
   constructor() { }
 
   setToken(token: string) {
-    localStorage.setItem(this.tokenName, token);
+    localStorage.setItem(Token.TOKEN_KEY, token);
     this.token = this.decodeToken();
   }
 
@@ -27,12 +26,12 @@ export class TokenService {
 
   clearToken(): void {
     this.token = null;
-    localStorage.removeItem(this.tokenName);
+    localStorage.removeItem(Token.TOKEN_KEY);
   }
 
   private decodeToken(): Token {
     // Get token from local storage
-    let item: string = localStorage.getItem(this.tokenName);
+    let item: string = localStorage.getItem(Token.TOKEN_KEY);
 
     // TODO decode token properly
     this.token = new Token();

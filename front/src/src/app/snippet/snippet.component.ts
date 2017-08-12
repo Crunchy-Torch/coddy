@@ -1,4 +1,4 @@
-import { Error } from './../shared/error/error';
+import { Error } from '../core/error/error';
 import { ActivatedRoute } from '@angular/router';
 import { SnippetService } from './snippet.service';
 import { Language, Link, LinkType, Snippet } from './snippet';

@@ -1,12 +1,10 @@
-import { TokenService } from './../shared/token.service';
+import { TokenService } from '../token.service';
 import { LoginService } from './login.service';
-import { Error } from '../shared/error/error';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: './login.component.html'
 })
 export class LoginComponent {
 

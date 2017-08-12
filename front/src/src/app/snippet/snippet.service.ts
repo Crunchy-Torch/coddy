@@ -1,4 +1,4 @@
-import { BaseService } from './../shared/base.service';
+import { BaseService } from '../core/base.service';
 import { Observable } from 'rxjs/Rx';
 import serverUrl from '../../conf';
 import { Http } from '@angular/http';

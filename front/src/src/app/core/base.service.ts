@@ -1,8 +1,10 @@
+import { Injectable } from '@angular/core';
 import { Error } from './error/error';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import serverUrl from '../../conf';
 
+@Injectable()
 export class BaseService {
 
   protected extractArray(res: Response) {
