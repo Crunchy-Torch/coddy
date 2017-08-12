@@ -8,10 +8,12 @@ import org.crunchytorch.coddy.user.data.in.UpdateUser;
 import org.crunchytorch.coddy.user.data.out.SimpleUser;
 import org.crunchytorch.coddy.user.data.security.Permission;
 import org.crunchytorch.coddy.user.data.security.Token;
+import org.crunchytorch.coddy.user.filter.AuthorizationFilter;
 import org.crunchytorch.coddy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
