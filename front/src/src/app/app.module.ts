@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { LoginService } from './login/login.service';
 import { ErrorComponent } from './shared/error/error.component';
 import { SnippetService } from './snippet/snippet.service';
@@ -33,7 +34,8 @@ import { LoginComponent } from './login/login.component';
   imports: [
     BrowserModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [
     AppService,

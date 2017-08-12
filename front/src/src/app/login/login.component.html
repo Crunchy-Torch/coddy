@@ -4,13 +4,13 @@
   <div class="ui stacked segment">
     <div class="field">
       <div class="ui left icon input">
-        <input [value]="login" type="text" placeholder="Username">
+        <input [(ngModel)]="login" type="text" placeholder="Username">
         <i class="user icon"></i>
       </div>
     </div>
     <div class="field">
       <div class="ui left icon input">
-        <input [value]="password" type="password" placeholder="Password">
+        <input [(ngModel)]="password" type="password" placeholder="Password">
         <i class="lock icon"></i>
       </div>
     </div>
