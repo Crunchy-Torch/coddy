@@ -6,6 +6,9 @@
 target
 *.class
 
+# Visual Studio files
+.vscode/
+
 # Angular files
 front/src/dist
 front/src/tmp
@@ -21,6 +24,7 @@ front/src/typings
 front/src/e2e/*.js
 front/src/e2e/*.map
 front/src/package-lock.json
+
 # System Files
 .DS_Store
 Thumbs.db
