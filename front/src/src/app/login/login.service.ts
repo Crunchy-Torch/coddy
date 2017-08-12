@@ -1,4 +1,4 @@
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { BaseService } from '../shared/base.service';
 import { Injectable } from '@angular/core';
 
@@ -13,12 +13,13 @@ export class LoginService extends BaseService {
 
   authenticate(login: string, password: string) {
 
-    let body: any = {
-      login: login,
-      password: password
-    };
-    return this.http.post(this.buildUrl(this.authEndpoint), body)
-      .map(this.extractObject)
-      .catch(this.extractError);
+    let headers: Headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.post(
+      this.buildUrl(this.authEndpoint),
+      JSON.stringify({ login: login, password: password }),
+      { headers }
+    ).map(this.extractObject).catch(this.extractError);
   }
 }
