@@ -1,3 +1,4 @@
+import { TokenService } from './shared/token.service';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from './login/login.service';
 import { ErrorComponent } from './shared/error/error.component';
@@ -43,6 +44,7 @@ import { LoginComponent } from './login/login.component';
     UserService,
     AdminService,
     LoginService,
+    TokenService,
     PrivateGuard
   ],
   bootstrap: [AppComponent]
