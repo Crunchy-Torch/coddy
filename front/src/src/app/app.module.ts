@@ -15,6 +15,7 @@ import { SnippetComponent } from './snippet/snippet.component';
 import { AdminComponent } from './account/admin/admin.component';
 import { UserService } from './account/user/user.service';
 import { AdminService } from './account/admin/admin.service';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AdminService } from './account/admin/admin.service';
     HomeComponent,
     DashboardComponent,
     SnippetComponent,
-    AdminComponent
+    AdminComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
