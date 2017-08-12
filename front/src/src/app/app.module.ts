@@ -1,3 +1,4 @@
+import { LoginService } from './login/login.service';
 import { ErrorComponent } from './shared/error/error.component';
 import { SnippetService } from './snippet/snippet.service';
 import { PrivateGuard } from './../template/private/private.guard';
@@ -39,6 +40,7 @@ import { LoginComponent } from './login/login.component';
     SnippetService,
     UserService,
     AdminService,
+    LoginService,
     PrivateGuard
   ],
   bootstrap: [AppComponent]
