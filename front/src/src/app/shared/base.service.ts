@@ -5,23 +5,25 @@ import serverUrl from '../../conf';
 
 export class BaseService {
 
-    protected extractArray(res: Response) {
-        let body = res.json();
-        return body || [];
-    }
+  protected extractArray(res: Response) {
+    let body = res.json();
+    return body || [];
+  }
 
-    protected extractObject(res: Response) {
-        let body = res.json();
-        return body || {};
-    }
+  protected extractObject(res: Response) {
+    let body = res.json();
+    return body || {};
+  }
 
-    protected extractError(res: Response) {
-        console.log(res);
-        let error: Error = new Error(res.status, res.statusText || 'Something went horribly wrong...');
-        return Observable.throw(error);
-    }
+  protected extractError(res: Response) {
+    // Extract error message
+    let details: string = res.json().message || '';
+    let error: Error = new Error(res.status, res.statusText || 'Something went horribly wrong...');
+    error.details = details;
+    return Observable.throw(error);
+  }
 
-    protected buildUrl(endpoint: string): string{
-        return serverUrl + endpoint;
-    }
+  protected buildUrl(endpoint: string): string {
+    return serverUrl + endpoint;
+  }
 }
