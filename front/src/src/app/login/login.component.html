@@ -14,6 +14,11 @@
         <i class="lock icon"></i>
       </div>
     </div>
-    <button (click)="authenticate()" class="ui fluid large teal submit button">Login</button>
+    <button (click)="authenticate()" 
+      [disabled]="!login || !password || isLoading" 
+      [ngClass]="{'loading': isLoading }" 
+      class="ui large fluid teal submit button">
+      Login
+    </button>
   </div>
 </div>

@@ -11,12 +11,18 @@ export class LoginComponent {
 
   login = '';
   password = '';
+  isLoading = false;
   error: Error;
 
   constructor(private loginService: LoginService) { }
 
   authenticate() {
-    this.loginService.authenticate(this.login, this.password).subscribe(
+    this.isLoading = true;
+    this.error = null;
+    
+    this.loginService.authenticate(this.login, this.password).finally(
+      () => this.isLoading = false
+    ).subscribe(
       token => console.log(token),
       err => this.error = err
     );
