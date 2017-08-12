@@ -3,10 +3,10 @@
     <div *ngIf="hasStatus()" class="icon">{{error.status}}</div>
     <i *ngIf="!hasStatus()" class="warning icon"></i>
     <div class="content">
-      <div class="header">
+      <h2 class="header">
         {{error.message}}
-      </div>
-      <p>{{error.details}}</p>
+      </h2>
+      <p *ngIf="error.details">{{error.details}}</p>
     </div>
   </div>
 </div>
