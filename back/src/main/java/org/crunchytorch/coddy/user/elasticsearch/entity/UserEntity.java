@@ -1,7 +1,5 @@
 package org.crunchytorch.coddy.user.elasticsearch.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import org.crunchytorch.coddy.user.data.IUser;
 import org.crunchytorch.coddy.user.data.in.UpdateUser;
 import org.crunchytorch.coddy.user.data.security.Permission;
@@ -14,11 +12,10 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Document(indexName = "account", type = "user")
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserEntity implements Serializable, IUser {
 
     @Id
@@ -45,6 +42,12 @@ public class UserEntity implements Serializable, IUser {
     @Field(type = FieldType.String)
     private List<String> permissions;
 
+    @Field(type = FieldType.Date)
+    private Date createDate;
+
+    @Field(type = FieldType.Date)
+    private Date updateDate;
+
     public UserEntity() {
     }
 
@@ -58,6 +61,7 @@ public class UserEntity implements Serializable, IUser {
             add(Permission.PERSO_ACCOUNT);
             add(Permission.PERSO_SNIPPET);
         }};
+        this.createDate = this.updateDate = new Date();
     }
 
     public UserEntity(UpdateUser user, UserEntity oldEntity) {
@@ -65,6 +69,7 @@ public class UserEntity implements Serializable, IUser {
         this.id = oldEntity.getId();
         this.login = oldEntity.getLogin();
         this.permissions = oldEntity.getPermissions();
+        this.createDate = oldEntity.getCreateDate();
 
         // now the rest of the data can be updated
         if (user.getPassword() != null) {
@@ -73,6 +78,8 @@ public class UserEntity implements Serializable, IUser {
             this.password = oldEntity.getPassword();
             this.salt = oldEntity.getSalt();
         }
+
+        this.updateDate = new Date();
 
         this.firstName = user.getFirstName() != null ? user.getFirstName() : oldEntity.getFirstName();
         this.lastName = user.getLastName() != null ? user.getLastName() : oldEntity.getLastName();
@@ -145,6 +152,22 @@ public class UserEntity implements Serializable, IUser {
 
     public void setPermissions(List<String> permissions) {
         this.permissions = permissions;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 
     private void generatePasswordAndSalt(char[] password) {

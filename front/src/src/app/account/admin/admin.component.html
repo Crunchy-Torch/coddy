@@ -1,0 +1,79 @@
+<div class="ui segment">
+    <h1 class="ui center aligned header">Admin panel</h1>
+</div>
+
+<div class="ui segment">
+    <div *ngIf="isFirstLoading" class="ui active centered inline loader"></div>
+
+    <app-error [error]="error"></app-error>
+
+    <div *ngIf="!isFirstLoading && users" class="ui items">
+
+        <div class="ui right aligned header">
+            <div class="ui search">
+                <div class="ui icon input">
+                    <input class="prompt" type="text" placeholder="Search user by login...">
+                    <i class="search icon"></i>
+                </div>
+            </div>
+        </div>
+
+        <table class="ui selectable very basic table">
+            <thead>
+            <tr>
+                <th>Login</th>
+                <th>First Name</th>
+                <th>Last name</th>
+                <th>Creation date</th>
+                <th>Update date</th>
+                <th>Permissions</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <div *ngIf="isUserLoading" class="ui active centered inline loader"></div>
+            <tbody *ngIf="!isUserLoading">
+            <tr *ngFor="let user of users">
+                <td>{{user.login}}</td>
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.createDate}}</td>
+                <td>{{user.updateDate}}</td>
+                <td>
+                    <div *ngFor="let permission of user.permissions" class="ui large label">{{permission}}</div>
+                </td>
+                <td>
+                    <div class="ui tiny buttons">
+                        <button class="ui yellow button">
+                            <i class="edit icon"></i>
+                            Edit
+                        </button>
+                        <div class="or"></div>
+                        <button *ngIf="isDeleteLoading" class="ui loading red button">
+                            Loading
+                        </button>
+                        <button *ngIf="!isDeleteLoading" (click)="deleteUser(user.login)" class="ui red button">
+                            <i class="trash icon"></i>
+                            Delete
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot *ngIf="nbUser >= 0">
+            <tr>
+                <th colspan="3">
+                    <div class="ui right floated pagination menu">
+                        <a (click)="previousPage()" class="icon item">
+                            <i class="left chevron icon"></i>
+                        </a>
+                        <a *ngFor="let i of paginationArray" (click)="getUsers(i)" class="item">{{i}}</a>
+                        <a (click)="nextPage()" class="icon item">
+                            <i class="right chevron icon"></i>
+                        </a>
+                    </div>
+                </th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
