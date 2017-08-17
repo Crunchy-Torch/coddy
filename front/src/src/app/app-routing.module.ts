@@ -1,4 +1,3 @@
-import { SnippetComponent } from './snippet/snippet.component';
 import { PrivateGuard } from './../template/private/private.guard';
 import { PrivateComponent } from './../template/private/private.component';
 import { PublicComponent } from './../template/public/public.component';
@@ -14,7 +13,6 @@ const PUBLIC_ROUTES: Routes = [
 
 const PRIVATE_ROUTES: Routes = [
   {path: 'dashboard', component: DashboardComponent},
-  {path: 'snippet/:id', component: SnippetComponent},
   {path: 'admin', component: AdminComponent}
 ];
 
