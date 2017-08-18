@@ -1,8 +1,7 @@
-import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared/shared.module';
 import { CoreModule } from './../core/core.module';
 import { TokenService } from './token.service';
 import { AuthHttpService } from './auth-http.service';
-import { FormsModule } from '@angular/forms';
 import { LoginService } from './login/login.service';
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
@@ -14,13 +13,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 }
 
 @NgModule({
+  imports: [
+    SharedModule
+  ],
   exports: [
     LoginComponent
-  ],
-  imports: [
-    CommonModule,
-    CoreModule,
-    FormsModule
   ],
   declarations: [
     LoginComponent
