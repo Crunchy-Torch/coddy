@@ -7,6 +7,8 @@ import serverUrl from '../../conf';
 @Injectable()
 export class BaseService {
 
+  private static DEFAULT_ERROR = 'Something went horribly wrong...';
+
   protected extractArray(res: Response) {
     let body = res.json();
     return body || [];
@@ -18,10 +20,17 @@ export class BaseService {
   }
 
   protected extractError(res: Response) {
-    // Extract error message
-    let details: string = res.json().message || '';
-    let error: Error = new Error(res.status, res.statusText || 'Something went horribly wrong...');
-    error.details = details;
+
+    let error: Error = new Error();
+    if (res instanceof Response) {
+      // Extract error message
+      error.status = res.status
+      error.message = res.statusText || BaseService.DEFAULT_ERROR;
+      error.details = res.json().message || '';
+    } else {
+      error.message = BaseService.DEFAULT_ERROR;
+      error.details = res as string || '';
+    }
     return Observable.throw(error);
   }
 
