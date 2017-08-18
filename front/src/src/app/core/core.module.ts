@@ -1,20 +1,25 @@
-import { BaseService } from './base.service';
-import { ErrorComponent } from './error/error.component';
+import { PrivateComponent } from './template/private/private.component';
+import { PublicComponent } from './template/public/public.component';
+import { AuthModule } from '../auth/auth.module';
+import { SharedModule } from '../shared/shared.module';
+import { CoreRoutingModule } from './core-routing.module';
+import { HomeComponent } from './home/home.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [
-    CommonModule
+    SharedModule,
+    CoreRoutingModule,
+    AuthModule
   ],
-  exports: [
-    ErrorComponent
-  ],
+  exports: [],
   declarations: [
-    ErrorComponent
+    PublicComponent,
+    PrivateComponent,
+    DashboardComponent,
+    HomeComponent
   ],
-  providers: [
-    BaseService
-  ]
+  providers: []
 })
 export class CoreModule { }
