@@ -1,3 +1,4 @@
+import { PrivateGuard } from './template/private/private.guard';
 import { PrivateComponent } from './template/private/private.component';
 import { PublicComponent } from './template/public/public.component';
 import { AuthModule } from '../auth/auth.module';
@@ -17,8 +18,10 @@ import { NgModule } from '@angular/core';
     PublicComponent,
     PrivateComponent,
     DashboardComponent,
-    HomeComponent
+    HomeComponent    
   ],
-  providers: []
+  providers: [
+    PrivateGuard
+  ]
 })
 export class CoreModule { }

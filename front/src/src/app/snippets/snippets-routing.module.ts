@@ -1,3 +1,4 @@
+import { PrivateGuard } from '../core/template/private/private.guard';
 import { PrivateComponent } from '../core/template/private/private.component';
 import { SnippetComponent } from './snippet/snippet.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -8,7 +9,7 @@ const PRIVATE_ROUTES: Routes = [
 ];
 
 const SNIPPETS_ROUTES: Routes = [
-  { path: '', component: PrivateComponent, children: PRIVATE_ROUTES }
+  { path: '', component: PrivateComponent, children: PRIVATE_ROUTES, canActivate: [PrivateGuard] }
 ];
 
 @NgModule({

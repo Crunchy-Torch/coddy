@@ -20,8 +20,8 @@ export class TokenService {
     return this.token;
   }
 
-  hasToken(): boolean {
-    return this.getToken() !== null;
+  hasValidToken(): boolean {
+    return this.hasToken();
   }
 
   clearToken(): void {
@@ -38,5 +38,9 @@ export class TokenService {
     this.token.raw = item;
 
     return this.token;
+  }
+
+  private hasToken(): boolean {
+    return localStorage.getItem(Token.TOKEN_KEY) !== null;
   }
 }
