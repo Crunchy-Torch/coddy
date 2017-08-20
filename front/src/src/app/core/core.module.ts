@@ -10,8 +10,7 @@ import { NgModule } from '@angular/core';
 @NgModule({
   imports: [
     SharedModule,
-    CoreRoutingModule,
-    AuthModule
+    CoreRoutingModule
   ],
   exports: [],
   declarations: [
