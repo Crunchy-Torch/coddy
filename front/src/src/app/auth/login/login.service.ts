@@ -1,5 +1,6 @@
+import { Observable } from 'rxjs/Rx';
 import { BaseService } from '../../shared/base.service';
-import { Http, Headers } from '@angular/http';
+import { Headers, Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 
 @Injectable()
@@ -11,7 +12,7 @@ export class LoginService extends BaseService {
     super();
   }
 
-  authenticate(login: string, password: string) {
+  authenticate(login: string, password: string): Observable<string> {
 
     let headers: Headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -20,6 +21,10 @@ export class LoginService extends BaseService {
       this.buildUrl(this.authEndpoint),
       JSON.stringify({ login: login, password: password }),
       { headers }
-    ).map(this.extractObject).catch(this.extractError);
+    ).map(res => this.extractObject(res).token).catch(this.extractError);
+  }
+
+  private extractToken(res: Response): string {
+    return this.extractObject(res).token;
   }
 }

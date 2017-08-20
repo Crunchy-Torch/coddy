@@ -1,5 +1,6 @@
+import { AuthRoutingModule } from './auth-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import { CoreModule } from './../core/core.module';
+import { CoreModule } from '../core/core.module';
 import { TokenService } from './token.service';
 import { AuthHttpService } from './auth-http.service';
 import { LoginService } from './login/login.service';
@@ -14,7 +15,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 
 @NgModule({
   imports: [
-    SharedModule
+    SharedModule,
+    AuthRoutingModule
   ],
   exports: [
     LoginComponent

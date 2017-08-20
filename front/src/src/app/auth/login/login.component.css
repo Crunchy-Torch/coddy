@@ -1,0 +1,13 @@
+.grid {
+  height: 100%;
+}
+
+.column {
+  max-width: 450px;
+}
+
+.ui.header {
+  text-align: left;
+  display: inline-block;
+  vertical-align: middle;
+}
