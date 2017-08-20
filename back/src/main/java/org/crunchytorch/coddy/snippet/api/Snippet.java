@@ -2,6 +2,7 @@ package org.crunchytorch.coddy.snippet.api;
 
 import org.crunchytorch.coddy.snippet.elasticsearch.entity.SnippetEntity;
 import org.crunchytorch.coddy.snippet.service.SnippetService;
+import org.crunchytorch.coddy.user.filter.AuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Component
+@AuthorizationFilter
 @Path("/snippet")
 public class Snippet {
 
