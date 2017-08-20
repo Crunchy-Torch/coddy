@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { TokenService } from '../../../auth/token.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,5 +9,10 @@ import { Component } from '@angular/core';
 })
 
 export class PrivateComponent {
-    constructor() { }
+    constructor(private router: Router, private tokenService: TokenService) { }
+
+    logout() {
+      this.tokenService.clearToken();
+      this.router.navigate(['/']);
+    }
 }
