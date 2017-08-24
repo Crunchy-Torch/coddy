@@ -72,11 +72,6 @@ paths:
       summary: "Get all users"
       operationId: "getUsers"
       parameters:
-      - name: "Authorization"
-        in: "header"
-        description: "the jwt token needed to authenticate the user and check permission"
-        required: true
-        type: "string"
       - name: "from"
         in: "query"
         required: false
@@ -96,6 +91,10 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/SimpleUser"
+          headers:
+            Authorization:
+              type: "string"
+              description: "a JWT token with a refresh session"
         401:
           $ref: "#/responses/Unauthorized"
         403:
@@ -106,6 +105,8 @@ paths:
           $ref: "#/responses/UnsupportedMediaType"
         500:
           $ref: "#/responses/InternalError"
+      security:
+      - jwt: []
   /user/auth:
     post:
       tags:
@@ -154,16 +155,11 @@ paths:
           $ref: "#/responses/InternalError"
   /user/search:
     get:
-      tags:
+      tags: 
       - "user"
       summary: "search user by login"
       operationId: "search"
       parameters:
-      - name: "Authorization"
-        in: "header"
-        description: "the jwt token needed to authenticate the user and check permission"
-        required: true
-        type: "string"
       - name: "login"
         in: "query"
         required: true
@@ -180,7 +176,7 @@ paths:
         required: false
         description: "allows you to configure the maximum amount of hits to be returned."
         type: integer
-        default: 10
+        default: 10      
       responses:
         200:
           description: "Returns all users who have a login that starts or ends with the one in the query parameter"
@@ -188,6 +184,10 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/SimpleUser"
+          headers:
+            Authorization:
+              type: "string"
+              description: "a JWT token with a refresh session"
         401:
           $ref: "#/responses/Unauthorized"
         403:
@@ -198,6 +198,8 @@ paths:
           $ref: "#/responses/UnsupportedMediaType"
         500:
           $ref: "#/responses/InternalError"
+      security:
+      - jwt: []
   /user/count:
     get:
       tags:
@@ -228,16 +230,15 @@ paths:
         description: "The login that needs to be fetched."
         required: true
         type: "string"
-      - name: "Authorization"
-        in: "header"
-        description: "the jwt token needed to authenticate the user and check permission"
-        required: true
-        type: "string"
       responses:
         200:
           description: "successful operation"
           schema:
             $ref: "#/definitions/SimpleUser"
+          headers:
+            Authorization:
+              type: "string"
+              description: "a JWT token with a refresh session"
         401:
           $ref: "#/responses/Unauthorized"
         403:
@@ -252,6 +253,8 @@ paths:
           $ref: "#/responses/UnsupportedMediaType"
         500:
           $ref: "#/responses/InternalError"
+      security:
+      - jwt: []
     put:
       tags:
       - "user"
@@ -262,11 +265,6 @@ paths:
       - name: "login"
         in: "path"
         description: "name that need to be updated"
-        required: true
-        type: "string"
-      - name: "Authorization"
-        in: "header"
-        description: "the jwt token needed to authenticate the user and check permission"
         required: true
         type: "string"
       - in: "body"
@@ -280,6 +278,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/SimpleUser"
+          headers:
+            Authorization:
+              type: "string"
+              description: "a JWT token with a refresh session"
         400:
           description: "Invalid user supplied"
           schema:
@@ -298,6 +300,8 @@ paths:
           $ref: "#/responses/UnsupportedMediaType"
         500:
           $ref: "#/responses/InternalError"
+      security:
+      - jwt: []
     delete:
       tags:
       - "user"
@@ -310,14 +314,13 @@ paths:
         description: "The name that needs to be deleted"
         required: true
         type: "string"
-      - name: "Authorization"
-        in: "header"
-        description: "the jwt token needed to authenticate the user and check permission"
-        required: true
-        type: "string"
       responses:
         204:
           description: "The resource was deleted successfully"
+          headers:
+            Authorization:
+              type: "string"
+              description: "a JWT token with a refresh session"
         400:
           description: "Invalid username supplied"
           schema:
@@ -336,6 +339,15 @@ paths:
           $ref: "#/responses/UnsupportedMediaType"
         500:
           $ref: "#/responses/InternalError"
+      security:
+      - jwt: []
+
+securityDefinitions:
+  jwt:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+    description: "the jwt token needed to authenticate the user and check permission"
 definitions:
   Credential:
     type: "object"
