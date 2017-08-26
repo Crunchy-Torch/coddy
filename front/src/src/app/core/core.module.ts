@@ -1,3 +1,4 @@
+import { AdminGuard } from './admin/admin.guard';
 import { PrivateGuard } from './template/private/private.guard';
 import { PrivateComponent } from './template/private/private.component';
 import { PublicComponent } from './template/public/public.component';
@@ -21,7 +22,8 @@ import { NgModule } from '@angular/core';
     HomeComponent    
   ],
   providers: [
-    PrivateGuard
+    PrivateGuard,
+    AdminGuard
   ]
 })
 export class CoreModule { }
