@@ -16,9 +16,9 @@ import { AdminService } from './account/admin/admin.service';
   imports: [
     BrowserModule,
     HttpModule,
+    CoreModule,
     AppRoutingModule,
     FormsModule,
-    CoreModule,
     SharedModule,
     AuthModule,
     SnippetsModule
