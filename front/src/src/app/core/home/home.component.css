@@ -1,8 +1,29 @@
 .masthead.segment {
     min-height: 100%;
     padding: 1em 0em;
-    background-color: #1d2626;
+    background-color:#f7f7f7;
     background-position: center;
+    background-size: 100%;
+}
+
+.brand.logo {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;  
+}
+
+.brand.logo .icon {
+  font-size: 1.2rem !important;
+}
+
+.header + .header {
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.darkgrey.header {
+  color: #666;
+  font-weight: 500;
 }
 
 .ui.text.container {
@@ -11,10 +32,6 @@
 
 .icon.no.margin {
     margin-right: 0 !important;
-}
-
-i.icon.code:before {
-    margin-left: -3px;
 }
 
 .field {
@@ -71,6 +88,25 @@ i.big.icon {
 .scroll.button.container > .align {
     position: relative;
     left: -50%;
+}
+
+.ui.grid {
+  margin: 0;
+}
+
+.ui.grid {
+  min-width: 100%;
+}
+.ui.horizontal.segments {
+  padding: 0 8rem;
+  border: none;
+  box-shadow: none;
+}
+
+.ui.horizontal.segments .segment {
+  padding: 0 4rem;
+  border: none;
+  box-shadow: none;
 }
 
 @media only screen and (max-width: 700px) {
