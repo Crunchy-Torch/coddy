@@ -1,0 +1,34 @@
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+
+    <h2 class="ui header">
+      <i class="circular large ui icon inverted teal code icon"></i>
+      <div class="content">
+        Coddy
+        <div class="sub header">Log-in to your account</div>
+      </div>
+    </h2>
+
+    <app-error [error]="error"></app-error>
+    <div class="ui form">
+      <div class="ui stacked segment">
+        <div class="field">
+          <div class="ui left icon input">
+            <input [(ngModel)]="login" type="text" placeholder="Username">
+            <i class="user icon"></i>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <input [(ngModel)]="password" type="password" placeholder="Password">
+            <i class="lock icon"></i>
+          </div>
+        </div>
+        <button (click)="authenticate()" [disabled]="!login || !password || isLoading" [ngClass]="{'loading': isLoading }" class="ui large fluid teal submit button">
+      Login
+    </button>
+      </div>
+    </div>
+
+  </div>
+</div>

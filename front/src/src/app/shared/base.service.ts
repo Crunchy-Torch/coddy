@@ -1,27 +1,40 @@
+import { Injectable } from '@angular/core';
 import { Error } from './error/error';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import serverUrl from '../../conf';
 
+@Injectable()
 export class BaseService {
 
-    protected extractArray(res: Response) {
-        let body = res.json();
-        return body || [];
-    }
+  private static DEFAULT_ERROR = 'Something went horribly wrong...';
 
-    protected extractObject(res: Response) {
-        let body = res.json();
-        return body || {};
-    }
+  protected extractArray(res: Response) {
+    let body = res.json();
+    return body || [];
+  }
 
-    protected extractError(res: Response) {
-        console.log(res);
-        let error: Error = new Error(res.status, res.statusText || 'Something went horribly wrong...');
-        return Observable.throw(error);
-    }
+  protected extractObject(res: Response) {
+    let body = res.json();
+    return body || {};
+  }
 
-    protected buildUrl(endpoint: string): string{
-        return serverUrl + endpoint;
+  protected extractError(res: Response) {
+
+    let error: Error = new Error();
+    if (res instanceof Response) {
+      // Extract error message
+      error.status = res.status
+      error.message = res.statusText || BaseService.DEFAULT_ERROR;
+      error.details = res.json().message || '';
+    } else {
+      error.message = BaseService.DEFAULT_ERROR;
+      error.details = res as string || '';
     }
+    return Observable.throw(error);
+  }
+
+  protected buildUrl(endpoint: string): string {
+    return serverUrl + endpoint;
+  }
 }

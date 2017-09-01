@@ -170,7 +170,6 @@ public class JWTService {
                 .setClaims(claims)
                 .setNotBefore(notBefore)
                 .setExpiration(Date.from(expiration.atZone(ZoneId.systemDefault()).toInstant()))
-                .compressWith(CompressionCodecs.DEFLATE)
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact());
     }

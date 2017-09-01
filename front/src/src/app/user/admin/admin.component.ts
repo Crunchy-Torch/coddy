@@ -25,6 +25,10 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.reinit();
+  }
+
+  reinit(): void {
     this.getUsersFirstLoading();
     this.countUser();
   }
