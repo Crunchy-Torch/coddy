@@ -13,7 +13,7 @@ export class HomeComponent {
   constructor() { }
 
   public scrollToLogin() {
-    let element: Element = document.getElementById('login-form');
+    let element: Element = document.getElementById('coddy-presentation');
     element.scrollIntoView(true);
   }
 }
