@@ -1,9 +1,9 @@
 .inline {
     display: inline;
-}
 
-.inline + button {
-    margin-left: 1em;
+    &+ button {
+      margin-left: 1em;
+    }
 }
 
 .attached.header > .icon {
@@ -12,4 +12,3 @@
     padding-top: inherit;
     vertical-align: inherit;
 }
-

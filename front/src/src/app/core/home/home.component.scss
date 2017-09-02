@@ -1,0 +1,129 @@
+$wallpaper-width: 1920px;
+$wallpaper-height: 1280px;
+
+.ui.attached.segment {
+  max-width: $wallpaper-width;
+  margin: auto;
+  border-left: none;
+  border-right: none;
+
+  &.top {
+    height: 100%;
+    max-height: $wallpaper-height;
+  }
+
+  &.padding {
+    padding: 5em 0 5em 0;
+  }
+
+  .wallpaper {
+    width: 100%;
+    max-width: 1920px;
+    height: 100%;
+    max-height: 1280px;
+    position: absolute;
+    background-position: center;
+  }
+
+  .brand.logo {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;  
+
+    .icon {
+      font-size: 1.2rem !important;
+    }
+  }
+}
+
+.ui.text.container {
+  margin-top: 5em;
+  text-align: center;
+
+  .header + .header {
+    margin-top: 0;
+    margin-bottom: 2rem;
+  }
+
+  .darkgrey.header {
+    color: #666;
+    font-weight: 500;
+  }
+}
+
+// Arrow down button (with animation)
+.scroll.button.container {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+
+  >.align {
+    position: relative;
+    left: -50%;
+  }
+
+  .transparent.button {
+    border: none;
+    background-color: transparent;
+    color: white;
+  
+    &:focus {
+      outline: none;
+    }
+  
+    .bounce {
+      -moz-animation: bounce 2s infinite;
+      -webkit-animation: bounce 2s infinite;
+      animation: bounce 2s infinite;
+    }
+  
+    i.big.icon {
+      font-size: 3em;
+    }
+  }
+}
+
+// Hide arrow if the display is large enough to see below content
+@media only screen and (min-height: 1280px) {
+  .scroll.button.container {
+    display: none;
+  }
+}
+
+.image.logo {
+  max-width: 100px;
+  max-height: 100px;
+
+  &+ .image.logo {
+    margin-left: 1em;
+  }
+}
+
+.no-padding {  
+  padding: 0;
+}
+
+.icon.no.margin {
+  margin-right: 0 !important;
+}
+
+.field {
+  margin-bottom: 1em;
+}
+
+.ui.grid {
+  margin: 0;
+  min-width: 100%;
+}
+
+.ui.horizontal.segments {
+  padding: 0 8rem;
+  border: none;
+  box-shadow: none;
+}
+
+.ui.horizontal.segments .segment {
+  padding: 0 4rem;
+  border: none;
+  box-shadow: none;
+}
