@@ -1,7 +1,7 @@
 import { PrivateGuard } from './template/private/private.guard';
 import { PrivateComponent } from './template/private/private.component';
 import { PublicComponent } from './template/public/public.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { OverviewComponent } from './overview/overview.component';
 import { HomeComponent } from './home/home.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -11,7 +11,7 @@ const PUBLIC_ROUTES: Routes = [
 ];
 
 const PRIVATE_ROUTES: Routes = [
-  { path: 'dashboard', component: DashboardComponent }
+  { path: 'overview', component: OverviewComponent }
 ];
 
 const CORE_ROUTES: Routes = [

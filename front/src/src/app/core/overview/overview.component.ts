@@ -3,11 +3,11 @@ import { Snippet } from '../../snippets/snippet/snippet';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-overview',
+  templateUrl: './overview.component.html',
+  styleUrls: ['./overview.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class OverviewComponent implements OnInit {
 
   isLoading: boolean;
   snippets: Snippet[];

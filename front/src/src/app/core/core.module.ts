@@ -6,7 +6,7 @@ import { AuthModule } from '../auth/auth.module';
 import { SharedModule } from '../shared/shared.module';
 import { CoreRoutingModule } from './core-routing.module';
 import { HomeComponent } from './home/home.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { OverviewComponent } from './overview/overview.component';
 import { NgModule } from '@angular/core';
 
 @NgModule({
@@ -18,7 +18,7 @@ import { NgModule } from '@angular/core';
   declarations: [
     PublicComponent,
     PrivateComponent,
-    DashboardComponent,
+    OverviewComponent,
     HomeComponent    
   ],
   providers: [
