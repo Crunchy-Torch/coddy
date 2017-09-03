@@ -8,6 +8,7 @@ EXPOSE 4200
 ENV PROJECT_DIRECTORY=/var/workspace/coddy
 
 COPY entrypoint.sh /
+RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 
