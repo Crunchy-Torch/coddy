@@ -1,7 +1,7 @@
-import { AdminGuard } from './admin/admin.guard';
-import { PrivateGuard } from './template/private/private.guard';
-import { PrivateComponent } from './template/private/private.component';
-import { PublicComponent } from './template/public/public.component';
+import { AdminGuard } from './guard/admin.guard';
+import { PrivateGuard } from './guard/private.guard';
+import { NavbarComponent } from './template/navbar/navbar.component';
+import { TemplateComponent } from './template/template.component';
 import { AuthModule } from '../auth/auth.module';
 import { SharedModule } from '../shared/shared.module';
 import { CoreRoutingModule } from './core-routing.module';
@@ -14,10 +14,12 @@ import { NgModule } from '@angular/core';
     SharedModule,
     CoreRoutingModule
   ],
-  exports: [],
+  exports: [
+    TemplateComponent
+  ],
   declarations: [
-    PublicComponent,
-    PrivateComponent,
+    TemplateComponent,
+    NavbarComponent,
     OverviewComponent,
     HomeComponent    
   ],

@@ -1,21 +1,16 @@
-import { AdminGuard } from '../core/admin/admin.guard';
+import { PrivateGuard } from '../core/guard/private.guard';
+import { AdminGuard } from '../core/guard/admin.guard';
 import { AdminComponent } from './admin/admin.component';
-import { PrivateGuard } from '../core/template/private/private.guard';
-import { PrivateComponent } from '../core/template/private/private.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-const PRIVATE_ROUTES: Routes = [
-  { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] }
-];
-
-const SNIPPETS_ROUTES: Routes = [
-  { path: '', component: PrivateComponent, children: PRIVATE_ROUTES, canActivate: [PrivateGuard] }
+const USER_ROUTES: Routes = [
+  { path: 'admin', component: AdminComponent, canActivate: [PrivateGuard, AdminGuard] }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forChild(SNIPPETS_ROUTES)
+    RouterModule.forChild(USER_ROUTES)
   ],
   exports: [
     RouterModule

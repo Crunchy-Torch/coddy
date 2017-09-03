@@ -1,0 +1,28 @@
+.ui.menu {
+  margin-bottom: 0;
+  border: none;
+
+  &.homepage {
+    position: absolute;
+    width: 100%;
+    z-index: 9999;
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+
+  .item:before {
+    width: 0;
+  }
+}
+
+.brand.logo .icon {
+  font-weight: bold;
+  font-size: 1rem !important;
+}
+
+.item .small.button {
+  padding: .5em 1.5em;
+}
+
+.toto {
+  margin-top: 52px !important;
+}

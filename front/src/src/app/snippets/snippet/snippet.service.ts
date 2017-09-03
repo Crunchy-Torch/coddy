@@ -1,3 +1,4 @@
+import { Http } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 import { BaseService } from '../../shared/base.service';
 import { Observable } from 'rxjs/Rx';
@@ -9,18 +10,18 @@ export class SnippetService extends BaseService {
 
     snippetEndpoint = '/snippet';
 
-    constructor(private authHttp: AuthHttp) {
+    constructor(private http: Http) {
         super();
     }
 
     getSnippets(): Observable<Snippet[]> {
-        return this.authHttp.get(this.buildUrl(this.snippetEndpoint))
+        return this.http.get(this.buildUrl(this.snippetEndpoint))
             .map(this.extractArray)
             .catch(this.extractError);
     }
 
     getSnippet(id: string): Observable<Snippet> {
-        return this.authHttp.get(this.buildUrl(this.snippetEndpoint) + '/' + id)
+        return this.http.get(this.buildUrl(this.snippetEndpoint) + '/' + id)
             .map(res => Snippet.toObject(this.extractObject(res)))
             .catch(this.extractError);
     }

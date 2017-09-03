@@ -1,0 +1,25 @@
+<div class="ui menu" [ngClass]="{'homepage': isHomepage}">
+  <a class="item brand logo" [routerLink]="['/']">
+    <h5 class="ui teal header">
+      <i class="mini circular inverted teal code icon"></i>
+      <div class="content">
+        Coddy
+      </div>
+    </h5>
+  </a>
+
+  <div class="right menu">
+    <div *ngIf="!isLogged" class="item">
+      <a class="ui small teal button" [routerLink]="['/login']">
+          <i class="sign in icon"></i>
+          Login
+        </a>
+    </div>
+    <div *ngIf="isLogged" class="item">
+      <a class="ui small red button" (click)="signout()">
+          <i class="sign out icon"></i>
+          Logout
+        </a>
+    </div>
+  </div>
+</div>

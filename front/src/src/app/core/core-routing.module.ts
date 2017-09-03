@@ -1,22 +1,11 @@
-import { PrivateGuard } from './template/private/private.guard';
-import { PrivateComponent } from './template/private/private.component';
-import { PublicComponent } from './template/public/public.component';
 import { OverviewComponent } from './overview/overview.component';
 import { HomeComponent } from './home/home.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-const PUBLIC_ROUTES: Routes = [
-  { path: '', component: HomeComponent }
-];
-
-const PRIVATE_ROUTES: Routes = [
-  { path: 'overview', component: OverviewComponent }
-];
-
 const CORE_ROUTES: Routes = [
-  { path: '', component: PublicComponent, children: PUBLIC_ROUTES },
-  { path: '', component: PrivateComponent, children: PRIVATE_ROUTES, canActivate: [PrivateGuard] }
+  { path: '', component: HomeComponent },
+  { path: 'overview', component: OverviewComponent }
 ];
 
 @NgModule({
