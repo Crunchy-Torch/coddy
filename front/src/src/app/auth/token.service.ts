@@ -1,5 +1,6 @@
 import { Token } from './token';
 import { Injectable } from '@angular/core';
+import { JwtHelper } from 'angular2-jwt';
 
 @Injectable()
 export class TokenService {
@@ -14,7 +15,7 @@ export class TokenService {
   }
 
   getToken(): Token {
-    if(this.token === null) {
+    if (this.token === null) {
       this.token = this.decodeToken();
     }
     return this.token;
@@ -33,11 +34,25 @@ export class TokenService {
     // Get token from local storage
     let item: string = localStorage.getItem(Token.TOKEN_KEY);
 
-    // TODO decode token properly
-    this.token = new Token();
-    this.token.raw = item;
-
-    return this.token;
+    // Check if token is set
+    if (typeof item !== 'undefined' && item !== null && item.length !== 0 && item !== 'undefined') {
+      // Extract and decode token
+      let jwtHelper: JwtHelper = new JwtHelper();
+      let decodedToken: any = jwtHelper.decodeToken(item);
+      // Create typed token object
+      let token: Token = new Token();
+      token.raw = item;
+      token.firstname = decodedToken.firstname;
+      token.lastname = decodedToken.lastname;
+      token.login = decodedToken.login;
+      token.exp = decodedToken.exp;
+      token.nbf = decodedToken.nbf;
+      decodedToken.permissions.forEach(permission => {
+        token.permissions.add(Token.toEnum(permission));
+      });
+      return token;
+    }
+    return null;
   }
 
   private hasToken(): boolean {

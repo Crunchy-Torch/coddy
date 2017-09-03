@@ -1,4 +1,4 @@
-<div class="ui menu" [ngClass]="{'homepage': isHomepage}">
+<div class="ui menu" [ngClass]="{'homepage': isHomepage, 'logged': isLogged}">
   <a class="item brand logo" [routerLink]="['/']">
     <h5 class="ui teal header">
       <i class="mini circular inverted teal code icon"></i>
@@ -8,18 +8,46 @@
     </h5>
   </a>
 
+  <ng-container *ngIf="isLogged && token !== null">
+    <div class="item">
+      <div class="ui transparent icon input">
+        <input type="text" placeholder="Search...">
+        <i class="search icon"></i>
+      </div>
+    </div>
+    <a class="item">
+      Favorites
+      <div class="ui teal label">12</div>
+    </a>
+    <a class="item">
+      Notifications
+      <div class="ui orange label">4</div>
+    </a>
+  </ng-container>
+
   <div class="right menu">
     <div *ngIf="!isLogged" class="item">
       <a class="ui small teal button" [routerLink]="['/login']">
-          <i class="sign in icon"></i>
-          Login
-        </a>
+        <i class="sign in icon"></i>
+        Login
+      </a>
     </div>
-    <div *ngIf="isLogged" class="item">
-      <a class="ui small red button" (click)="signout()">
+
+    <ng-container *ngIf="isLogged && token !== null">
+      <a class="item">
+        {{token.firstname}} {{token.lastname}}
+        <div *ngIf="hasAccountPermission()" class="ui compact yellow circular label" data-tooltip="Manage your account!" data-position="bottom center">a</div>
+        <div *ngIf="hasSnippetPermission()" class="ui compact olive circular label" data-tooltip="Manage your snippets!" data-position="bottom center">s</div>
+      </a>
+      <a class="item">
+        <i class="settings icon"></i>
+        Settings
+      </a>
+      <div class="item">
+        <a class="ui small red icon button" (click)="signout()">
           <i class="sign out icon"></i>
-          Logout
         </a>
-    </div>
+      </div>
+    </ng-container>
   </div>
 </div>

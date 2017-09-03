@@ -1,3 +1,4 @@
+import { Token } from '../../auth/token';
 import { Router } from '@angular/router';
 import { TokenService } from '../../auth/token.service';
 import { Component, OnInit } from '@angular/core';
@@ -11,6 +12,10 @@ export class TemplateComponent implements OnInit {
   constructor(private tokenService: TokenService, private router: Router) { }
 
   ngOnInit() { }
+
+  getToken(): Token {
+    return this.tokenService.getToken();
+  }
 
   isLogged(): boolean {
     return this.tokenService.hasValidToken();
