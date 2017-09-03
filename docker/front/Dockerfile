@@ -1,6 +1,6 @@
-FROM node:6.9
+FROM node:6.11
 
-RUN npm install -g @angular/cli && npm cache clean
+RUN yarn global add @angular/cli && yarn cache clean
 
 # Expose angular port
 EXPOSE 4200

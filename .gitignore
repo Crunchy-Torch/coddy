@@ -24,6 +24,8 @@ front/src/typings
 front/src/e2e/*.js
 front/src/e2e/*.map
 front/src/package-lock.json
+front/src/yarn.lock
+
 
 # System Files
 .DS_Store
