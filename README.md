@@ -39,7 +39,7 @@ If you want to develop this project or just test it, a `docker-compose.dev.yml` 
 
 When all server are up, you can access to :
 
-* the local back-end at this URL : http://localhost:8080/
+* the local back-end at this URL : http://localhost:8080/api/v1/
 * the local front-end at this URL : http://localhost:4200/
 * the local instance of elasticsearch at this URL : http://localhost:9200
 
