@@ -14,7 +14,6 @@ services:
       - 8080:8080
     volumes:
       - $CODDY_DIR:${DOCKER_PROJECT_DIRECTORY}
-      - $HOME/.m2:/root/.m2/
     depends_on:
       - es
   front:
