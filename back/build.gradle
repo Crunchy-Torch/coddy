@@ -40,3 +40,7 @@ dependencies {
     testCompile group: 'net.java.dev.jna', name: 'jna', version: '4.1.0'
     testCompile group: 'com.shazam', name: 'shazamcrest', version: '0.11'
 }
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.1'
+}
