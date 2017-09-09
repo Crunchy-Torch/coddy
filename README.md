@@ -1,48 +1,55 @@
-# coddy
+# Coddy
 [![Build Status](https://travis-ci.org/Crunchy-Torch/coddy.svg?branch=master)](https://travis-ci.org/Crunchy-Torch/coddy)
 
 1. [Overview](#overview)  
 2. [Development](#development)
 3. [Contributions](#contributions)
+4. [License](#license)
 
 ## Overview
 
-**Project Status** : *work in progress* :smirk:
+**Project status**: *work in progress* :smirk:
 
-This project aims to propose a light solution to display and search code snippet in order to share some personal knowledge in IT.
+Coddy is a community-driven platform that allow users to share code snippets. It provides an easy and interactive way to input code snippets and to share them with the rest of the community.
 
-### Technologies used
+### Technologies
 
-* back-end developped with java 8 :
-  * spring-boot
-  * jersey
-  * jwt
+* Back-end:
+  * Java 8
+  * Spring-boot
+  * Jersey
+  * Jwt
   * ElasticSearch
-* front-end developped with angular 4 :
+* Front-end:
+  * Angular 4 with Typescript
   * angular-cli
   * semantic-ui
-* integration with Docker
+* Integration:
+  * Docker
+  * Travis-CI
 
 ### API
-If you want to see all endpoint provide by our api, you can take a look at [this swagger](./docs/api-swagger.yml), 
-or you can access through the [swaggerHub](https://app.swaggerhub.com/apis/Nexucis/Coddy/1.0.0)
+Endpoints exposed by Coddy's API are described in [this swagger](./docs/api-swagger.yml). If you're not so familiar with the swagger syntax (or if you prefer a well-designed interface over raw text), just check out the data on [SwaggerHub](https://app.swaggerhub.com/apis/Nexucis/Coddy/1.0.0)!
 
 ## Development
+You want to try it out? Great! We provide a `docker-compose.dev.yml` file to help you getting started.
 
-If you want to develop this project or just test it, a `docker-compose.dev.yml` is provided in order to start locally all necessary server.
+1. Rename it (or copy) to `docker-compose.yml` (same folder).  *This file is ignored, feel free to edit it directly.*
+2. Create a new local environment variable named `CODDY_DIR`, which contains the absolute path of the project.
+3. Use the command `docker-compose up`.
 
-1. You must copy this file and rename it to `docker-compose.yml` at the same place. 
-2. Declare local environment variable `CODDY_DIR` which must value the absolute path to the project. *Because the file is ignored, you can edit the file directly by replacing the variable `CODDY_DIR` with the absolute path.*
-3. And then just fire the command `docker-compose up`.
+**Tip** : you may need to install docker-compose before using it. To do this, just follow the official documentation [here](https://docs.docker.com/compose/install/).
 
-**Tips** : of course you need to install docker-compose before using it. To do this, follow the official documentation [here](https://docs.docker.com/compose/install/)
+Once servers are up, you can access:
 
-When all server are up, you can access to :
-
-* the local back-end at this URL : http://localhost:8080/api/v1/
-* the local front-end at this URL : http://localhost:4200/
-* the local instance of elasticsearch at this URL : http://localhost:9200
+* the local back-end at this URL: http://localhost:8080/api/v1/
+* the local front-end at this URL: http://localhost:4200/
+* the local instance of elasticsearch at this URL: http://localhost:9200
 
 ## Contributions
 
-Any contribution or suggestion would be really appreciated. Please feel free to use the Issue section or to send a pull request.
+Any contribution or suggestion would be really appreciated. Feel free to use the Issue section or to send a pull request.
+
+## License
+
+MIT
