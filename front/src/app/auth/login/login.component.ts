@@ -18,7 +18,7 @@ export class LoginComponent {
   redirectTo = '/overview';
 
   constructor(
-    private loginService: LoginService, 
+    private loginService: LoginService,
     private tokenService: TokenService,
     private router: Router
   ) { }
