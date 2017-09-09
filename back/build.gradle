@@ -1,0 +1,46 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.6.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'coddy-back'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    compile("org.springframework.boot:spring-boot-starter-jetty")
+    compile("org.springframework.boot:spring-boot-starter-jersey")
+    compile("org.springframework.boot:spring-boot-starter-data-elasticsearch")
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.7.0'
+    compile group: 'com.google.guava', name: 'guava', version: '18.0'
+    testCompile("org.springframework.boot:spring-boot-starter-test") {
+        exclude(module: 'commons-logging')
+    }
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'net.java.dev.jna', name: 'jna', version: '4.1.0'
+    testCompile group: 'com.shazam', name: 'shazamcrest', version: '0.11'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.1'
+}

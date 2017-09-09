@@ -1,14 +1,18 @@
-# Use an official openjdk runtime as a parent image
-FROM maven:3.5.0-jdk-8
+FROM gradle:4.0.1-jdk8
+
+MAINTAINER Augustin Husson<husson.augustin@gmail.com>
+
+USER root
 
 ENV PROJECT_DIRECTORY=/var/workspace/coddy
 
 COPY entrypoint.sh /
+RUN chmod +x /entrypoint.sh
 
-# Expose tomcat port
+# Expose jetty port
 EXPOSE 8080
 
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Define default command.
-CMD java -jar ${PROJECT_DIRECTORY}/back/target/coddy-back-*.war
+CMD java -jar ${PROJECT_DIRECTORY}/back/build/libs/coddy-back-*.jar
