@@ -4,4 +4,9 @@
   [token]="getToken()" 
   (logout)="logout()">
 </app-navbar>
-<router-outlet></router-outlet>
+
+<div *ngIf="!isHomepage()" class="ui container">
+  <router-outlet></router-outlet>
+</div>
+
+<router-outlet *ngIf="isHomepage()"></router-outlet>
