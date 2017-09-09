@@ -4,6 +4,7 @@
 1. [Overview](#overview)  
 2. [Development](#development)
 3. [Contributions](#contributions)
+4. [License](#license)
 
 ## Overview
 
@@ -48,3 +49,7 @@ Once all servers are up, you can access to:
 ## Contributions
 
 Any contribution or suggestion would be really appreciated. Feel free to use the Issue section or to send a pull request.
+
+## License
+
+MIT
