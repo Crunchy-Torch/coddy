@@ -11,6 +11,8 @@ target
 /back/.gradle/
 /back/build/
 /back/gradle/
+/back/gradlew
+/back/gradlew.bat
 # Visual Studio files
 .vscode/
 
