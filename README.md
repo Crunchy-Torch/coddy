@@ -24,7 +24,7 @@ Coddy is a community-driven platform that allow users to share code snippets. It
   * Angular 4 with Typescript
   * angular-cli
   * semantic-ui
-* Integration
+* Integration:
   * Docker
   * Travis-CI
 
@@ -40,7 +40,7 @@ You want to try it out? Great! We provide a `docker-compose.dev.yml` file to hel
 
 **Tip** : you may need to install docker-compose before using it. To do this, just follow the official documentation [here](https://docs.docker.com/compose/install/).
 
-Once all servers are up, you can access to:
+Once servers are up, you can access:
 
 * the local back-end at this URL: http://localhost:8080/api/v1/
 * the local front-end at this URL: http://localhost:4200/
