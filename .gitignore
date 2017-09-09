@@ -6,6 +6,10 @@
 target
 *.class
 
+## Gradle
+/back/.gradle/
+/back/build/
+/back/gradle/
 # Visual Studio files
 .vscode/
 
