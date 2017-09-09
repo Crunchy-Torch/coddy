@@ -10,7 +10,7 @@ target
 /back/gradle_cache/
 /back/.gradle/
 /back/build/
-/back/gradle/wrapper/gradle-wrapper.jar
+/back/gradle/
 # Visual Studio files
 .vscode/
 
