@@ -10,21 +10,21 @@ target
 .vscode/
 
 # Angular files
-front/src/dist
-front/src/tmp
-front/src/out-tsc
-front/src/node_modules/
-front/src/.sass-cache
-front/src/connect.lock
-front/src/coverage
-front/src/libpeerconnection.log
-front/src/npm-debug.log
-front/src/testem.log
-front/src/typings
-front/src/e2e/*.js
-front/src/e2e/*.map
-front/src/package-lock.json
-front/src/yarn.lock
+front/dist
+front/tmp
+front/out-tsc
+front/node_modules/
+front/.sass-cache
+front/connect.lock
+front/coverage
+front/libpeerconnection.log
+front/npm-debug.log
+front/testem.log
+front/typings
+front/e2e/*.js
+front/e2e/*.map
+front/package-lock.json
+front/yarn.lock
 
 
 # System Files
