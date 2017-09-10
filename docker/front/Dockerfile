@@ -1,6 +1,4 @@
-FROM node:6.11
-
-RUN yarn global add @angular/cli && yarn cache clean
+FROM node:8.4.0
 
 # Expose angular port
 EXPOSE 4200
