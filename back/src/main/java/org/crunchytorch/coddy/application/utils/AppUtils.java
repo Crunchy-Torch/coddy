@@ -10,7 +10,7 @@ public class AppUtils {
 
     public static final String CONF_ADMIN_PASSWORD = PREFIX_FIELD_CONF + ".admin.password";
 
-    public static final String CONF_ADMIN_EMAIL = PREFIX_FIELD_CONF + "admin.email";
+    public static final String CONF_ADMIN_EMAIL = PREFIX_FIELD_CONF + ".admin.email";
 
     public static final String CONF_BOT_LOGIN = PREFIX_FIELD_CONF + ".bot.login";
 
