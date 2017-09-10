@@ -15,4 +15,4 @@ EXPOSE 8080
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Define default command.
-CMD java -jar ${PROJECT_DIRECTORY}/back/build/libs/coddy-back-*.jar
+CMD java -jar ${PROJECT_DIRECTORY}/back/build/libs/coddy-back.jar
