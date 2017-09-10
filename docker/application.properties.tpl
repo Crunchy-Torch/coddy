@@ -1,5 +1,5 @@
 # Framework configuration
-spring.data.elasticsearch.cluster-nodes=es:9300{{SPRING_ES_HOST|default(es:9300)}}{% endif %}
+spring.data.elasticsearch.cluster-nodes={{SPRING_ES_HOST|default(es:9300)}}{% endif %}
 
 # Application configuration
 {% if CODDY_VERSION is defined %}org.crunchytorch.coddy.version={{CODDY_VERSION}}{% endif %}
