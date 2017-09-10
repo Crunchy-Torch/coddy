@@ -99,6 +99,9 @@ COPY docker/nginx.conf /etc/nginx/
 COPY docker/nginx.vhost.conf /etc/nginx/sites-available/coddy.conf
 RUN ln -s /etc/nginx/sites-available/coddy.conf /etc/nginx/sites-enabled/coddy.conf
 
+ENV CODDY_CONF_DIRECTORY="/app/conf"
+
+COPY docker/application.properties.tpl ${CODDY_CONF_DIRECTORY}/application.properties.tpl
 COPY back/build/libs/coddy-back.jar /app/back/coddy-back.jar
 COPY front/dist /app/front
 
@@ -106,5 +109,5 @@ WORKDIR /app
 
 EXPOSE 80
 
-COPY docker/entrypoint.sh /entrypoint.sh
-CMD ["/bin/bash", "/entrypoint.sh"]
+COPY docker/entrypoint.sh /app/entrypoint.sh
+CMD ["/bin/bash", "/app/entrypoint.sh"]
