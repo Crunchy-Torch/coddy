@@ -19,7 +19,7 @@ import java.util.List;
 public class SnippetEntity implements Serializable {
 
     @Id
-    private String id;
+    private String _id;
 
     @Field(type = FieldType.String)
     private String title;
@@ -54,11 +54,11 @@ public class SnippetEntity implements Serializable {
     private Date lastModified;
 
     public String getId() {
-        return id;
+        return _id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this._id = id;
     }
 
     public String getTitle() {

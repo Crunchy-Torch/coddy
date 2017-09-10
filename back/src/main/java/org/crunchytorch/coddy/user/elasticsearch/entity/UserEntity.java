@@ -19,7 +19,7 @@ import java.util.List;
 public class UserEntity implements Serializable, IUser {
 
     @Id
-    private String id;
+    private String _id;
 
     @Field(type = FieldType.String, index = FieldIndex.not_analyzed)
     private String login;
@@ -66,7 +66,7 @@ public class UserEntity implements Serializable, IUser {
 
     public UserEntity(UpdateUser user, UserEntity oldEntity) {
         // the following data cannot be modified
-        this.id = oldEntity.getId();
+        this._id = oldEntity.getId();
         this.login = oldEntity.getLogin();
         this.permissions = oldEntity.getPermissions();
         this.createDate = oldEntity.getCreateDate();
@@ -87,11 +87,11 @@ public class UserEntity implements Serializable, IUser {
     }
 
     public String getId() {
-        return id;
+        return _id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this._id = id;
     }
 
     @Override
