@@ -25,8 +25,7 @@ front/.sass-cache
 front/connect.lock
 front/coverage
 front/libpeerconnection.log
-front/npm-debug.log
-front/testem.log
+front/*.log
 front/typings
 front/e2e/*.js
 front/e2e/*.map
