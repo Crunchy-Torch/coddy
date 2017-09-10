@@ -138,7 +138,7 @@ public class UserService extends AbstractService<UserEntity> {
         return entity;
     }
 
-    private boolean isExist(String login) {
+    public boolean isExist(String login) {
         return UserRepository.class.cast(this.repository).findByLogin(login) != null;
     }
 }
