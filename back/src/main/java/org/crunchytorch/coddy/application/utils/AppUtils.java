@@ -4,6 +4,8 @@ public class AppUtils {
 
     private static final String PREFIX_FIELD_CONF = "org.crunchytorch.coddy";
 
+    public static final String LINUX_ENV_CONFIG_PATH = "CODDY_CONF_DIRECTORY";
+
     public static final String CONF_VERSION = PREFIX_FIELD_CONF + ".version";
 
     public static final String CONF_ADMIN_LOGIN = PREFIX_FIELD_CONF + ".admin.login";

@@ -13,6 +13,7 @@ target
 /back/gradle/
 /back/gradlew
 /back/gradlew.bat
+/back/out/
 # Visual Studio files
 .vscode/
 
