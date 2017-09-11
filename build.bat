@@ -6,7 +6,7 @@ SET DOCKER_IMAGE_BASE_NAME=crunchytorch/coddy
 
 SET option=%~1
 
-IF "%option%" == "-p" (
+IF "%option%" == "-b" (
     ECHO build images
     CALL :build %~2
     GOTO :EOF
