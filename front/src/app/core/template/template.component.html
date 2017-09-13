@@ -5,8 +5,4 @@
   (logout)="logout()">
 </app-navbar>
 
-<div *ngIf="!isHomepage()" class="ui container">
-  <router-outlet></router-outlet>
-</div>
-
-<router-outlet *ngIf="isHomepage()"></router-outlet>
+<router-outlet></router-outlet>
