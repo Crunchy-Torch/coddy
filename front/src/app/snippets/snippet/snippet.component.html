@@ -1,93 +1,95 @@
-<div *ngIf="isLoading" class="ui active centered inline loader"></div>
+<div class="ui container">
+  <div *ngIf="isLoading" class="ui active centered inline loader"></div>
 
-<app-error [error]="error"></app-error>
+  <app-error [error]="error"></app-error>
 
-<div *ngIf="!isLoading && snippet" class="ui items">
+  <div *ngIf="!isLoading && snippet" class="ui items">
 
-  <div class="item">
-    <div class="ui inline huge header">
-      {{snippet.title}}
-    </div>
-    <button class="ui tiny red right floated icon button">
+    <div class="item">
+      <div class="ui inline huge header">
+        {{snippet.title}}
+      </div>
+      <button class="ui tiny red right floated icon button">
       <i class="trash icon"></i>
       Delete
     </button>
-    <button class="ui tiny yellow right floated icon button">
+      <button class="ui tiny yellow right floated icon button">
       <i class="edit icon"></i>
       Edit
     </button>
-    <button (click)="getSnippet()" class="ui tiny basic right floated icon button">
+      <button (click)="getSnippet()" class="ui tiny basic right floated icon button">
       <i class="refresh icon"></i>
     </button>
-  </div>
-  
-  <div class="item">
-    <h4 class="ui inline header">Language:</h4>
-    <div class="ui orange label" tabindex="0">{{snippet.language?.name}}</div>
-    <div class="ui basic left pointing label" *ngIf="snippet.language?.version">{{snippet.language?.version}}</div>
-  </div>
+    </div>
 
-  <div class="item">
-    <h4 class="ui inline header">Keywords:</h4>
-    <div *ngFor="let keyword of snippet.keywords" class="ui label">{{keyword}}</div>
-  </div>
+    <div class="item">
+      <h4 class="ui inline header">Language:</h4>
+      <div class="ui orange label" tabindex="0">{{snippet.language?.name}}</div>
+      <div class="ui basic left pointing label" *ngIf="snippet.language?.version">{{snippet.language?.version}}</div>
+    </div>
 
-  <div class="item">
-    <div class="ui right floated">
-      <button class="ui tiny right labeled icon teal button">
+    <div class="item">
+      <h4 class="ui inline header">Keywords:</h4>
+      <div *ngFor="let keyword of snippet.keywords" class="ui label">{{keyword}}</div>
+    </div>
+
+    <div class="item">
+      <div class="ui right floated">
+        <button class="ui tiny right labeled icon teal button">
         <i class="code icon"></i>
         Copy        
       </button>
-    </div>
-  </div>
-
-  <div class="item extra margin bottom">
-    <div class="ui orange existing segment">
-      <p>
-        {{snippet.content}}
-      </p>
-    </div>
-  </div>
-
-  <div class="item">
-    <h4 class="ui header">Description:</h4>
-    <div class="ui message">
-      {{snippet.description}}
-    </div>
-  </div>
-
-  <div class="item">
-    <h4 class="ui header">Associated links:</h4>
-    <div class="ui list">
-      <div *ngFor="let link of snippet.associatedLinks" class="item">
-        <i [class]="linkTypeClass(link.type)"></i>
-        <a class="content" [href]="link.value" target="blank">
-          {{link.description}}
-        </a>
       </div>
     </div>
-  </div>
 
-  <div class="item">
-    <h4 class="ui inline header">Rate:</h4>
-    <div class="ui star rating">
-      <i *ngFor="let i of intToArray(snippet.rate)" class="icon active"></i>
+    <div class="item extra margin bottom">
+      <div class="ui orange existing segment">
+        <p>
+          {{snippet.content}}
+        </p>
+      </div>
     </div>
-  </div>
 
-  <div class="item">
-    <h4 class="ui no margin header">Author:</h4>
-    <p>{{snippet.author}}</p>
-  </div>
+    <div class="item">
+      <h4 class="ui header">Description:</h4>
+      <div class="ui message">
+        {{snippet.description}}
+      </div>
+    </div>
 
-  <div class="item">
-    <h4 class="ui no margin header">Created:</h4>
-    <p>{{snippet.created}}</p>
-  </div>
+    <div class="item">
+      <h4 class="ui header">Associated links:</h4>
+      <div class="ui list">
+        <div *ngFor="let link of snippet.associatedLinks" class="item">
+          <i [class]="linkTypeClass(link.type)"></i>
+          <a class="content" [href]="link.value" target="blank">
+          {{link.description}}
+        </a>
+        </div>
+      </div>
+    </div>
 
-  <div class="item">
-    <h4 class="ui no margin header">Last modified:</h4>
-    <p>{{snippet.lastModified}}</p>
-  </div>
+    <div class="item">
+      <h4 class="ui inline header">Rate:</h4>
+      <div class="ui star rating">
+        <i *ngFor="let i of intToArray(snippet.rate)" class="icon active"></i>
+      </div>
+    </div>
 
+    <div class="item">
+      <h4 class="ui no margin header">Author:</h4>
+      <p>{{snippet.author}}</p>
+    </div>
+
+    <div class="item">
+      <h4 class="ui no margin header">Created:</h4>
+      <p>{{snippet.created}}</p>
+    </div>
+
+    <div class="item">
+      <h4 class="ui no margin header">Last modified:</h4>
+      <p>{{snippet.lastModified}}</p>
+    </div>
+
+  </div>
 </div>
