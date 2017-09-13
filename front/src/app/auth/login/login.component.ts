@@ -15,7 +15,7 @@ export class LoginComponent {
   isLoading = false;
   error: Error;
 
-  redirectTo = '/dashboard';
+  redirectTo = '/overview';
 
   constructor(
     private loginService: LoginService, 

@@ -13,4 +13,4 @@ RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Define default command.
-CMD cd $PROJECT_DIRECTORY/front/src && npm start
+CMD cd $PROJECT_DIRECTORY/front/ && npm start

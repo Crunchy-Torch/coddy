@@ -5,7 +5,7 @@ if [[ ! -d "$PROJECT_DIRECTORY" ]]; then
 else
     # build project at first start
     echo "running command 'npm install'"
-    cd ${PROJECT_DIRECTORY}/front/src && yarn install
+    cd ${PROJECT_DIRECTORY}/front && yarn install
 fi
 
 # Execute every command from user or from CMD Docker directive

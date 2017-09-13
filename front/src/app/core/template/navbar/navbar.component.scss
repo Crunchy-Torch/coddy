@@ -1,0 +1,36 @@
+.ui.menu {
+  margin-bottom: 0;
+  border: none;
+
+  &.homepage {
+    position: absolute;
+    width: 100%;
+    z-index: 9999;
+    background-color: rgba(255, 255, 255, 0.25);
+  } 
+
+  &:not(.logged) .item:before {
+    width: 0;
+  }
+}
+
+.brand.logo .icon {
+  font-weight: bold;
+  font-size: 1rem !important;
+}
+
+.item .small.button {
+  padding: .5em .7em;
+}
+
+.ui.label + .ui.label {
+  margin-left: .2rem;
+}
+
+.toto {
+  margin-top: 52px !important;
+}
+
+[data-position="bottom center"][data-tooltip]:before {
+  left: 20%;
+}

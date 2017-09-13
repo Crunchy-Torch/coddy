@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class HomeComponent {
 
   appName = 'Coddy';
-  appDescription = 'Code snippets warehouse.'
+  appDescription = 'Code snippets warehouse.';
 
   constructor() { }
 
