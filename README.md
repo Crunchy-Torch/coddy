@@ -54,6 +54,15 @@ services:
       - es
 ```
 
+Once the image is started, wait until you see something like this : 
+
+```bash
+2017-09-15 21:28:51.343  INFO 74 --- [           main] .s.b.c.e.j.JettyEmbeddedServletContainer : Jetty started on port(s) 8080 (http/1.1)
+2017-09-15 21:28:51.355  INFO 74 --- [           main] org.crunchytorch.coddy.Main              : Started Main in 15.305 seconds (JVM running for 16.668)
+```
+
+After seeing this log, you can access to the coddy instance through this url : http://localhost
+
 #### Environment Variables
 
 When you start the coddy image, you can adjust the configuration of the Coddy instance by passing one or more environment variables on the docker run command line or in the docker-compose file configuration.
