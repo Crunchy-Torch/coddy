@@ -19,4 +19,12 @@ public class Permission {
     private Permission() {
 
     }
+
+    /**
+     * @param permission the given permission that we have to check
+     * @return <code>true</code> if the given permission is recognized. <code>false</code> if not.
+     */
+    public static boolean isPermissionExist(final String permission) {
+        return ADMIN.equals(permission) || MODERATION.equals(permission) || PERSO_ACCOUNT.equals(permission) || PERSO_SNIPPET.equals(permission);
+    }
 }
