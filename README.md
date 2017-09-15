@@ -3,8 +3,7 @@
 
 1. [Overview](#overview)  
 2. [Development](#development)
-3. [Contributions](#contributions)
-4. [License](#license)
+3. [License](#license)
 
 ## Overview
 
@@ -79,8 +78,13 @@ These variables are optional, used in conjunction to create a new admin and to s
 
 Be warned, if you don't have an admin, you cannot manage your users and cannot give admin permission using the coddy interface to others.
 
-## Development
-You want to try it out? Great! We provide a `docker-compose.dev.yml` file to help you getting started.
+## Contributions
+
+Any contribution or suggestion would be really appreciated. Feel free to use the Issue section or to send a pull request.
+
+### Development
+
+In order to help you to develop this project (by helping us or in a independent fork), we provide a `docker-compose.dev.yml` file. 
 
 1. Rename it (or copy) to `docker-compose.yml` (same folder).  *This file is ignored, feel free to edit it directly.*
 2. Create a new local environment variable named `CODDY_DIR`, which contains the absolute path of the project.
@@ -94,10 +98,6 @@ Once servers are up, you can access:
 * the local front-end at this URL: http://localhost:4200/
 * the local instance of elasticsearch at this URL: http://localhost:9200
 
-## Contributions
-
-Any contribution or suggestion would be really appreciated. Feel free to use the Issue section or to send a pull request.
-
 ## License
 
-MIT
+[MIT](./LICENSE)
