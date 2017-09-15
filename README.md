@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/Crunchy-Torch/coddy.svg?branch=master)](https://travis-ci.org/Crunchy-Torch/coddy)
 
 1. [Overview](#overview)  
-2. [Development](#development)
+2. [Contributions](#contributions)
 3. [License](#license)
 
 ## Overview
