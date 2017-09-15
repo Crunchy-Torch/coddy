@@ -11,5 +11,8 @@ export class TitleComponent {
   @Input()
   text: string;
 
+  @Input()
+  inline = false;
+
   constructor() { }
 }
