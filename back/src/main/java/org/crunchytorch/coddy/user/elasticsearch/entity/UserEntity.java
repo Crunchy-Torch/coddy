@@ -51,16 +51,13 @@ public class UserEntity implements Serializable, IUser {
     public UserEntity() {
     }
 
-    public UserEntity(UpdateUser user) {
+    public UserEntity(UpdateUser user, List<String> permissions) {
         this.login = user.getLogin();
         this.generatePasswordAndSalt(user.getPassword());
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
-        this.permissions = new ArrayList<String>() {{
-            add(Permission.PERSO_ACCOUNT);
-            add(Permission.PERSO_SNIPPET);
-        }};
+        this.permissions = permissions;
         this.createDate = this.updateDate = new Date();
     }
 

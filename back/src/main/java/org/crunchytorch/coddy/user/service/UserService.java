@@ -7,6 +7,7 @@ import org.crunchytorch.coddy.application.service.AbstractService;
 import org.crunchytorch.coddy.user.data.in.Credential;
 import org.crunchytorch.coddy.user.data.in.UpdateUser;
 import org.crunchytorch.coddy.user.data.out.SimpleUser;
+import org.crunchytorch.coddy.user.data.security.Permission;
 import org.crunchytorch.coddy.user.data.security.Token;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.crunchytorch.coddy.user.elasticsearch.repository.UserRepository;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import javax.ws.rs.BadRequestException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService extends AbstractService<UserEntity> {
@@ -67,7 +69,13 @@ public class UserService extends AbstractService<UserEntity> {
      * @throws BadRequestException   if the given user has no login
      */
     public SimpleUser create(UpdateUser user) {
+        return this.create(user, new ArrayList<String>() {{
+            add(Permission.PERSO_ACCOUNT);
+            add(Permission.PERSO_SNIPPET);
+        }});
+    }
 
+    public SimpleUser create(UpdateUser user, List<String> permissions) {
         if (user.getLogin() == null || user.getPassword() == null) {
             throw new BadRequestException("login and password cannot be null");
         }
@@ -77,14 +85,17 @@ public class UserService extends AbstractService<UserEntity> {
             throw new EntityExistsException("user with login : " + user.getLogin() + " already exists");
         }
 
+        // remove unknown permission
+        List<String> permissionFiltered = permissions.stream().filter(Permission::isPermissionExist).collect(Collectors.toList());
+
         //generate entity, hash and salt the password
-        UserEntity entity = new UserEntity(user);
+        UserEntity entity = new UserEntity(user, permissionFiltered);
 
         return new SimpleUser(super.create(entity));
     }
 
     /**
-     * @param user
+     * @param user the personal information needed to update the associated user
      * @return the {@link SimpleUser user} updated
      * @throws EntityNotFoundException if the given user is not found
      * @throws BadRequestException     if the given user has no login
