@@ -14,10 +14,6 @@ public class AppUtils {
 
     public static final String CONF_ADMIN_EMAIL = PREFIX_FIELD_CONF + ".admin.email";
 
-    public static final String CONF_BOT_LOGIN = PREFIX_FIELD_CONF + ".bot.login";
-
-    public static final String CONF_BOT_PASSWORD = PREFIX_FIELD_CONF + ".bot.password";
-
     /**
      * JWT secret configuration. It allows the possibility to erase the default secret key.
      */

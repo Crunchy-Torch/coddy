@@ -12,6 +12,3 @@ spring.data.elasticsearch.cluster-nodes={{SPRING_ES_HOST|default(es:9300)}}{% en
 {% if CODDY_ADMIN_LOGIN is defined %}org.crunchytorch.coddy.admin.login={{CODDY_ADMIN_LOGIN}}{% endif %}
 {% if CODDY_ADMIN_PASSWORD is defined %}org.crunchytorch.coddy.admin.password={{CODDY_ADMIN_PASSWORD}}{% endif %}
 {% if CODDY_ADMIN_EMAIL is defined %}org.crunchytorch.coddy.admin.email={{CODDY_ADMIN_EMAIL}}{% endif %}
-
-{% if CODDY_BOT_LOGIN is defined %}org.crunchytorch.coddy.bot.login={{CODDY_BOT_LOGIN}}{% endif %}
-{% if CODDY_BOT_PASSWORD is defined %}org.crunchytorch.coddy.bot.password={{CODDY_BOT_PASSWORD}}{% endif %}
