@@ -6,20 +6,18 @@
   <div *ngIf="!isLoading && snippet" class="ui items">
 
     <div class="item">
-      <div class="ui inline huge header">
-        {{snippet.title}}
-      </div>
+      <app-title [text]="snippet.title" [inline]="true"></app-title>
       <button class="ui tiny red right floated icon button">
-      <i class="trash icon"></i>
-      Delete
-    </button>
+        <i class="trash icon"></i>
+        Delete
+      </button>
       <button class="ui tiny yellow right floated icon button">
-      <i class="edit icon"></i>
-      Edit
-    </button>
+        <i class="edit icon"></i>
+        Edit
+      </button>
       <button (click)="getSnippet()" class="ui tiny basic right floated icon button">
-      <i class="refresh icon"></i>
-    </button>
+        <i class="refresh icon"></i>
+      </button>
     </div>
 
     <div class="item">
