@@ -1,13 +1,10 @@
 <div class="ui container">
-  <div class="ui huge header">
-    Overview
-  </div>
-
+  <app-title [text]="'Overview'"></app-title>
   <div class="ui segments">
 
     <div class="ui attached header">
       <h3 class="inline">Last snippets</h3>
-      <button (click)="getSnippets()" class="ui basic icon button">
+      <button (click)="getSnippets()" class="ui basic right floated icon button">
       <i class="refresh icon"></i>
     </button>
     </div>

@@ -1,3 +1,4 @@
+import { TitleComponent } from './title/title.component';
 import { FormsModule } from '@angular/forms';
 import { BaseService } from './base.service';
 import { ErrorComponent } from './error/error.component';
@@ -12,9 +13,13 @@ import { NgModule } from '@angular/core';
   exports: [
     CommonModule,
     FormsModule,
-    ErrorComponent
+    ErrorComponent,
+    TitleComponent
   ],
-  declarations: [ErrorComponent],
+  declarations: [
+    ErrorComponent,
+    TitleComponent
+  ],
   providers: [BaseService],
 })
 export class SharedModule { }
