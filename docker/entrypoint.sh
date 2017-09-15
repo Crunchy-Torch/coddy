@@ -15,4 +15,5 @@ start_supervisor() {
     /usr/local/bin/supervisord -n -c /etc/supervisor/supervisord.conf
 }
 
+build_app_conf
 start_supervisor
