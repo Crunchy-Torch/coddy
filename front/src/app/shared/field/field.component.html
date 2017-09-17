@@ -1,7 +1,8 @@
 <label class="inline">{{improvedName}}</label>
 <i id="sm-tooltip" *ngIf="help?.length > 0" class="info circle icon"></i>
 <div class="ui icon input">
-  <input type="text" [placeholder]="placeholder" [formControl]="control">
+  <input *ngIf="!isTextArea" [type]="type" [placeholder]="placeholder" [formControl]="control">
+  <textarea *ngIf="isTextArea" [rows]="rows" [formControl]="control" [placeholder]="placeholder"></textarea>
   <i *ngIf="control?.invalid && (control?.dirty || control?.touched)" class="red remove icon"></i>
   <i *ngIf="control?.valid" class="green checkmark icon"></i>
 </div>

@@ -19,6 +19,12 @@ export class FieldComponent implements OnInit, AfterViewInit {
 
   @Input() help: string[];
 
+  @Input() type = 'text';
+
+  @Input() isTextArea = false;
+
+  @Input() rows = 3;
+
   improvedName: string;
 
   constructor() { }
