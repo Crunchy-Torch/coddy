@@ -13,6 +13,7 @@ target
 /back/gradle/
 /back/gradlew
 /back/gradlew.bat
+/back/out/
 # Visual Studio files
 .vscode/
 
@@ -25,8 +26,7 @@ front/.sass-cache
 front/connect.lock
 front/coverage
 front/libpeerconnection.log
-front/npm-debug.log
-front/testem.log
+front/*.log
 front/typings
 front/e2e/*.js
 front/e2e/*.map

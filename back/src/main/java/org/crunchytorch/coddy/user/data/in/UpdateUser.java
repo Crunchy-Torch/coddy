@@ -12,6 +12,20 @@ public class UpdateUser {
     private String lastName;
     private String email;
 
+    public UpdateUser(){
+        // this blank constructor is used by json serialization
+    }
+
+    public UpdateUser(String login, char[] password){
+        this.login = login;
+        this.password = password;
+    }
+
+    public UpdateUser(String login, char[] password, String email){
+        this(login, password);
+        this.email = email;
+    }
+
     public String getLogin() {
         return login;
     }

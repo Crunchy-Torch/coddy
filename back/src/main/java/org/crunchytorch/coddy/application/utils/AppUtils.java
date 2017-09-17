@@ -4,6 +4,16 @@ public class AppUtils {
 
     private static final String PREFIX_FIELD_CONF = "org.crunchytorch.coddy";
 
+    public static final String LINUX_ENV_CONFIG_PATH = "CODDY_CONF_DIRECTORY";
+
+    public static final String CONF_VERSION = PREFIX_FIELD_CONF + ".version";
+
+    public static final String CONF_ADMIN_LOGIN = PREFIX_FIELD_CONF + ".admin.login";
+
+    public static final String CONF_ADMIN_PASSWORD = PREFIX_FIELD_CONF + ".admin.password";
+
+    public static final String CONF_ADMIN_EMAIL = PREFIX_FIELD_CONF + ".admin.email";
+
     /**
      * JWT secret configuration. It allows the possibility to erase the default secret key.
      */

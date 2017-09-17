@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Error } from './error/error';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import serverUrl from '../../conf';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class BaseService {
@@ -35,6 +35,6 @@ export class BaseService {
   }
 
   protected buildUrl(endpoint: string): string {
-    return serverUrl + endpoint;
+    return environment.serverUrl + endpoint;
   }
 }
