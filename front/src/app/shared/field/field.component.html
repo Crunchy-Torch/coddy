@@ -1,12 +1,12 @@
 <label class="inline">{{improvedName}}</label>
-<i id="sm-tooltip" *ngIf="help?.length > 0" class="info circle icon"></i>
+<i [id]="name" *ngIf="help?.length > 0" class="info circle icon"></i>
 <div class="ui icon input">
   <input *ngIf="!isTextArea" [type]="type" [placeholder]="placeholder" [formControl]="control">
   <textarea *ngIf="isTextArea" [rows]="rows" [formControl]="control" [placeholder]="placeholder"></textarea>
   <i *ngIf="control?.invalid && (control?.dirty || control?.touched)" class="red remove icon"></i>
-  <i *ngIf="control?.valid" class="green checkmark icon"></i>
+  <i *ngIf="control?.valid && control?.touched" class="green checkmark icon"></i>
 </div>
-<div *ngIf="help?.length > 0" class="ui popup">
+<div [id]="name + '-popup'" *ngIf="help?.length > 0" class="ui popup">
   <div class="ui bulleted list">
     <div *ngFor="let text of help" class="item">{{text}}</div>
   </div>
