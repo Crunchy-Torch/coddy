@@ -1,0 +1,12 @@
+<label class="inline">{{improvedName}}</label>
+<i id="sm-tooltip" *ngIf="help?.length > 0" class="info circle icon"></i>
+<div class="ui icon input">
+  <input type="text" [placeholder]="placeholder" [formControl]="control">
+  <i *ngIf="control?.invalid && (control?.dirty || control?.touched)" class="red remove icon"></i>
+  <i *ngIf="control?.valid" class="green checkmark icon"></i>
+</div>
+<div *ngIf="help?.length > 0" class="ui popup">
+  <div class="ui bulleted list">
+    <div *ngFor="let text of help" class="item">{{text}}</div>
+  </div>
+</div>

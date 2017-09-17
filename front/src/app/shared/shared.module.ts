@@ -4,6 +4,7 @@ import { BaseService } from './base.service';
 import { ErrorComponent } from './error/error.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FieldComponent } from './field/field.component';
 
 @NgModule({
   imports: [
@@ -16,11 +17,13 @@ import { NgModule } from '@angular/core';
     FormsModule,
     ReactiveFormsModule,
     ErrorComponent,
-    TitleComponent
+    TitleComponent,
+    FieldComponent
   ],
   declarations: [
     ErrorComponent,
-    TitleComponent
+    TitleComponent,
+    FieldComponent
   ],
   providers: [BaseService],
 })
