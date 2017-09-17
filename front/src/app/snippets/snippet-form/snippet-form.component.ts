@@ -1,8 +1,10 @@
+import { ToastComponent } from '../../shared/toast/toast.component';
+import { Toast } from '../../shared/toast/toast';
 import { Error } from '../../shared/error/error';
 import { Snippet } from '../shared/snippet';
 import { SnippetService } from '../shared/snippet.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-snippet-form',
@@ -11,7 +13,8 @@ import { Component, Input } from '@angular/core';
 })
 export class SnippetFormComponent {
 
-  @Input() snippet: Snippet;  
+  @Input() snippet: Snippet;
+  @ViewChild(ToastComponent) toasts: ToastComponent;
   error: Error;
   snippetForm: FormGroup;
   isLoading = false;
@@ -59,10 +62,11 @@ export class SnippetFormComponent {
         this.isLoading = false;
       }).subscribe(
         res => {
-          
+          this.pushToast();
+          this.createForm();
         },
         error => this.error = error
-      );
+        );
     }
   }
 
@@ -70,5 +74,9 @@ export class SnippetFormComponent {
     const formModel = this.snippetForm.value;
     formModel.keywords = formModel.keywords.split(',');
     return Snippet.toObject(formModel);
+  }
+
+  pushToast() {
+    this.toasts.addToast(new Toast('green', 'Snippet created!', 'Your snippet has been successfully pushed'))
   }
 }

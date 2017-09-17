@@ -3,7 +3,7 @@
   <app-title [text]="'Create a snippet'" [back]="true"></app-title>
   <app-error [error]="error"></app-error>
 
-  <form [formGroup]="snippetForm" (ngSubmit)="onSubmit()" class="ui form" novalidate>
+  <form [formGroup]="snippetForm" [ngClass]="{'loading': isLoading}" (ngSubmit)="onSubmit()" class="ui form" novalidate>
 
     <div class="two fields">
       <div app-field class="field" [control]="snippetForm?.get('title')" [name]="'Title'" [placeholder]="'Title'" [help]="validationMessages.title"></div>
@@ -30,3 +30,5 @@
     <button class="ui button" type="submit" [disabled]="!snippetForm.valid">Submit</button>
   </form>
 </div>
+
+<app-toast></app-toast>
