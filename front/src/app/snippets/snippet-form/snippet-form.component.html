@@ -1,6 +1,6 @@
 <div class="ui container">
 
-  <form [formGroup]="snippetForm" class="ui form" novalidate>
+  <form [formGroup]="snippetForm" (ngSubmit)="onSubmit()" class="ui form" novalidate>
 
     <div class="field">
       <label>Title</label>
@@ -32,6 +32,6 @@
       <textarea rows="8" formControlName="content" placeholder="Paste your code here"></textarea>
     </div>
 
-    <button class="ui button">Submit</button>
+    <button class="ui button" type="submit">Submit</button>
   </form>
 </div>

@@ -1,5 +1,7 @@
+import { Snippet } from '../shared/snippet';
+import { SnippetService } from '../shared/snippet.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-snippet-form',
@@ -8,9 +10,11 @@ import { Component } from '@angular/core';
 })
 export class SnippetFormComponent {
 
+  @Input() snippet: Snippet;
+
   snippetForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private snippetService: SnippetService) {
     this.createForm();
   }
 
@@ -25,5 +29,20 @@ export class SnippetFormComponent {
       keywords: ['', Validators.required],
       content: ['', Validators.required]
     });
+  }
+
+  onSubmit() {
+    console.log('submit!');
+    this.snippet = this.buildSnippet();
+    this.snippetService.createSnippet(this.snippet).subscribe(
+      res => console.log(res),
+      err => console.error(err)
+    );
+  }
+
+  buildSnippet(): Snippet {
+    const formModel = this.snippetForm.value;
+    formModel.keywords = formModel.keywords.split(',');
+    return Snippet.toObject(formModel);
   }
 }
