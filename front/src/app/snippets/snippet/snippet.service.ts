@@ -2,7 +2,7 @@ import { Http } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 import { BaseService } from '../../shared/base.service';
 import { Observable } from 'rxjs/Rx';
-import { Snippet } from './snippet';
+import { Snippet } from '../snippet';
 import { Injectable } from '@angular/core';
 
 @Injectable()

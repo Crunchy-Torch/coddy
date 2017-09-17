@@ -1,5 +1,5 @@
 import { SnippetService } from '../../snippets/snippet/snippet.service';
-import { Snippet } from '../../snippets/snippet/snippet';
+import { Snippet } from '../../snippets/snippet';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
