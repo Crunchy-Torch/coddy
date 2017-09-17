@@ -5,6 +5,7 @@ import { ErrorComponent } from './error/error.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FieldComponent } from './field/field.component';
+import { ToastComponent } from './toast/toast.component';
 
 @NgModule({
   imports: [
@@ -18,12 +19,14 @@ import { FieldComponent } from './field/field.component';
     ReactiveFormsModule,
     ErrorComponent,
     TitleComponent,
-    FieldComponent
+    FieldComponent,
+    ToastComponent
   ],
   declarations: [
     ErrorComponent,
     TitleComponent,
-    FieldComponent
+    FieldComponent,
+    ToastComponent
   ],
   providers: [BaseService],
 })
