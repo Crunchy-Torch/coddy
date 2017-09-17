@@ -12,6 +12,10 @@ services:
     image: crunchytorch/coddy
     depends_on:
       - es
+    environment:
+      - CODDY_ADMIN_LOGIN=
+      - CODDY_ADMIN_PASSWORD=
+      - CODDY_ADMIN_EMAIL=admin.coddy@crunchy-torch.fr
     networks:
       - coddy
       - gfe
