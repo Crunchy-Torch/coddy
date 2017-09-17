@@ -1,3 +1,37 @@
-<p>
-  snippet-form works!
-</p>
+<div class="ui container">
+
+  <form [formGroup]="snippetForm" class="ui form" novalidate>
+
+    <div class="field">
+      <label>Title</label>
+      <input type="text" placeholder="Title" formControlName="title">
+    </div>
+    <div class="field">
+      <label>Keywords</label>
+      <input type="text" placeholder="Loop, responsive, etc." formControlName="keywords">
+    </div>
+    <div class="field">
+      <label>Description</label>
+      <textarea rows="3" formControlName="description" placeholder="Write a few words to describe your snippet"></textarea>
+    </div>
+
+    <div class="field" formGroupName="language">
+      <label>Language</label>
+      <div class="two fields">
+        <div class="field">
+          <input type="text" placeholder="Name" formControlName="name">
+        </div>
+        <div class="field">
+          <input type="text" placeholder="Version" formControlName="version">
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Code</label>
+      <textarea rows="8" formControlName="content" placeholder="Paste your code here"></textarea>
+    </div>
+
+    <button class="ui button">Submit</button>
+  </form>
+</div>

@@ -1,5 +1,5 @@
 import { TitleComponent } from './title/title.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BaseService } from './base.service';
 import { ErrorComponent } from './error/error.component';
 import { CommonModule } from '@angular/common';
@@ -8,11 +8,13 @@ import { NgModule } from '@angular/core';
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     ErrorComponent,
     TitleComponent
   ],
