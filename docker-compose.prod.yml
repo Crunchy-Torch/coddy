@@ -6,9 +6,22 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
+    networks:
+      - coddy
   coddy:
     image: crunchytorch/coddy
-    ports:
-      - 80:80
     depends_on:
       - es
+    networks:
+      - coddy
+      - gfe
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=coddy"
+      - "traefik.frontend.rule=Host:coddy.crunchytorch.fr"
+      - "traefik.docker.network=gfe"
+networks:
+  gfe:
+    external:
+      name: gfe
+  coddy: ~
