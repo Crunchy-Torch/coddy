@@ -1,43 +1,32 @@
 <div class="ui container">
 
   <app-title [text]="'Create a snippet'" [back]="true"></app-title>
+  <app-error [error]="error"></app-error>
 
   <form [formGroup]="snippetForm" (ngSubmit)="onSubmit()" class="ui form" novalidate>
 
     <div class="two fields">
-      <div class="field">
-        <label>Title</label>
-        <input type="text" placeholder="Title" formControlName="title">
-      </div>
-      <div class="field">
-        <label>Keywords</label>
-        <input type="text" placeholder="Loop, responsive, etc." formControlName="keywords">
-      </div>
+      <div app-field class="field" [control]="snippetForm?.get('title')" [name]="'Title'" [placeholder]="'Title'" [help]="validationMessages.title"></div>
+      <div app-field class="field" [control]="snippetForm?.get('keywords')" [name]="'Keywords'" [placeholder]="'Loop, responsive, etc.'"></div>
     </div>
 
     <div class="two fields">
+      <div app-field class="field" [control]="snippetForm?.get('description')" [name]="'Description'" 
+        [placeholder]="'Write a few words to describe your snippet'" [help]="validationMessages.description"
+        [isTextArea]="true"></div>
+      
       <div class="field">
-        <label>Description</label>
-        <textarea rows="3" formControlName="description" placeholder="Write a few words to describe your snippet"></textarea>
-      </div>
-      <div class="field" formGroupName="language">
-        <label>Language</label>
         <div class="two fields">
-          <div class="field">
-            <input type="text" placeholder="Name" formControlName="name">
-          </div>
-          <div class="field">
-            <input type="text" placeholder="Version" formControlName="version">
-          </div>
+          <div app-field class="field" [control]="snippetForm?.get('language')?.get('name')" [name]="'Language'" [placeholder]="'Name'"></div>
+          <div app-field class="field" [control]="snippetForm?.get('language')?.get('version')" [name]="'Version'" [placeholder]="'Number or name'"></div>
         </div>
       </div>
     </div>
 
-    <div class="field">
-      <label>Code</label>
-      <textarea rows="8" formControlName="content" placeholder="Paste your code here"></textarea>
-    </div>
+    <div app-field class="field" [control]="snippetForm?.get('content')" [name]="'Code'" 
+    [placeholder]="'Write / Paste your code here'" [help]="validationMessages.content"
+    [isTextArea]="true" [rows]="8"></div>
 
-    <button class="ui button" type="submit">Submit</button>
+    <button class="ui button" type="submit" [disabled]="!snippetForm.valid">Submit</button>
   </form>
 </div>

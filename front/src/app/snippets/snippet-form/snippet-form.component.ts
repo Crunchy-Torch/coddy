@@ -1,6 +1,7 @@
+import { Error } from '../../shared/error/error';
 import { Snippet } from '../shared/snippet';
 import { SnippetService } from '../shared/snippet.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -10,9 +11,28 @@ import { Component, Input } from '@angular/core';
 })
 export class SnippetFormComponent {
 
-  @Input() snippet: Snippet;
-
+  @Input() snippet: Snippet;  
+  error: Error;
   snippetForm: FormGroup;
+  isLoading = false;
+
+  validationMessages = {
+    'title': [
+      'Must be at least 4 characters long.',
+      'Must be at most 140 characters long.'
+    ],
+    'description': [
+      'Must be at least 10 characters long.',
+      'Must be at most 400 characters long.'
+    ],
+    'keywords': [
+      'Provide a coma separated list of keywords'
+    ],
+    'content': [
+      'Must be at least 10 characters long.',
+      'Must be at most 500 characters long.'
+    ],
+  };
 
   constructor(private formBuilder: FormBuilder, private snippetService: SnippetService) {
     this.createForm();
@@ -20,23 +40,30 @@ export class SnippetFormComponent {
 
   createForm() {
     this.snippetForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
+      title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(140)]],
+      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(400)]],
       language: this.formBuilder.group({
         name: ['', Validators.required],
         version: '',
       }),
       keywords: ['', Validators.required],
-      content: ['', Validators.required]
+      content: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]]
     });
   }
 
   onSubmit() {
-    this.snippet = this.buildSnippet();
-    this.snippetService.createSnippet(this.snippet).subscribe(
-      res => console.log(res),
-      err => console.error(err)
-    );
+    if (this.snippetForm.valid) {
+      this.isLoading = true;
+      this.snippet = this.buildSnippet();
+      this.snippetService.createSnippet(this.snippet).finally(() => {
+        this.isLoading = false;
+      }).subscribe(
+        res => {
+          
+        },
+        error => this.error = error
+      );
+    }
   }
 
   buildSnippet(): Snippet {

@@ -33,12 +33,12 @@ export class FieldComponent implements OnInit, AfterViewInit {
     this.improvedName = this.isMandatory() ? this.name + ' *' : this.name;
   }
 
-  isMandatory(): boolean { 
+  isMandatory(): boolean {
     let validator: any = this.control.validator && this.control.validator(this.control);
     return validator && validator.required;
   }
 
   ngAfterViewInit() {
-    jQuery('#sm-tooltip').popup({ popup: '.ui.popup', position: 'right center' });
+    jQuery('#' + this.name).popup({ popup: '#' + this.name + '-popup', position: 'right center' });
   }
 }
