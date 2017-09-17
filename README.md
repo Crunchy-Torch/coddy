@@ -39,7 +39,7 @@ A production docker image of Coddy is available and can be pulled on [docker hub
 
 #### How to use the Coddy image
 
-The easiest way to start Soccy is to use a docker-compose file configuration. For example: 
+The easiest way to start Coddy is to use a docker-compose file configuration. For example: 
 
 ```yaml
 version: '3'
