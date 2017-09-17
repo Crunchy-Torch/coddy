@@ -37,7 +37,7 @@ public class Main extends SpringBootServletInitializer {
             props.put("spring.config.location", "file:${" + AppUtils.LINUX_ENV_CONFIG_PATH + "}/");
 
         } else {
-            LOCAL_LOGGER.error("Linux variable environment {} missing. Unable to load external configuration files", AppUtils.LINUX_ENV_CONFIG_PATH);
+            LOCAL_LOGGER.error("Linux variable environment {} is missing. Unable to load external configuration files", AppUtils.LINUX_ENV_CONFIG_PATH);
         }
         return props;
     }

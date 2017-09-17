@@ -81,15 +81,15 @@ public class UserService extends AbstractService<UserEntity> {
         }
 
         // check if the current login already exist
-        if (this.isExist(user.getLogin())) {
+        if (this.exists(user.getLogin())) {
             throw new EntityExistsException("user with login : " + user.getLogin() + " already exists");
         }
 
         // remove unknown permission
-        List<String> permissionFiltered = permissions.stream().filter(Permission::isPermissionExist).collect(Collectors.toList());
+        List<String> filteredPermissions = permissions.stream().filter(Permission::isValid).collect(Collectors.toList());
 
         //generate entity, hash and salt the password
-        UserEntity entity = new UserEntity(user, permissionFiltered);
+        UserEntity entity = new UserEntity(user, filteredPermissions);
 
         return new SimpleUser(super.create(entity));
     }
@@ -139,6 +139,10 @@ public class UserService extends AbstractService<UserEntity> {
         return new SimpleUser(this.getUserEntityByLogin(login));
     }
 
+    public boolean exists(String login) {
+        return UserRepository.class.cast(this.repository).findByLogin(login) != null;
+    }
+
     private UserEntity getUserEntityByLogin(final String login) {
         UserEntity entity = UserRepository.class.cast(this.repository).findByLogin(login);
 
@@ -147,9 +151,5 @@ public class UserService extends AbstractService<UserEntity> {
         }
 
         return entity;
-    }
-
-    public boolean isExist(String login) {
-        return UserRepository.class.cast(this.repository).findByLogin(login) != null;
     }
 }
