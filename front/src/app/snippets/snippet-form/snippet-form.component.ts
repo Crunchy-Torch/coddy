@@ -32,7 +32,6 @@ export class SnippetFormComponent {
   }
 
   onSubmit() {
-    console.log('submit!');
     this.snippet = this.buildSnippet();
     this.snippetService.createSnippet(this.snippet).subscribe(
       res => console.log(res),
