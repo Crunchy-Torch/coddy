@@ -1,4 +1,5 @@
-import { ToastComponent } from '../../shared/toast/toast.component';
+import { ToastService } from '../../core/template/toast.service';
+import { Router } from '@angular/router';
 import { Toast } from '../../shared/toast/toast';
 import { Error } from '../../shared/error/error';
 import { Snippet } from '../shared/snippet';
@@ -14,7 +15,6 @@ import { Component, Input, ViewChild } from '@angular/core';
 export class SnippetFormComponent {
 
   @Input() snippet: Snippet;
-  @ViewChild(ToastComponent) toasts: ToastComponent;
   error: Error;
   snippetForm: FormGroup;
   isLoading = false;
@@ -37,7 +37,8 @@ export class SnippetFormComponent {
     ],
   };
 
-  constructor(private formBuilder: FormBuilder, private snippetService: SnippetService) {
+  constructor(private formBuilder: FormBuilder, private snippetService: SnippetService,
+    private toastService: ToastService, private router: Router) {
     this.createForm();
   }
 
@@ -63,7 +64,7 @@ export class SnippetFormComponent {
       }).subscribe(
         res => {
           this.pushToast();
-          this.createForm();
+          this.router.navigate(['/overview']);
         },
         error => this.error = error
         );
@@ -77,6 +78,6 @@ export class SnippetFormComponent {
   }
 
   pushToast() {
-    this.toasts.addToast(new Toast('green', 'Snippet created!', 'Your snippet has been successfully pushed'))
+    this.toastService.pushToast(new Toast('green', 'Snippet created!', 'Your snippet has been successfully pushed'));
   }
 }

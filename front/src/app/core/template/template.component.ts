@@ -1,7 +1,9 @@
+import { ToastService } from './toast.service';
 import { Token } from '../../auth/token';
 import { Router } from '@angular/router';
 import { TokenService } from '../../auth/token.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ToastComponent } from '../../shared/toast/toast.component';
 
 @Component({
   selector: 'app-template',
@@ -9,9 +11,17 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class TemplateComponent implements OnInit {
-  constructor(private tokenService: TokenService, private router: Router) { }
 
-  ngOnInit() { }
+  @ViewChild(ToastComponent) toasts: ToastComponent;
+
+  constructor(private tokenService: TokenService, private toastService: ToastService,
+    private router: Router) { }
+
+  ngOnInit() {
+    this.toastService.get().subscribe(toast => {
+      this.toasts.addToast(toast);
+    });
+  }
 
   getToken(): Token {
     return this.tokenService.getToken();
