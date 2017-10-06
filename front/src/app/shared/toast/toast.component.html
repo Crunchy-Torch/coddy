@@ -1,9 +1,11 @@
 <div class="toast container" [ngClass]="position">
-  <div *ngFor="let toast of toasts" class="ui message" [ngClass]="toast.color">
-    <i class="close icon"></i>
-    <div *ngIf="toast.title" class="header">
-      {{toast.title}}
+  <ng-container *ngFor="let toast of toasts">
+    <div *ngIf="!toast.hidden" class="ui message" [ngClass]="toast.color">
+      <i (click)="hide(toast)" class="close icon"></i>
+      <div *ngIf="toast.title" class="header">
+        {{toast.title}}
+      </div>
+      <p *ngIf="toast.text">{{toast.text}}</p>
     </div>
-    <p *ngIf="toast.text">{{toast.text}}</p>
-  </div>
+  </ng-container>
 </div>

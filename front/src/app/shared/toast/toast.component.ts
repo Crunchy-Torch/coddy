@@ -24,7 +24,8 @@ export class ToastComponent {
     }, this.duration);
   }
 
-  print() {
-    console.log(this.toasts);
+  hide(toast: Toast) {
+    // Toast will be automatically remove once time is up. Just hide it until then.
+    toast.hidden = true;
   }
 }
