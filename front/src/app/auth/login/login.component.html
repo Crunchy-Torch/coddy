@@ -10,6 +10,9 @@
     </h2>
 
     <app-error [error]="error"></app-error>
+    <app-message *ngIf="tokenHasExpired" [message]="'Your session has expired.'" [details]="'Don\'t be sad: this had to happen eventually...'" [type]="MESSAGE_TYPE.WARNING"></app-message>
+    <app-message *ngIf="redirect" [message]="'This action requires to be logged in'" [details]="'Fill in the details: cheats\'s about to get real.'" [type]="MESSAGE_TYPE.INFO"></app-message>
+
     <div class="ui form">
       <div class="ui stacked segment">
         <div class="field">
