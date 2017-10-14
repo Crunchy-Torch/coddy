@@ -31,6 +31,6 @@ export class TemplateComponent implements OnInit {
   }
 
   isLoginPage(): boolean {
-    return this.router.url === '/login';
+    return this.router.url.split(';')[0] === '/login';
   }
 }
