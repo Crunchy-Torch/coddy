@@ -4,6 +4,7 @@ import org.crunchytorch.coddy.application.exception.EntityNotFoundException;
 import org.crunchytorch.coddy.application.service.AbstractService;
 import org.crunchytorch.coddy.snippet.elasticsearch.entity.SnippetEntity;
 import org.crunchytorch.coddy.snippet.elasticsearch.repository.SnippetRepository;
+import org.crunchytorch.coddy.user.data.security.JWTPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,7 @@ public class SnippetService extends AbstractService<SnippetEntity> {
         entity.setCreated(now);
         entity.setLastModified(now);
         // Set author from token information
-        entity.setAuthor(securityContext.getUserPrincipal().getName());
+        entity.setAuthor(((JWTPrincipal) securityContext.getUserPrincipal()).getLogin());
         // Initiate rate
         entity.setRate(0);
         return super.create(entity);
