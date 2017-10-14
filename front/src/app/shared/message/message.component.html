@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="ui icon message" [ngClass]="getColor()">
+    <i *ngIf="hasIcon()" class="icon" [ngClass]="getIcon()"></i>
+    <div class="content">
+      <h2 *ngIf="message" class="header">
+        {{message}}
+      </h2>
+      <p *ngIf="details">{{details}}</p>
+    </div>
+  </div>
+</div>
