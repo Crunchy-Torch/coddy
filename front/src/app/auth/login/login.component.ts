@@ -1,4 +1,5 @@
-import { Router } from '@angular/router';
+import { MessageType } from '../../shared/message/message-type';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { TokenService } from '../token.service';
 import { LoginService } from './login.service';
 import { Component, OnInit } from '@angular/core';
@@ -8,11 +9,15 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+
+  MESSAGE_TYPE: typeof MessageType = MessageType;
 
   login = '';
   password = '';
   isLoading = false;
+  redirect = false;
+  tokenHasExpired = false;
   error: Error;
 
   redirectTo = '/overview';
@@ -20,8 +25,20 @@ export class LoginComponent {
   constructor(
     private loginService: LoginService,
     private tokenService: TokenService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
+
+  ngOnInit() {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.redirect = !!params.get('redirect');
+      this.tokenHasExpired = !!params.get('tokenHasExpired');
+    });
+    this.route.params.subscribe((params: { redirect: boolean, tokenHasExpired: boolean }) => {
+      this.redirect = params.redirect;
+      this.tokenHasExpired = params.tokenHasExpired;
+    });
+  }
 
   authenticate() {
     this.isLoading = true;
@@ -35,6 +52,6 @@ export class LoginComponent {
         this.router.navigate([this.redirectTo]);
       },
       err => this.error = err
-    );
+      );
   }
 }
