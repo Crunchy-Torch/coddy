@@ -7,26 +7,23 @@ SET DOCKER_IMAGE_BASE_NAME=crunchytorch/coddy
 SET option=%~1
 
 IF "%option%" == "-b" (
-    ECHO build images
     CALL :build %~2
     GOTO :EOF
 )
 
 IF "%option%" == "-t" (
-    ECHO tag images
     CALL :tag %~2 %~3
     GOTO :EOF
 )
 
 IF "%option%" == "-p" (
-    ECHO push images %~2
-    CALL :tag %~2
+    CALL :push %~2
     GOTO :EOF
 )
 
 :build
     SET local_tag=%~1
-    echo %local_tag%
+    echo build image %DOCKER_IMAGE_BASE_NAME%:%local_tag%
 
     docker images | findstr /R /C:"coddy_front" > nul
 
@@ -56,16 +53,15 @@ IF "%option%" == "-p" (
 EXIT /B 0
 
 :tag
-    echo "generate tag"
     SET l_initial_tag=%~1
-    SET  l_target_tag=%~2
-
+    SET l_target_tag=%~2
+    echo generate tag from %DOCKER_IMAGE_BASE_NAME%:%l_initial_tag% to %DOCKER_IMAGE_BASE_NAME%:%l_target_tag%
     docker tag %DOCKER_IMAGE_BASE_NAME%:%l_initial_tag%  %DOCKER_IMAGE_BASE_NAME%:%l_target_tag%
 EXIT /B 0
 
 :push
-    echo "push images"
     SET l_initial_tag=%~1
+    echo "push images %DOCKER_IMAGE_BASE_NAME%:%l_initial_tag%"
     docker push %DOCKER_IMAGE_BASE_NAME%:%l_initial_tag%
 
 EXIT /B 0

@@ -1,3 +1,4 @@
+import { MessageComponent } from './message/message.component';
 import { TitleComponent } from './title/title.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BaseService } from './base.service';
@@ -17,12 +18,14 @@ import { ToastComponent } from './toast/toast.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    MessageComponent,
     ErrorComponent,
     TitleComponent,
     FieldComponent,
     ToastComponent
   ],
   declarations: [
+    MessageComponent,
     ErrorComponent,
     TitleComponent,
     FieldComponent,
