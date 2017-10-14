@@ -42,9 +42,7 @@
 
     <div class="item extra margin bottom">
       <div class="ui orange existing segment">
-        <p>
-          {{snippet.content}}
-        </p>
+        <pre [innerHtml]="highlightCode(snippet.content)"></pre>
       </div>
     </div>
 

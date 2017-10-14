@@ -4,6 +4,7 @@ import { SnippetService } from '../shared/snippet.service';
 import { Language, Link, LinkType, Snippet } from '../shared/snippet';
 
 import { Component, OnInit } from '@angular/core';
+import * as hljs from 'highlight.js';
 
 @Component({
   selector: 'app-snippet',
@@ -53,5 +54,9 @@ export class SnippetComponent implements OnInit {
 
   intToArray(int: number): Array<number> {
     return Array.from(Array(int),(x,i)=>i);
+  }
+
+  highlightCode(code: string) {
+    return hljs.highlightAuto(code).value;
   }
 }
