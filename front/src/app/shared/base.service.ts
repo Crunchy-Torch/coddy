@@ -8,6 +8,7 @@ import { environment } from '../../environments/environment';
 export class BaseService {
 
   private static DEFAULT_ERROR = 'Something went horribly wrong...';
+  private static DEFAULT_DETAILS = 'A team of highly trained monkeys has been dispatched to deal with this situation.'
 
   protected extractArray(res: Response) {
     let body = res.json();
@@ -26,10 +27,10 @@ export class BaseService {
       // Extract error message
       error.status = res.status
       error.message = res.statusText || BaseService.DEFAULT_ERROR;
-      error.details = res.json().message || '';
+      error.details = res.json().message || BaseService.DEFAULT_DETAILS;
     } else {
       error.message = BaseService.DEFAULT_ERROR;
-      error.details = res as string || '';
+      error.details = res as string || BaseService.DEFAULT_DETAILS;
     }
     return Observable.throw(error);
   }
