@@ -1,4 +1,3 @@
-import { Http } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 import { BaseService } from '../../shared/base.service';
 import { Observable } from 'rxjs/Rx';
@@ -10,7 +9,7 @@ export class SnippetService extends BaseService {
 
   snippetEndpoint = '/snippet';
 
-  constructor(private http: Http) {
+  constructor(private http: AuthHttp) {
     super();
   }
 
