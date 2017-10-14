@@ -22,7 +22,21 @@ export class TokenService {
   }
 
   hasValidToken(): boolean {
-    return this.hasToken();
+    let token: Token = this.getToken();
+    // Token 'not before' and 'expiration time' are in seconds
+    let now: number = Date.now() / 1000;
+    return this.hasToken() && this.hasNotExpired();
+  }
+
+  hasToken(): boolean {
+    return localStorage.getItem(Token.TOKEN_KEY) !== null;
+  }
+
+  hasNotExpired(): boolean {
+    let token: Token = this.getToken();
+    // Token 'not before' and 'expiration time' are in seconds
+    let now: number = Date.now() / 1000;
+    return token.exp > now && token.nbf < now;
   }
 
   clearToken(): void {
@@ -53,9 +67,5 @@ export class TokenService {
       return token;
     }
     return null;
-  }
-
-  private hasToken(): boolean {
-    return localStorage.getItem(Token.TOKEN_KEY) !== null;
   }
 }

@@ -1,3 +1,4 @@
+import { MessageComponent } from './message/message.component';
 import { TitleComponent } from './title/title.component';
 import { FormsModule } from '@angular/forms';
 import { BaseService } from './base.service';
@@ -13,10 +14,12 @@ import { NgModule } from '@angular/core';
   exports: [
     CommonModule,
     FormsModule,
+    MessageComponent,
     ErrorComponent,
     TitleComponent
   ],
   declarations: [
+    MessageComponent,
     ErrorComponent,
     TitleComponent
   ],
