@@ -7,6 +7,7 @@ import org.crunchytorch.coddy.snippet.elasticsearch.repository.SnippetRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.ws.rs.core.SecurityContext;
 import java.util.Date;
 
 @Service
@@ -27,11 +28,13 @@ public class SnippetService extends AbstractService<SnippetEntity> {
         return entity;
     }
 
-    @Override
-    public SnippetEntity create(SnippetEntity entity) {
+    public SnippetEntity create(SnippetEntity entity, SecurityContext securityContext) {
+        // Set date to now
         Date now = new Date();
         entity.setCreated(now);
         entity.setLastModified(now);
+        // Set author from token information
+        entity.setAuthor(securityContext.getUserPrincipal().getName());
         return super.create(entity);
     }
 }
