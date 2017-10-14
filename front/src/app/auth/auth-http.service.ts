@@ -10,7 +10,8 @@ export class AuthHttpService extends AuthHttp {
     super(new AuthConfig({
       noTokenScheme: true,
       tokenName: Token.TOKEN_KEY,
-      globalHeaders: [{ 'Content-Type': 'application/json' }]
+      globalHeaders: [{ 'Content-Type': 'application/json' }],
+      noJwtError: true
     }), http, defOpts);
   }
 }
