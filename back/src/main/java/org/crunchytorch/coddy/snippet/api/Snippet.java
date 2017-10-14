@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.SecurityContext;
 import java.util.List;
 
 @Component
@@ -37,7 +39,7 @@ public class Snippet {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @AuthorizationFilter
-    public void create(SnippetEntity snippet) {
-        snippetService.create(snippet);
+    public void create(@Context SecurityContext securityContext, SnippetEntity snippet) {
+        snippetService.create(snippet, securityContext);
     }
 }
