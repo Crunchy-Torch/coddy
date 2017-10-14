@@ -35,6 +35,8 @@ public class SnippetService extends AbstractService<SnippetEntity> {
         entity.setLastModified(now);
         // Set author from token information
         entity.setAuthor(securityContext.getUserPrincipal().getName());
+        // Initiate rate
+        entity.setRate(0);
         return super.create(entity);
     }
 }
