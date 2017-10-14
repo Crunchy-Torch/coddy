@@ -2,6 +2,7 @@ package org.crunchytorch.coddy.snippet.api;
 
 import org.crunchytorch.coddy.snippet.elasticsearch.entity.SnippetEntity;
 import org.crunchytorch.coddy.snippet.service.SnippetService;
+import org.crunchytorch.coddy.user.filter.AuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,6 +36,7 @@ public class Snippet {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @AuthorizationFilter
     public void create(SnippetEntity snippet) {
         snippetService.create(snippet);
     }

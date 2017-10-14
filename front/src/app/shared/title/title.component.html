@@ -1,3 +1,7 @@
+<button *ngIf="back" (click)="goBack()" class="ui small basic icon back button">
+  <i class="left arrow icon"></i>
+  Back
+</button>
 <div class="ui huge header" [ngClass]="{'inline': inline}">
   {{text}}
 </div>

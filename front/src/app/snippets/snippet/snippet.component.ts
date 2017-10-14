@@ -1,7 +1,7 @@
 import { Error } from '../../shared/error/error';
 import { ActivatedRoute } from '@angular/router';
-import { SnippetService } from './snippet.service';
-import { Language, Link, LinkType, Snippet } from './snippet';
+import { SnippetService } from '../shared/snippet.service';
+import { Language, Link, LinkType, Snippet } from '../shared/snippet';
 
 import { Component, OnInit } from '@angular/core';
 

@@ -65,7 +65,7 @@ Once the image is started, wait until you see something like:
 2017-09-15 21:28:51.355  INFO 74 --- [           main] org.crunchytorch.coddy.Main              : Started Main in 15.305 seconds (JVM running for 16.668)
 ```
 
-Then you can access your Coddy instance at `http://localhost
+Then you can access your Coddy instance at `http://localhost`
 
 #### Environment variables
 

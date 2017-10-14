@@ -1,8 +1,9 @@
 import { SharedModule } from '../shared/shared.module';
 import { SnippetsRoutingModule } from './snippets-routing.module';
-import { SnippetService } from './snippet/snippet.service';
+import { SnippetService } from './shared/snippet.service';
 import { SnippetComponent } from './snippet/snippet.component';
 import { NgModule } from '@angular/core';
+import { SnippetFormComponent } from './snippet-form/snippet-form.component';
 
 @NgModule({
   imports: [
@@ -10,7 +11,7 @@ import { NgModule } from '@angular/core';
     SnippetsRoutingModule
   ],
   exports: [],
-  declarations: [SnippetComponent],
+  declarations: [SnippetComponent, SnippetFormComponent],
   providers: [SnippetService],
 })
 export class SnippetsModule { }

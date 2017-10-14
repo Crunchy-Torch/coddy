@@ -1,0 +1,7 @@
+label.inline {
+  display: inline-block !important;
+}
+
+label.inline + i.icon {
+  margin-left: .3rem;
+}

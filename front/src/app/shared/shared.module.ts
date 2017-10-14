@@ -1,27 +1,35 @@
 import { MessageComponent } from './message/message.component';
 import { TitleComponent } from './title/title.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BaseService } from './base.service';
 import { ErrorComponent } from './error/error.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FieldComponent } from './field/field.component';
+import { ToastComponent } from './toast/toast.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     MessageComponent,
     ErrorComponent,
-    TitleComponent
+    TitleComponent,
+    FieldComponent,
+    ToastComponent
   ],
   declarations: [
     MessageComponent,
     ErrorComponent,
-    TitleComponent
+    TitleComponent,
+    FieldComponent,
+    ToastComponent
   ],
   providers: [BaseService],
 })

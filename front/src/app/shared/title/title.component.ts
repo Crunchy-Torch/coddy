@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -14,5 +15,12 @@ export class TitleComponent {
   @Input()
   inline = false;
 
-  constructor() { }
+  @Input()
+  back = false;
+
+  constructor(private location: Location) { }
+
+  goBack() {
+    this.location.back();
+  }
 }
