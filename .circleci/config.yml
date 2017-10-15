@@ -73,9 +73,9 @@ jobs:
       - checkout
 
       - restore_cache:
-        key:
-        - dependency-cache-{{ checksum "./front/package.json" }}
-        - dependency-cache-
+          key:
+          - dependency-cache-{{ checksum "./front/package.json" }}
+          - dependency-cache-
 
       - run: npm install
 
