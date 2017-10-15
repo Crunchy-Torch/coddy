@@ -77,10 +77,10 @@ jobs:
           - dependency-cache-{{ checksum "./front/package.json" }}
           - dependency-cache-
 
-      - run: npm install
+      - run: cd ./front && npm install
 
       # build
-      - run: npm run-script build-prod
+      - run: cd ./front && npm run-script build-prod
 
       - save_cache:
           key: dependency-cache-{{ checksum "./front/package.json" }}
