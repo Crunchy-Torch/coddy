@@ -33,10 +33,11 @@ jobs:
 
       - run: cd back && gradle dependencies
 
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: v1-dependencies-{{ checksum "build.gradle" }}
-
       # run tests!
       - run: cd back && gradle test
+
+      - save_cache:
+          paths:
+            - $HOME/.gradle/caches/
+            - $HOME/.gradle/wrapper/
+          key: v1-dependencies-{{ checksum "build.gradle" }}
