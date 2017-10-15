@@ -4,18 +4,11 @@
 #
 version: 2
 jobs:
-  build:
+  build-back:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8-jdk
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
     working_directory: ~/repo
-
     environment:
       # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
@@ -27,7 +20,37 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "back/build.gradle" }}
+          - v1-dependencies-{{ checksum "./back/build.gradle" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: cd back && gradle dependencies
+
+      # run tests!
+      - run: cd back && gradle compile
+
+      - save_cache:
+          paths:
+            - $HOME/.gradle/caches/
+            - $HOME/.gradle/wrapper/
+          key: v1-dependencies-{{ checksum "./back/build.gradle" }}
+  test-back:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    environment:
+      # Customize the JVM maximum heap limit
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "./back/build.gradle" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
@@ -40,4 +63,38 @@ jobs:
           paths:
             - $HOME/.gradle/caches/
             - $HOME/.gradle/wrapper/
-          key: v1-dependencies-{{ checksum "back/build.gradle" }}
+          key: v1-dependencies-{{ checksum "./back/build.gradle" }}
+  build-front:
+    docker:
+      - image: circleci/node:8.4.0
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+        key:
+        - dependency-cache-{{ checksum "./front/package.json" }}
+        - dependency-cache-
+
+      - run: npm install
+
+      # build
+      - run: npm run-script build-prod
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "./front/package.json" }}
+          paths:
+            - ./front/node_modules
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build-back
+      - build-front
+  test:
+    jobs:
+      - test-back:
+          requires:
+            - build-back
