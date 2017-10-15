@@ -20,9 +20,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "./back/build.gradle" }}
+          - v2-dependencies-{{ checksum "./back/build.gradle" }}
           # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+          - v2-dependencies-
 
       - run: cd back && gradle dependencies
 
@@ -33,7 +33,7 @@ jobs:
           paths:
             - /home/circleci/.gradle/caches/
             - /home/circleci/.gradle/wrapper/
-          key: v1-dependencies-{{ checksum "./back/build.gradle" }}
+          key: v2-dependencies-{{ checksum "./back/build.gradle" }}
   test-back:
     docker:
       # specify the version you desire here
@@ -50,9 +50,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "./back/build.gradle" }}
+          - v2-dependencies-{{ checksum "./back/build.gradle" }}
           # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+          - v2-dependencies-
 
       - run: cd back && gradle dependencies
 
@@ -63,7 +63,7 @@ jobs:
           paths:
             - /home/circleci/.gradle/caches/
             - /home/circleci/.gradle/wrapper/
-          key: v1-dependencies-{{ checksum "./back/build.gradle" }}
+          key: v2-dependencies-{{ checksum "./back/build.gradle" }}
   build-front:
     docker:
       - image: circleci/node:8.4.0
