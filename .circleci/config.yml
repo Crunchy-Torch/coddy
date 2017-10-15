@@ -31,8 +31,8 @@ jobs:
 
       - save_cache:
           paths:
-            - $HOME/.gradle/caches/
-            - $HOME/.gradle/wrapper/
+            - /home/circleci/.gradle/caches/
+            - /home/circleci/.gradle/wrapper/
           key: v1-dependencies-{{ checksum "./back/build.gradle" }}
   test-back:
     docker:
@@ -61,8 +61,8 @@ jobs:
 
       - save_cache:
           paths:
-            - $HOME/.gradle/caches/
-            - $HOME/.gradle/wrapper/
+            - /home/circleci/.gradle/caches/
+            - /home/circleci/.gradle/wrapper/
           key: v1-dependencies-{{ checksum "./back/build.gradle" }}
   build-front:
     docker:
