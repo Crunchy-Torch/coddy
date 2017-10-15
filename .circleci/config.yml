@@ -27,7 +27,7 @@ jobs:
       - run: cd back && gradle dependencies
 
       # run tests!
-      - run: cd back && gradle compile
+      - run: cd back && gradle compileJava
 
       - save_cache:
           paths:
