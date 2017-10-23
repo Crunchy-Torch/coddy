@@ -2,10 +2,12 @@ package org.crunchytorch.coddy.snippet.api;
 
 import org.crunchytorch.coddy.snippet.elasticsearch.entity.SnippetEntity;
 import org.crunchytorch.coddy.snippet.service.SnippetService;
+import org.crunchytorch.coddy.user.data.security.Permission;
 import org.crunchytorch.coddy.user.filter.AuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -39,7 +41,17 @@ public class Snippet {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @AuthorizationFilter
-    public void create(@Context SecurityContext securityContext, SnippetEntity snippet) {
-        snippetService.create(snippet, securityContext);
+    public SnippetEntity create(@Context SecurityContext securityContext, SnippetEntity snippet) {
+        return snippetService.create(snippet, securityContext);
+    }
+
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{id}")
+    @AuthorizationFilter
+    @RolesAllowed({Permission.ADMIN, Permission.PERSO_SNIPPET})
+    public void delete(@PathParam("id") String id){
+        snippetService.delete(id);
     }
 }
