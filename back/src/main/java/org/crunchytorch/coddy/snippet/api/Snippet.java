@@ -29,14 +29,6 @@ public class Snippet {
         return snippetService.getEntity(from, size);
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{id}")
-    public SnippetEntity getSnippet(@PathParam("id") String id) {
-        return snippetService.getSnippet(id);
-    }
-
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -45,13 +37,32 @@ public class Snippet {
         return snippetService.create(snippet, securityContext);
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{id}")
+    public SnippetEntity getSnippet(@PathParam("id") String id) {
+        return snippetService.getSnippet(id);
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{id}")
+    @AuthorizationFilter
+    @RolesAllowed({Permission.ADMIN, Permission.PERSO_SNIPPET})
+    public SnippetEntity updateSnippet(@PathParam("id") String id, SnippetEntity snippet) {
+        snippet.setId(id);
+        return this.snippetService.update(snippet);
+    }
+
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
     @AuthorizationFilter
     @RolesAllowed({Permission.ADMIN, Permission.PERSO_SNIPPET})
-    public void delete(@PathParam("id") String id){
+    public void delete(@PathParam("id") String id) {
         snippetService.delete(id);
     }
 }

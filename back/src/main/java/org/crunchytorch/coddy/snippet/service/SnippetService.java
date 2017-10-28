@@ -41,6 +41,11 @@ public class SnippetService extends AbstractService<SnippetEntity> {
         return super.create(entity);
     }
 
+    public SnippetEntity update(SnippetEntity snippetUpdated) {
+        SnippetEntity oldSnippet = this.getSnippet(snippetUpdated.getId());
+        return super.create(new SnippetEntity(snippetUpdated, oldSnippet));
+    }
+
     /**
      * This method will delete the {@link SnippetEntity snippet} from the given ID.
      *
