@@ -30,6 +30,7 @@ public class SnippetService extends AbstractService<SnippetEntity> {
     }
 
     public SnippetEntity create(SnippetEntity entity, SecurityContext securityContext) {
+        entity.setId(null);
         // Set date to now
         Date now = new Date();
         entity.setCreated(now);
