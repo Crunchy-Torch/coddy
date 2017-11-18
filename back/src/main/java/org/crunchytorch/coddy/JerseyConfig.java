@@ -2,6 +2,7 @@ package org.crunchytorch.coddy;
 
 import org.crunchytorch.coddy.application.api.Hello;
 import org.crunchytorch.coddy.application.exception.mapper.*;
+import org.crunchytorch.coddy.language.api.Language;
 import org.crunchytorch.coddy.snippet.api.Snippet;
 import org.crunchytorch.coddy.user.api.User;
 import org.crunchytorch.coddy.user.exception.mapper.AuthenticationMapper;
@@ -24,6 +25,7 @@ public class JerseyConfig extends ResourceConfig {
         register(Hello.class);
         register(User.class);
         register(Snippet.class);
+        register(Language.class);
 
         //allow to use RolesAllowed annotation
         register(RolesAllowedDynamicFeature.class);
