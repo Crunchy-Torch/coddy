@@ -1,3 +1,5 @@
+import { Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
+import { LanguageService } from '../shared/language.service';
 import { ToastService } from '../../core/template/toast.service';
 import { Router } from '@angular/router';
 import { Toast } from '../../shared/toast/toast';
@@ -5,18 +7,22 @@ import { Error } from '../../shared/error/error';
 import { Snippet } from '../shared/snippet';
 import { SnippetService } from '../shared/snippet.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+
+declare var jQuery: any;
 
 @Component({
   selector: 'app-snippet-form',
   templateUrl: './snippet-form.component.html',
   styleUrls: ['./snippet-form.component.scss']
 })
-export class SnippetFormComponent {
+export class SnippetFormComponent implements OnInit {
 
   @Input() snippet: Snippet;
+
   error: Error;
   snippetForm: FormGroup;
+  languages: string[];
   isLoading = false;
 
   validationMessages = {
@@ -38,8 +44,18 @@ export class SnippetFormComponent {
   };
 
   constructor(private formBuilder: FormBuilder, private snippetService: SnippetService,
-    private toastService: ToastService, private router: Router) {
+    private languageService: LanguageService, private toastService: ToastService, 
+    private router: Router) {
     this.createForm();
+  }
+
+  ngOnInit() {
+    this.languageService.getLanguages().subscribe(
+      res => {
+        this.languages = res;
+        jQuery('.ui.dropdown').dropdown({placeholder: 'Select a language'});
+      }
+    );
   }
 
   createForm() {
