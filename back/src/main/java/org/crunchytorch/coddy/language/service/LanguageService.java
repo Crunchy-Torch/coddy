@@ -1,7 +1,6 @@
 package org.crunchytorch.coddy.language.service;
 
-import org.crunchytorch.coddy.language.LanguageProperties;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,14 +8,14 @@ import java.util.List;
 @Service
 public class LanguageService {
 
-    @Autowired
-    private LanguageProperties languageProperties;
+    @Value("#{'${coddy.languages}'.split(',')}")
+    private List<String> languages;
 
     public List<String> getLanguages() {
-        return languageProperties.getLanguages();
+        return this.languages;
     }
 
     public boolean isLanguageValid(String language) {
-        return languageProperties.getLanguages().contains(language);
+        return this.languages.contains(language);
     }
 }
