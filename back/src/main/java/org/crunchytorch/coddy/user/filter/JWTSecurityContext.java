@@ -1,6 +1,7 @@
 package org.crunchytorch.coddy.user.filter;
 
 import org.crunchytorch.coddy.application.utils.AppUtils;
+import org.crunchytorch.coddy.snippet.service.SnippetService;
 import org.crunchytorch.coddy.user.data.security.JWTPrincipal;
 import org.crunchytorch.coddy.user.data.security.Permission;
 
@@ -13,11 +14,14 @@ public class JWTSecurityContext implements SecurityContext {
     private final JWTPrincipal jwtPrincipal;
     private final String scheme;
     private final MultivaluedMap<String, String> pathParameter;
+    private final SnippetService snippetService;
 
-    public JWTSecurityContext(final JWTPrincipal jwtPrincipal, final String scheme, final MultivaluedMap<String, String> pathParameter) {
+    public JWTSecurityContext(final JWTPrincipal jwtPrincipal, final String scheme,
+                              final MultivaluedMap<String, String> pathParameter, final SnippetService snippetService) {
         this.jwtPrincipal = jwtPrincipal;
         this.scheme = scheme;
         this.pathParameter = pathParameter;
+        this.snippetService = snippetService;
     }
 
     @Override
@@ -50,6 +54,12 @@ public class JWTSecurityContext implements SecurityContext {
             // in that case, we need to verify that the access to the account is done by the owner and not by anyone else.
             return this.pathParameter.containsKey(AppUtils.API_USER_LOGIN_PATH_PARAM)
                     && jwtPrincipal.getLogin().equals(this.pathParameter.getFirst(AppUtils.API_USER_LOGIN_PATH_PARAM));
+        }
+
+        if (Permission.PERSO_SNIPPET.equals(role)) {
+            // in that case, we need to verify that the access to the snippet is done by the owner and not by anyone else.
+            return this.pathParameter.containsKey("id")
+                    && jwtPrincipal.getLogin().equals(this.snippetService.getSnippet(this.pathParameter.getFirst("id")).getAuthor());
         }
 
         return true;
