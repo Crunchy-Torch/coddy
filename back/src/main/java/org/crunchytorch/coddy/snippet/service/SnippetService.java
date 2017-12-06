@@ -30,6 +30,7 @@ public class SnippetService extends AbstractService<SnippetEntity> {
     }
 
     public SnippetEntity create(SnippetEntity entity, SecurityContext securityContext) {
+        entity.setId(null);
         // Set date to now
         Date now = new Date();
         entity.setCreated(now);
@@ -39,5 +40,20 @@ public class SnippetService extends AbstractService<SnippetEntity> {
         // Initiate rate
         entity.setRate(0);
         return super.create(entity);
+    }
+
+    public SnippetEntity update(SnippetEntity snippetUpdated) {
+        SnippetEntity oldSnippet = this.getSnippet(snippetUpdated.getId());
+        return super.create(new SnippetEntity(snippetUpdated, oldSnippet));
+    }
+
+    /**
+     * This method will delete the {@link SnippetEntity snippet} from the given ID.
+     *
+     * @param id the snippet's ID
+     * @throws EntityNotFoundException if the given ID is not associated to a {@link SnippetEntity snippet}
+     */
+    public void delete(final String id) {
+        super.delete(this.getSnippet(id));
     }
 }

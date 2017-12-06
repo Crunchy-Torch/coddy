@@ -25,6 +25,10 @@ responses:
     description: "access forbidden"
     schema:
       $ref: "#/definitions/ApiErrorResponse"
+  404NotFound:
+    description: "Entity not found"
+    schema:
+      $ref: "#/definitions/ApiErrorResponse"
   MethodNotAllowed:
     description: "method not allowed"
     schema:
@@ -341,6 +345,180 @@ paths:
           $ref: "#/responses/InternalError"
       security:
       - jwt: []
+  /snippet:
+    get:
+      tags:
+      - "snippet"
+      summary: "Get all snippets"
+      operationId: "getSnippets"
+      parameters:
+      - name: "from"
+        in: "query"
+        required: false
+        description: "the offset from the first result you want to fetch"
+        type: integer
+        default: 0
+      - name: "size"
+        in: "query"
+        required: false
+        description: "allows you to configure the maximum amount of hits to be returned."
+        type: integer
+        default: 10
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Snippet"
+          headers:
+            Authorization:
+              type: "string"
+              description: "a JWT token with a refresh session if it exists in the request at the same place"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
+    post:
+      tags:
+      - "snippet"
+      summary: "create new snippet"
+      operationId: "createSnippet"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created snippet object."
+        required: true
+        schema:
+          $ref: "#/definitions/Snippet"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Snippet"
+          headers:
+            Authorization:
+              type: "string"
+              description: "a JWT token with a refresh session"
+        401:
+          $ref: "#/responses/Unauthorized"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
+      security:
+      - jwt: []
+  /snippet/{id}:
+    get:
+      tags:
+      - "snippet"
+      summary: "get the snippet which is associated to the given ID"
+      operationId: "getSnippet"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id that needs to be fetched."
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Snippet"
+          headers:
+            Authorization:
+              type: "string"
+              description: "a JWT token with a refresh session if it exists in the request at the same place"
+        404:
+          $ref: "#/responses/404NotFound"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
+    put:
+      tags:
+      - "snippet"
+      summary: "update the snippet"
+      operationId: "updateSnippet"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id that needs to be fetched."
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Updated snippet object."
+        required: true
+        schema:
+          $ref: "#/definitions/Snippet"
+      responses:
+        204:
+          description: "The resource was deleted successfully"
+          headers:
+            Authorization:
+              type: "string"
+              description: "a JWT token with a refresh session if it exists in the request at the same place"
+        401:
+          $ref: "#/responses/Unauthorized"
+        403:
+          $ref: "#/responses/Forbidden"
+        404:
+          $ref: "#/responses/404NotFound"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
+      security:
+      - jwt: []
+    delete:
+      tags:
+      - "snippet"
+      summary: "delete the snippet"
+      operationId: "deleteSnippet"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id that needs to be fetched."
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Snippet"
+          headers:
+            Authorization:
+              type: "string"
+              description: "a JWT token with a refresh session if it exists in the request at the same place"
+        401:
+          $ref: "#/responses/Unauthorized"
+        403:
+          $ref: "#/responses/Forbidden"
+        404:
+          $ref: "#/responses/404NotFound"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
+      security:
+      - jwt: []
 
 securityDefinitions:
   jwt:
@@ -395,6 +573,36 @@ definitions:
     properties:
       token:
         type: "string"
+  Snippet:
+    type: "object"
+    properties:
+      _id:
+        type: "string"
+      title:
+        type: "string"
+      language:
+        type: "string"
+      keywors:
+        type: "array"
+        items:
+          type: "string"
+      content:
+        type: "string"
+      associatedLinks:
+        type: "array"
+        items:
+          type: "string"
+      rate:
+        type: "number"
+        format: "float"
+      author:
+        type: "string"
+      created:
+        type: "string"
+        format: "date"
+      lastModified:
+        type: "string"
+        format: "date"
   ApiErrorResponse:
     type: "object"
     properties:

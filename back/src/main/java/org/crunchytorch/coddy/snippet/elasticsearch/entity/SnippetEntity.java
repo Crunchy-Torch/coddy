@@ -53,6 +53,34 @@ public class SnippetEntity implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private Date lastModified;
 
+    public SnippetEntity() {
+        // this constructor must be kipped. It'll use by the json deserialization.
+    }
+
+    /**
+     * @param newSnippet : The snippet which comes from the GUI. We take all information which can be updated like the title or the description.
+     *                   See the oldSnippet parameter to see what is the information that cannot be updated.
+     * @param oldSnippet : The snippet got from the database. It is used to extract some information that must not be modified like the unique ID,
+     *                   the author who create initially the snippet or the created date.
+     */
+    public SnippetEntity(SnippetEntity newSnippet, SnippetEntity oldSnippet) {
+        // the following data cannot be modified
+        this._id = oldSnippet.getId();
+        this.author = oldSnippet.getAuthor();
+        this.created = oldSnippet.getCreated();
+
+        // now the rest of the data can be updated
+        this.title = newSnippet.getTitle();
+        this.description = newSnippet.getDescription();
+        this.language = newSnippet.getLanguage();
+        this.keywords = newSnippet.getKeywords();
+        this.content = newSnippet.getContent();
+        this.associatedLinks = newSnippet.getAssociatedLinks();
+        this.rate = newSnippet.getRate();
+
+        this.lastModified = new Date();
+    }
+
     public String getId() {
         return _id;
     }
