@@ -16,38 +16,32 @@ import java.util.List;
 
 @Component
 @Path("/snippet")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class Snippet {
 
     @Autowired
     private SnippetService snippetService;
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public List<SnippetEntity> getSnippets(@DefaultValue("0") @QueryParam("from") final int from,
                                            @DefaultValue("10") @QueryParam("size") final int size) {
         return snippetService.getEntity(from, size);
     }
 
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     @AuthorizationFilter
     public SnippetEntity create(@Context SecurityContext securityContext, SnippetEntity snippet) {
         return snippetService.create(snippet, securityContext);
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
     public SnippetEntity getSnippet(@PathParam("id") String id) {
         return snippetService.getSnippet(id);
     }
 
     @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
     @AuthorizationFilter
     @RolesAllowed({Permission.ADMIN, Permission.PERSO_SNIPPET})
@@ -57,8 +51,6 @@ public class Snippet {
     }
 
     @DELETE
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
     @AuthorizationFilter
     @RolesAllowed({Permission.ADMIN, Permission.PERSO_SNIPPET})
