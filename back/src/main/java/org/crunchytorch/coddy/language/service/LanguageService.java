@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public class LanguageService {
 
-    @Value("#{'${org.crunchytorch.coddy.languages}'.split(',')}")
+    @Value("#{'${org.crunchytorch.coddy.languages}?:'.split(',')}")
     private List<String> languages;
 
     public List<String> getLanguages() {
