@@ -17,11 +17,11 @@ export class PrivateGuard implements CanActivate {
 
     let hasNotExpired = this.tokenService.hasNotExpired();
 
-    /*if (!hasNotExpired) {
+    if (!hasNotExpired) {
       this.tokenService.clearToken();
       this.router.navigate(['login', { tokenHasExpired: true }]);
       return false;
-    }*/
+    }
 
     return true;
   }
