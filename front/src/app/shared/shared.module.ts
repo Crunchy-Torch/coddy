@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TextFieldComponent } from './form/text-field/text-field.component';
 import { ToastComponent } from './toast/toast.component';
+import { TextAreaComponent } from './form/text-area/text-area.component';
 
 @NgModule({
   imports: [
@@ -22,14 +23,16 @@ import { ToastComponent } from './toast/toast.component';
     ErrorComponent,
     TitleComponent,
     TextFieldComponent,
-    ToastComponent
+    ToastComponent,
+    TextAreaComponent
   ],
   declarations: [
     MessageComponent,
     ErrorComponent,
     TitleComponent,
     TextFieldComponent,
-    ToastComponent
+    ToastComponent,
+    TextAreaComponent
   ],
   providers: [BaseService],
 })
