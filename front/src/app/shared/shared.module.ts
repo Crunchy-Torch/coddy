@@ -5,7 +5,7 @@ import { BaseService } from './base.service';
 import { ErrorComponent } from './error/error.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FieldComponent } from './field/field.component';
+import { TextFieldComponent } from './form/text-field/text-field.component';
 import { ToastComponent } from './toast/toast.component';
 
 @NgModule({
@@ -21,14 +21,14 @@ import { ToastComponent } from './toast/toast.component';
     MessageComponent,
     ErrorComponent,
     TitleComponent,
-    FieldComponent,
+    TextFieldComponent,
     ToastComponent
   ],
   declarations: [
     MessageComponent,
     ErrorComponent,
     TitleComponent,
-    FieldComponent,
+    TextFieldComponent,
     ToastComponent
   ],
   providers: [BaseService],

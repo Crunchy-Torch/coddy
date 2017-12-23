@@ -1,15 +1,14 @@
-import { any } from 'codelyzer/util/function';
-import { AbstractControl, Validators } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 
 declare var jQuery: any;
 
 @Component({
   selector: '[app-field]',
-  templateUrl: './field.component.html',
-  styleUrls: ['./field.component.scss']
+  templateUrl: './text-field.component.html',
+  styleUrls: ['./text-field.component.scss']
 })
-export class FieldComponent implements OnInit, AfterViewInit {
+export class TextFieldComponent implements OnInit, AfterViewInit {
 
   @Input() control: AbstractControl;
 
