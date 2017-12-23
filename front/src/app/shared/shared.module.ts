@@ -8,6 +8,7 @@ import { NgModule } from '@angular/core';
 import { TextFieldComponent } from './form/text-field/text-field.component';
 import { ToastComponent } from './toast/toast.component';
 import { TextAreaComponent } from './form/text-area/text-area.component';
+import { DropdownComponent } from './form/dropdown/dropdown.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { TextAreaComponent } from './form/text-area/text-area.component';
     TitleComponent,
     TextFieldComponent,
     ToastComponent,
-    TextAreaComponent
+    TextAreaComponent,
+    DropdownComponent
   ],
   declarations: [
     MessageComponent,
@@ -32,7 +34,8 @@ import { TextAreaComponent } from './form/text-area/text-area.component';
     TitleComponent,
     TextFieldComponent,
     ToastComponent,
-    TextAreaComponent
+    TextAreaComponent,
+    DropdownComponent
   ],
   providers: [BaseService],
 })

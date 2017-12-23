@@ -16,13 +16,8 @@
       
       <div class="field">
         <div class="two fields">
-            <div class="field">
-              <label>Language *</label>
-              <select [formControl]="snippetForm?.get('language')?.get('name')" class="ui fluid search selection dropdown">
-                <option value="" disabled>Select a language</option>  
-                <option *ngFor="let language of languages" [attr.value]="language">{{language}}</option>
-              </select>
-            </div>
+          <div app-dropdown class="field" [control]="snippetForm?.get('language')?.get('name')" [name]="'Language'"
+               [placeholder]="'Select a language'" [items]="languages"></div>
           <div app-text-field class="field" [control]="snippetForm?.get('language')?.get('version')" [name]="'Version'" [placeholder]="'Number or name'"></div>
         </div>
       </div>
