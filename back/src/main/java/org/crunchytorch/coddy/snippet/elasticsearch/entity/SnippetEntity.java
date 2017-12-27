@@ -33,8 +33,8 @@ public class SnippetEntity implements Serializable {
     @Field(type = FieldType.String)
     private List<String> keywords;
 
-    @Field(type = FieldType.String)
-    private String content;
+    @Field(type = FieldType.Nested)
+    private List<FileEntity> files;
 
     @Field(type = FieldType.Nested, index = FieldIndex.no)
     private List<LinkEntity> associatedLinks;
@@ -74,7 +74,7 @@ public class SnippetEntity implements Serializable {
         this.description = newSnippet.getDescription();
         this.language = newSnippet.getLanguage();
         this.keywords = newSnippet.getKeywords();
-        this.content = newSnippet.getContent();
+        this.files = newSnippet.getFiles();
         this.associatedLinks = newSnippet.getAssociatedLinks();
         this.rate = newSnippet.getRate();
 
@@ -121,12 +121,12 @@ public class SnippetEntity implements Serializable {
         this.keywords = keywords;
     }
 
-    public String getContent() {
-        return content;
+    public List<FileEntity> getFiles() {
+        return files;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setFiles(List<FileEntity> files) {
+        this.files = files;
     }
 
     public List<LinkEntity> getAssociatedLinks() {
