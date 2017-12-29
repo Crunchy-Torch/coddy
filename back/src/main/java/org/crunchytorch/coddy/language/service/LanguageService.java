@@ -9,7 +9,7 @@ import java.util.List;
 public class LanguageService {
 
 
-    @Value("#{'${org.crunchytorch.coddy.languages:java,c++,python,go}'.split(',')}")
+    @Value("#{'${org.crunchytorch.coddy.languages:java,cpp,python,go}'.split(',')}")
     private List<String> languages;
 
     public List<String> getLanguages() {
