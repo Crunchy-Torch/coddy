@@ -10,6 +10,8 @@ tags:
   description: "Operation about snippet"
 - name: "user"
   description: "Operations about user"
+- name: "language"
+  description: "Operation about language supported by Coddy"
 schemes:
 - "http"
 consumes:
@@ -519,6 +521,27 @@ paths:
           $ref: "#/responses/InternalError"
       security:
       - jwt: []
+  /language:
+    get:
+      tags:
+      - "language"
+      summary: "Get the list of the language supported by Coddy"
+      operationId: "getLanguages"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              type: "string"
+        404:
+          $ref: "#/responses/404NotFound"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        415:
+          $ref: "#/responses/UnsupportedMediaType"
+        500:
+          $ref: "#/responses/InternalError"
 
 securityDefinitions:
   jwt:
