@@ -34,7 +34,7 @@ public class TestUtils {
      * @return an object instance by the data contains inside the json file
      * @throws IOException if the file doesn't exist
      */
-    public static <T> T getObjecFromJson(final String jsonFile, Class<T> object) throws IOException {
+    public static <T> T getObjectFromJson(final String jsonFile, Class<T> object) throws IOException {
         InputStream stream = null;
         try {
             ObjectMapper mapper = new ObjectMapper();

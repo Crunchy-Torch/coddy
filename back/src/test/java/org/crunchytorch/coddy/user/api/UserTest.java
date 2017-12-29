@@ -40,7 +40,7 @@ public class UserTest {
 
     @Before
     public void populateDataBase() throws IOException {
-        UserEntity[] users = TestUtils.getObjecFromJson("user/user.database.json", UserEntity[].class);
+        UserEntity[] users = TestUtils.getObjectFromJson("user/user.database.json", UserEntity[].class);
 
         repository.save(Arrays.asList(users));
     }
@@ -68,7 +68,7 @@ public class UserTest {
         ResponseEntity<SimpleUser> response = restTemplate.exchange(TestUtils.getUrl(USER_ENDPOINT + "/ciceron"), HttpMethod.GET, entity, SimpleUser.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        MatcherAssert.assertThat(response.getBody(), Matchers.sameBeanAs(TestUtils.getObjecFromJson("user/getUserWithTokenExpected.json", SimpleUser.class)));
+        MatcherAssert.assertThat(response.getBody(), Matchers.sameBeanAs(TestUtils.getObjectFromJson("user/getUserWithTokenExpected.json", SimpleUser.class)));
     }
 
     @Test
