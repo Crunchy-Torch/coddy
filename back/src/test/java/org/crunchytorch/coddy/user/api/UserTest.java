@@ -27,13 +27,14 @@ import java.io.IOException;
 import java.util.Arrays;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = Main.class)
 public class UserTest {
 
     private static final String USER_ENDPOINT = "/user";
 
-    private TestRestTemplate restTemplate = new TestRestTemplate();
+    @Autowired
+    private TestRestTemplate restTemplate;
 
     @Autowired
     private UserRepository repository;

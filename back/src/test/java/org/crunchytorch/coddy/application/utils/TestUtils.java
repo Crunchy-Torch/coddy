@@ -7,10 +7,6 @@ import java.io.InputStream;
 
 public class TestUtils {
 
-    private static final String SERVER_HOST = "localhost";
-
-    private static final int SERVER_PORT = 8888;
-
     private static final String API_PREFIX = "/api/v1";
 
     private TestUtils() {
@@ -22,7 +18,7 @@ public class TestUtils {
      * @return the built url with the given endpoint
      */
     public static String getUrl(final String endpoint) {
-        return "http://" + SERVER_HOST + ":" + SERVER_PORT + API_PREFIX + endpoint;
+        return API_PREFIX + endpoint;
     }
 
     /**
