@@ -26,6 +26,8 @@ import java.util.stream.Collectors;
  */
 @Component
 @Path("/user")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class User {
 
     @Autowired
@@ -45,8 +47,6 @@ public class User {
      *                   </p>
      */
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("/auth")
     public Token authentication(final Credential credential) {
         return this.service.authenticate(credential);
@@ -60,15 +60,11 @@ public class User {
      * @throws EntityExistsException if the given user already exists
      */
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public SimpleUser create(UpdateUser user) {
         return this.service.create(user);
     }
 
     @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}")
     @AuthorizationFilter
     @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
@@ -84,8 +80,6 @@ public class User {
      * @throws EntityNotFoundException if the given login is not associated to a {@link SimpleUser user}
      */
     @DELETE
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}")
     @AuthorizationFilter
     @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
@@ -94,16 +88,12 @@ public class User {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("/count")
     public long count() {
         return this.service.count();
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     @AuthorizationFilter
     @RolesAllowed(Permission.ADMIN)
     public List<SimpleUser> getUsers(@DefaultValue("0") @QueryParam("from") final int from,
@@ -112,8 +102,6 @@ public class User {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("/search")
     public List<SimpleUser> search(@QueryParam("login") final String loginToSearch,
                                    @DefaultValue("0") @QueryParam("from") final int from,
@@ -127,8 +115,6 @@ public class User {
      * or the salt has been deleted previously
      */
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}")
     @AuthorizationFilter
     @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
@@ -137,8 +123,6 @@ public class User {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("/permission")
     public List<String> getAvailablePermissions() {
         return new ArrayList<String>() {{
