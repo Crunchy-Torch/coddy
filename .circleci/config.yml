@@ -143,3 +143,6 @@ workflows:
       - test-front:
           requires:
             - build-front
+      - lint-front:
+          requires:
+            - test-front
