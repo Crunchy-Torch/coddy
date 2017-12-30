@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SnippetComponent } from './snippet.component';
-import { SharedModule } from "../../shared/shared.module";
-import { HttpModule } from "@angular/http";
-import { SnippetService } from "../shared/snippet.service";
-import { RouterTestingModule } from "@angular/router/testing";
-import { AuthModule } from "../../auth/auth.module";
+import { SharedModule } from '../../shared/shared.module';
+import { HttpModule } from '@angular/http';
+import { SnippetService } from '../shared/snippet.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AuthModule } from '../../auth/auth.module';
 
 describe('SnippetComponent', () => {
   let component: SnippetComponent;

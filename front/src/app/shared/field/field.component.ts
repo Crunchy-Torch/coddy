@@ -1,13 +1,14 @@
-import { any } from 'codelyzer/util/function';
-import { AbstractControl, Validators } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 
 declare var jQuery: any;
 
 @Component({
+  /*tslint:disable:component-selector*/
   selector: '[app-field]',
+  /*tslint:enable*/
   templateUrl: './field.component.html',
-  styleUrls: ['./field.component.scss']
+  styleUrls: [ './field.component.scss' ]
 })
 export class FieldComponent implements OnInit, AfterViewInit {
 
@@ -27,18 +28,19 @@ export class FieldComponent implements OnInit, AfterViewInit {
 
   improvedName: string;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
     this.improvedName = this.isMandatory() ? this.name + ' *' : this.name;
   }
 
   isMandatory(): boolean {
-    let validator: any = this.control.validator && this.control.validator(this.control);
+    const validator: any = this.control.validator && this.control.validator(this.control);
     return validator && validator.required;
   }
 
   ngAfterViewInit() {
-    jQuery('#' + this.name).popup({ popup: '#' + this.name + '-popup', position: 'right center' });
+    jQuery('#' + this.name).popup({popup: '#' + this.name + '-popup', position: 'right center'});
   }
 }

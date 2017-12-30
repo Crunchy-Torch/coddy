@@ -1,11 +1,11 @@
 export class Error {
 
-    status: number;
-    message: string;
-    details: string = 'No additional information.';
+  status: number;
+  message: string;
+  details = 'No additional information.';
 
-    constructor(status?: number, message?: string, details?: string){
-        this.status = status;
-        this.message = message;
-    }
+  constructor(status?: number, message?: string, details?: string) {
+    this.status = status;
+    this.message = message;
+  }
 }

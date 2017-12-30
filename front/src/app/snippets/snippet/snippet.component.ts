@@ -1,7 +1,7 @@
 import { Error } from '../../shared/error/error';
 import { ActivatedRoute } from '@angular/router';
 import { SnippetService } from '../shared/snippet.service';
-import { Language, Link, LinkType, Snippet } from '../shared/snippet';
+import { LinkType, Snippet } from '../shared/snippet';
 
 import { Component, OnInit } from '@angular/core';
 import * as hljs from 'highlight.js';
@@ -9,7 +9,7 @@ import * as hljs from 'highlight.js';
 @Component({
   selector: 'app-snippet',
   templateUrl: './snippet.component.html',
-  styleUrls: ['./snippet.component.scss']
+  styleUrls: [ './snippet.component.scss' ]
 })
 export class SnippetComponent implements OnInit {
 
@@ -23,7 +23,7 @@ export class SnippetComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.route.params.subscribe((params: {id: string}) => {
+    this.route.params.subscribe((params: { id: string }) => {
       // Get route parameters
       this.id = params.id;
       this.getSnippet();
@@ -43,17 +43,21 @@ export class SnippetComponent implements OnInit {
   }
 
   linkTypeClass(linkType: LinkType): string {
-    
-    switch(linkType) {
-      case LinkType.DOCUMENTATION: return 'book icon';
-      case LinkType.STACK_OVERFLOW: return 'stack overflow icon';
-      case LinkType.GITHUB: return 'github icon';
-      default: return 'linkify icon';
+
+    switch (linkType) {
+      case LinkType.DOCUMENTATION:
+        return 'book icon';
+      case LinkType.STACK_OVERFLOW:
+        return 'stack overflow icon';
+      case LinkType.GITHUB:
+        return 'github icon';
+      default:
+        return 'linkify icon';
     }
   }
 
   intToArray(int: number): Array<number> {
-    return Array.from(Array(int),(x,i)=>i);
+    return Array.from(Array(int), (x, i) => i);
   }
 
   highlightCode(code: string) {

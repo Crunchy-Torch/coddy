@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OverviewComponent } from './overview.component';
-import { SnippetService } from "../../snippets/shared/snippet.service";
-import { SharedModule } from "../../shared/shared.module";
-import { RouterTestingModule } from "@angular/router/testing";
-import { AuthModule } from "../../auth/auth.module";
-import { HttpModule } from "@angular/http";
+import { SnippetService } from '../../snippets/shared/snippet.service';
+import { SharedModule } from '../../shared/shared.module';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AuthModule } from '../../auth/auth.module';
+import { HttpModule } from '@angular/http';
 
 describe('OverviewComponent', () => {
   let component: OverviewComponent;

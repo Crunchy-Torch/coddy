@@ -32,7 +32,7 @@ export class Queue<T> implements Collection<T>, Iterable<T> {
   }
 
   push(value: T) {
-    let pushedNode: Node<T> = new Node(value);
+    const pushedNode: Node<T> = new Node(value);
 
     if (this.rear == null) {
       this.front = pushedNode;
@@ -44,7 +44,7 @@ export class Queue<T> implements Collection<T>, Iterable<T> {
   }
 
   pop(): T {
-    var poppedValue = this.front.value;
+    const poppedValue = this.front.value;
     this.front = this.front.next;
     if (!this.front) {
       this.rear = null;
