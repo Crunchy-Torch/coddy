@@ -27,7 +27,7 @@ Coddy is a community-driven platform that allow users to share code snippets. It
   * semantic-ui
 * Integration:
   * Docker
-  * Travis-CI
+  * Circle-CI
 
 ### API
 Endpoints exposed by Coddy's API are described in [this swagger](./docs/api-swagger.yml). If you're not so familiar with the swagger syntax (or if you prefer a well-designed interface over raw text), just check out the data on [SwaggerHub](https://app.swaggerhub.com/apis/Nexucis/Coddy/1.0.0)!
