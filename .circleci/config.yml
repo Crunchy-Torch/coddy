@@ -59,6 +59,12 @@ jobs:
       # run tests!
       - run: cd back && gradle test
 
+      # run code-coverage generation
+      - run: cd back && gradle jacocoTestReport
+
+      # push code-coverage to codecov
+      - run: bash <(curl -s https://codecov.io/bash)
+
       - save_cache:
           paths:
             - /home/circleci/.gradle/caches/
