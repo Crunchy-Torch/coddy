@@ -104,6 +104,9 @@ jobs:
       # test
       - run: cd ./front && npm run test-ci
 
+      # push code coverage to codecov
+      - run: cd ./front && bash <(curl -s https://codecov.io/bash)
+
       - save_cache:
           key: dependency-cache-{{ checksum "./front/package.json" }}
           paths:
