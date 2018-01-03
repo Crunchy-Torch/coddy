@@ -101,6 +101,41 @@ jobs:
             - /home/circleci/.gradle/caches/
             - /home/circleci/.gradle/wrapper/
           key: v2-dependencies-{{ checksum "./back/build.gradle" }}
+  blocker-check:
+    docker:
+      - image: circleci/builder-base:1.1
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: .circleci/check_violation.sh blocker ${NB_BLOCKER_ISSUE}
+  critical-check:
+    docker:
+      - image: circleci/builder-base:1.1
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: .circleci/check_violation.sh critical ${NB_CRITICAL_ISSUE}
+  major-check:
+    docker:
+      - image: circleci/builder-base:1.1
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: .circleci/check_violation.sh major ${NB_MAJOR_ISSUE}
+  minor-check:
+    docker:
+      - image: circleci/builder-base:1.1
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: .circleci/check_violation.sh minor ${NB_MINOR_ISSUE}
+  info-check:
+    docker:
+      - image: circleci/builder-base:1.1
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: .circleci/check_violation.sh info ${NB_INFO_ISSUE}
 
   build-front:
     docker:
@@ -137,6 +172,30 @@ workflows:
       - sonarqube-back:
           requires:
             - test-back
+          filters:
+            branches:
+              only: master
+      - blocker-check:
+          requires:
+            - sonarqube-back
+          filters:
+            branches:
+              only: master
+      - major-check:
+          requires:
+            - sonarqube-back
+          filters:
+            branches:
+              only: master
+      - minor-check:
+          requires:
+            - sonarqube-back
+          filters:
+            branches:
+              only: master
+      - info-check:
+          requires:
+            - sonarqube-back
           filters:
             branches:
               only: master
