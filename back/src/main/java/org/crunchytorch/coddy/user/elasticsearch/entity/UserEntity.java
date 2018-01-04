@@ -2,7 +2,6 @@ package org.crunchytorch.coddy.user.elasticsearch.entity;
 
 import org.crunchytorch.coddy.user.data.IUser;
 import org.crunchytorch.coddy.user.data.in.UpdateUser;
-import org.crunchytorch.coddy.user.data.security.Permission;
 import org.crunchytorch.coddy.user.utils.SecurityUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -11,7 +10,6 @@ import org.springframework.data.elasticsearch.annotations.FieldIndex;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
