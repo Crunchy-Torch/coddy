@@ -12,11 +12,6 @@ if [ -z "$l_violation_type" ]; then
     exit 1
 fi
 
-if [ -z "$l_violation_nb_accepted" ]; then
-    echo "the number of violation which can be accepted is empty. You must set this value"
-    exit 1
-fi
-
 # Check if jq is present, if not install it
 if command -v jq > /dev/null; then
     echo "jq is present"
@@ -63,6 +58,11 @@ result="${result#\"}"
 
 if [[ "${l_branch}" == "master" ]]; then
 
+    if [ -z "$l_violation_nb_accepted" ]; then
+        echo "the number of violation which can be accepted is empty. You must set this value"
+        exit 1
+    fi
+
     if  [[ ${result} -gt ${l_violation_nb_accepted} ]]; then
         echo "the number of issue with the criticality ${l_violation_type} is greater than ${l_violation_nb_accepted} which is the number accepted"
         exit 1
@@ -73,5 +73,9 @@ else
     if  [[ ${result} -gt 0 ]]; then
         echo "You have ${result} new issue with the criticality ${l_violation_type}, please resolve them before make a pull request"
         exit 1
+    else
+        echo "you don't have any new issue with the criticality ${l_violation_type}, which is great !!
+Good luck with your future pull request, we hope it will be accepted ASAP.
+And of course thank you for your help!! :)"
     fi
 fi
