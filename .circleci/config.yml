@@ -102,35 +102,35 @@ jobs:
           key: v2-dependencies-{{ checksum "./back/build.gradle" }}
   blocker-check:
     docker:
-      - image: circleci/ubuntu-server:trusty-20160222
+      - image: circleci/openjdk:8-jdk
     working_directory: ~/repo
     steps:
       - checkout
       - run: .circleci/check_violation.sh blocker ${NB_BLOCKER_ISSUE}
   critical-check:
     docker:
-      - image: circleci/ubuntu-server:trusty-20160222
+      - image: circleci/openjdk:8-jdk
     working_directory: ~/repo
     steps:
       - checkout
       - run: .circleci/check_violation.sh critical ${NB_CRITICAL_ISSUE}
   major-check:
     docker:
-      - image: circleci/ubuntu-server:trusty-20160222
+      - image: circleci/openjdk:8-jdk
     working_directory: ~/repo
     steps:
       - checkout
       - run: .circleci/check_violation.sh major ${NB_MAJOR_ISSUE}
   minor-check:
     docker:
-      - image: circleci/ubuntu-server:trusty-20160222
+      - image: circleci/openjdk:8-jdk
     working_directory: ~/repo
     steps:
       - checkout
       - run: .circleci/check_violation.sh minor ${NB_MINOR_ISSUE}
   info-check:
     docker:
-      - image: circleci/ubuntu-server:trusty-20160222
+      - image: circleci/openjdk:8-jdk
     working_directory: ~/repo
     steps:
       - checkout
