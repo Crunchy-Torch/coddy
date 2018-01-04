@@ -94,8 +94,7 @@ jobs:
       - run: cd back && gradle dependencies
 
       # run sonarqube!
-      - run: cd back && gradle sonarqube -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=crunchytorch-github -Dsonar.login=${SONARQUBE_TOKEN}
-
+      - run: cd back && gradle sonarqube -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=crunchytorch-github -Dsonar.login=${SONARQUBE_TOKEN} -Dsonar.branch.name=${CIRCLE_BRANCH}
       - save_cache:
           paths:
             - /home/circleci/.gradle/caches/
@@ -172,30 +171,15 @@ workflows:
       - sonarqube-back:
           requires:
             - test-back
-          filters:
-            branches:
-              only: master
       - blocker-check:
           requires:
             - sonarqube-back
-          filters:
-            branches:
-              only: master
       - major-check:
           requires:
             - sonarqube-back
-          filters:
-            branches:
-              only: master
       - minor-check:
           requires:
             - sonarqube-back
-          filters:
-            branches:
-              only: master
       - info-check:
           requires:
             - sonarqube-back
-          filters:
-            branches:
-              only: master
