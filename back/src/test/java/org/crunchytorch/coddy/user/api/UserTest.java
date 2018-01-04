@@ -93,7 +93,7 @@ public class UserTest {
 
         // check if the user is effectively deleted.
         UserEntity user = repository.findByLogin(login);
-        Assert.assertEquals(user, null);
+        Assert.assertEquals(null, user);
     }
 
     @Test
@@ -107,7 +107,7 @@ public class UserTest {
 
         // check if the user is effectively deleted.
         UserEntity user = repository.findByLogin(userToDelete);
-        Assert.assertEquals(user, null);
+        Assert.assertEquals(null, user);
     }
 
     @Test
