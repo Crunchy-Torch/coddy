@@ -91,7 +91,7 @@ export class AdminComponent implements OnInit {
     this.userService.deleteUser(login).finally(
       () => {
         this.isDeleteLoading = false;
-        this.users = this.users.filter(user => login != user.login);
+        this.users = this.users.filter(user => login !== user.login);
         this.countUser();
       }
     ).subscribe(

@@ -8,14 +8,14 @@ export class PrivateGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-    let hasToken = this.tokenService.hasToken();
+    const hasToken = this.tokenService.hasToken();
 
     if (!hasToken) {
       this.router.navigate(['login', { redirect: true }]);
       return false;
     }
 
-    let hasNotExpired = this.tokenService.hasNotExpired();
+    const hasNotExpired = this.tokenService.hasNotExpired();
 
     if (!hasNotExpired) {
       this.tokenService.clearToken();

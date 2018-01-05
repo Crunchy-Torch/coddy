@@ -14,7 +14,7 @@ export class LoginService extends BaseService {
 
   authenticate(login: string, password: string): Observable<string> {
 
-    let headers: Headers = new Headers();
+    const headers: Headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     return this.http.post(
