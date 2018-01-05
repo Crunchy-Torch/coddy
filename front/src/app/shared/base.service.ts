@@ -11,18 +11,18 @@ export class BaseService {
   private static DEFAULT_DETAILS = 'A team of highly trained monkeys has been dispatched to deal with this situation.'
 
   protected extractArray(res: Response) {
-    let body = res.json();
+    const body = res.json();
     return body || [];
   }
 
   protected extractObject(res: Response) {
-    let body = res.json();
+    const body = res.json();
     return body || {};
   }
 
   protected extractError(res: Response) {
 
-    let error: Error = new Error();
+    const error: Error = new Error();
     if (res instanceof Response) {
       // Extract error message
       error.status = res.status

@@ -1,6 +1,10 @@
 package org.crunchytorch.coddy.snippet.elasticsearch.entity;
 
-public class LinkEntity {
+import java.io.Serializable;
+
+public class LinkEntity implements Serializable {
+
+    private static final long serialVersionUID = -971120926935892961L;
 
     public enum LinkType {
         DOCUMENTATION, STACK_OVERFLOW, GITHUB, OTHER

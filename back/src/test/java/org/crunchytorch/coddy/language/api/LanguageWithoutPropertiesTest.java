@@ -1,4 +1,4 @@
-package org.crunchytorch.coddy.application.api;
+package org.crunchytorch.coddy.language.api;
 
 import org.crunchytorch.coddy.Main;
 import org.crunchytorch.coddy.application.utils.TestUtils;
@@ -13,20 +13,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
-        , classes = Main.class)
-public class HelloTest {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        classes = Main.class)
+public class LanguageWithoutPropertiesTest {
+
+    private static final String LANGUAGE_ENDPOINT = "/language";
 
     @Autowired
     private TestRestTemplate restTemplate;
 
     @Test
-    public void health() {
-        ResponseEntity<String> entity =
-                restTemplate.getForEntity(TestUtils.getUrl("/"), String.class);
+    public void getLanguagesTest() {
+        ResponseEntity<String[]> response = this.restTemplate.getForEntity(TestUtils.getUrl(LANGUAGE_ENDPOINT), String[].class);
+        String[] expected = new String[]{"java", "cpp", "python", "go"};
 
-        Assert.assertEquals("Hello coddy!", entity.getBody());
-        Assert.assertEquals(HttpStatus.OK, entity.getStatusCode());
+        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assert.assertArrayEquals(expected, response.getBody());
     }
-
 }

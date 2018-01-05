@@ -15,6 +15,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class AdminCreationOnStartup implements ApplicationRunner {
@@ -45,11 +46,11 @@ public class AdminCreationOnStartup implements ApplicationRunner {
 
         LOGGER.info("create admin user if exists");
         if (!service.exists(adminUsername)) {
-            service.create(new UpdateUser(adminUsername, adminPassword, adminEmail), new ArrayList<String>() {{
-                add(Permission.PERSO_ACCOUNT);
-                add(Permission.PERSO_SNIPPET);
-                add(Permission.ADMIN);
-            }});
+            List<String> permissions = new ArrayList<>();
+            permissions.add(Permission.PERSO_ACCOUNT);
+            permissions.add(Permission.PERSO_SNIPPET);
+            permissions.add(Permission.ADMIN);
+            service.create(new UpdateUser(adminUsername, adminPassword, adminEmail), permissions);
         }
     }
 }

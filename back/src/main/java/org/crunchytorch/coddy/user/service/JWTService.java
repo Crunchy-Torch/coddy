@@ -70,8 +70,11 @@ public class JWTService {
         claims.put(SecurityUtils.PayloadFields.LAST_NAME.getName(), user.getLastName());
         claims.put(SecurityUtils.PayloadFields.PERMISSIONS.getName(), user.getPermissions());
 
-        Date notBefore = user instanceof UserEntity ? new Date() :
-                (((JWTPrincipal) user).getBeginActivationSession() != null ? ((JWTPrincipal) user).getBeginActivationSession() : new Date());
+        Date notBefore = new Date();
+
+        if (!(user instanceof UserEntity) && (((JWTPrincipal) user).getBeginActivationSession() != null)) {
+            notBefore = ((JWTPrincipal) user).getBeginActivationSession();
+        }
 
         return this.generateToken(claims, notBefore);
     }
