@@ -8,20 +8,20 @@ import { User } from './user';
 @Injectable()
 export class UserService extends BaseService {
 
-  static userEndpoint = "/user";
+  static userEndpoint = '/user';
 
   constructor(private http: Http) {
     super();
   }
 
   deleteUser(login: string) {
-    return this.http.delete(this.buildUrl(UserService.userEndpoint + "/" + login))
+    return this.http.delete(this.buildUrl(UserService.userEndpoint + '/' + login))
       .map(this.extractObject)
       .catch(this.extractError);
   }
 
   getUser(login: string): Observable<User> {
-    return this.http.get(this.buildUrl(UserService.userEndpoint + "/" + login))
+    return this.http.get(this.buildUrl(UserService.userEndpoint + '/' + login))
       .map(this.extractObject)
       .catch(this.extractError)
   }

@@ -7,7 +7,8 @@ export class TokenService {
 
   private token: Token = null;
 
-  constructor() { }
+  constructor() {
+  }
 
   setToken(token: string) {
     localStorage.setItem(Token.TOKEN_KEY, token);
@@ -22,9 +23,6 @@ export class TokenService {
   }
 
   hasValidToken(): boolean {
-    let token: Token = this.getToken();
-    // Token 'not before' and 'expiration time' are in seconds
-    let now: number = Date.now() / 1000;
     return this.hasToken() && this.hasNotExpired();
   }
 
@@ -33,9 +31,9 @@ export class TokenService {
   }
 
   hasNotExpired(): boolean {
-    let token: Token = this.getToken();
+    const token: Token = this.getToken();
     // Token 'not before' and 'expiration time' are in seconds
-    let now: number = Date.now() / 1000;
+    const now: number = Date.now() / 1000;
     return token.exp > now && token.nbf < now;
   }
 
@@ -46,15 +44,15 @@ export class TokenService {
 
   private decodeToken(): Token {
     // Get token from local storage
-    let item: string = localStorage.getItem(Token.TOKEN_KEY);
+    const item: string = localStorage.getItem(Token.TOKEN_KEY);
 
     // Check if token is set
     if (typeof item !== 'undefined' && item !== null && item.length !== 0 && item !== 'undefined') {
       // Extract and decode token
-      let jwtHelper: JwtHelper = new JwtHelper();
-      let decodedToken: any = jwtHelper.decodeToken(item);
+      const jwtHelper: JwtHelper = new JwtHelper();
+      const decodedToken: any = jwtHelper.decodeToken(item);
       // Create typed token object
-      let token: Token = new Token();
+      const token: Token = new Token();
       token.raw = item;
       token.firstname = decodedToken.firstname;
       token.lastname = decodedToken.lastname;

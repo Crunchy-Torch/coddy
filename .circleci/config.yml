@@ -59,11 +59,82 @@ jobs:
       # run tests!
       - run: cd back && gradle test
 
+      # run code-coverage generation
+      - run: cd back && gradle jacocoTestReport
+
+      # push code-coverage to codecov
+      - run: bash <(curl -s https://codecov.io/bash)
+
       - save_cache:
           paths:
             - /home/circleci/.gradle/caches/
             - /home/circleci/.gradle/wrapper/
           key: v2-dependencies-{{ checksum "./back/build.gradle" }}
+
+  sonarqube-back:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    environment:
+      # Customize the JVM maximum heap limit
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v2-dependencies-{{ checksum "./back/build.gradle" }}
+          # fallback to using the latest cache if no exact match is found
+          - v2-dependencies-
+
+      - run: cd back && gradle dependencies
+
+      # run sonarqube!
+      - run: cd back && gradle sonarqube -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=crunchytorch-github -Dsonar.login=${SONARQUBE_TOKEN} -Dsonar.branch.name=${CIRCLE_BRANCH}
+      - save_cache:
+          paths:
+            - /home/circleci/.gradle/caches/
+            - /home/circleci/.gradle/wrapper/
+          key: v2-dependencies-{{ checksum "./back/build.gradle" }}
+  blocker-check:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: .circleci/check_violations.sh blocker ${NB_BLOCKER_ISSUE}
+  critical-check:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: .circleci/check_violations.sh critical ${NB_CRITICAL_ISSUE}
+  major-check:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: .circleci/check_violations.sh major ${NB_MAJOR_ISSUE}
+  minor-check:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: .circleci/check_violations.sh minor ${NB_MINOR_ISSUE}
+  info-check:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: .circleci/check_violations.sh info ${NB_INFO_ISSUE}
 
   package-back:
     docker:
@@ -125,6 +196,54 @@ jobs:
           key: dependency-cache-{{ checksum "./front/package.json" }}
           paths:
             - ./front/node_modules
+  test-front:
+    docker:
+      - image: circleci/node:8.4.0
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - dependency-cache-{{ checksum "./front/package.json" }}
+          - dependency-cache-
+
+      - run: cd ./front && npm install
+
+      # test
+      - run: cd ./front && npm run test-ci
+
+      # push code coverage to codecov
+      - run: cd ./front && bash <(curl -s https://codecov.io/bash)
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "./front/package.json" }}
+          paths:
+            - ./front/node_modules
+
+  lint-front:
+    docker:
+      - image: circleci/node:8.4.0
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - dependency-cache-{{ checksum "./front/package.json" }}
+          - dependency-cache-
+
+      - run: cd ./front && npm install
+
+      # lint
+      - run: cd ./front && npm run lint
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "./front/package.json" }}
+          paths:
+            - ./front/node_modules
 
   ###################################################
   ###              Workflow Docker                ###
@@ -146,14 +265,42 @@ workflows:
   build_and_test:
     jobs:
       - build-back
-      - build-front
       - test-back:
           requires:
             - build-back
-      - package-back:
+      - sonarqube-back:
           requires:
             - test-back
+      - blocker-check:
+          requires:
+            - sonarqube-back
+      - critical-check:
+          requires:
+            - sonarqube-back
+      - major-check:
+          requires:
+            - sonarqube-back
+      - minor-check:
+          requires:
+            - sonarqube-back
+      - info-check:
+          requires:
+            - sonarqube-back
+      - package-back:
+          requires:
+            - blocker-check
+            - critical-check
+            - major-check
+            - minor-check
+            - info-check
+      - build-front
+      - test-front:
+          requires:
+            - build-front
+      - lint-front:
+          requires:
+            - test-front
       - build-docker:
           requires:
             - package-back
-            - build-front
+            - lint-front
