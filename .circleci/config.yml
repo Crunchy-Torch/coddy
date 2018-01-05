@@ -139,9 +139,7 @@ jobs:
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: ~/repo
-      - setup_remote_docker:
-        reusable: true
-        version: 17.11.0-ce
+      - setup_remote_docker
       - run: .circleci/build-docker.sh -b dev-master
 workflows:
   version: 2
