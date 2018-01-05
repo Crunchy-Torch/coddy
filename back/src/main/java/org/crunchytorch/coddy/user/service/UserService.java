@@ -69,10 +69,10 @@ public class UserService extends AbstractService<UserEntity> {
      * @throws BadRequestException   if the given user has no login
      */
     public SimpleUser create(UpdateUser user) {
-        return this.create(user, new ArrayList<String>() {{
-            add(Permission.PERSO_ACCOUNT);
-            add(Permission.PERSO_SNIPPET);
-        }});
+        List<String> permissions = new ArrayList<>();
+        permissions.add(Permission.PERSO_ACCOUNT);
+        permissions.add(Permission.PERSO_SNIPPET);
+        return this.create(user, permissions);
     }
 
     public SimpleUser create(UpdateUser user, List<String> permissions) {
