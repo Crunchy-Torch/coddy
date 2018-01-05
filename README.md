@@ -1,5 +1,5 @@
 # Coddy
-[![CircleCI](https://circleci.com/gh/Crunchy-Torch/coddy.svg?style=shield)](https://circleci.com/gh/Crunchy-Torch/coddy) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+[![CircleCI](https://circleci.com/gh/Crunchy-Torch/coddy.svg?style=shield)](https://circleci.com/gh/Crunchy-Torch/coddy) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) [![codecov](https://codecov.io/gh/Crunchy-Torch/coddy/branch/master/graph/badge.svg)](https://codecov.io/gh/Crunchy-Torch/coddy)
 
 1. [Overview](#overview)  
 2. [Run Coddy](#run-coddy)

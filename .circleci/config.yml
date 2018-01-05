@@ -59,11 +59,83 @@ jobs:
       # run tests!
       - run: cd back && gradle test
 
+      # run code-coverage generation
+      - run: cd back && gradle jacocoTestReport
+
+      # push code-coverage to codecov
+      - run: bash <(curl -s https://codecov.io/bash)
+
       - save_cache:
           paths:
             - /home/circleci/.gradle/caches/
             - /home/circleci/.gradle/wrapper/
           key: v2-dependencies-{{ checksum "./back/build.gradle" }}
+
+  sonarqube-back:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    environment:
+      # Customize the JVM maximum heap limit
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v2-dependencies-{{ checksum "./back/build.gradle" }}
+          # fallback to using the latest cache if no exact match is found
+          - v2-dependencies-
+
+      - run: cd back && gradle dependencies
+
+      # run sonarqube!
+      - run: cd back && gradle sonarqube -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=crunchytorch-github -Dsonar.login=${SONARQUBE_TOKEN} -Dsonar.branch.name=${CIRCLE_BRANCH}
+      - save_cache:
+          paths:
+            - /home/circleci/.gradle/caches/
+            - /home/circleci/.gradle/wrapper/
+          key: v2-dependencies-{{ checksum "./back/build.gradle" }}
+  blocker-check:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: .circleci/check_violations.sh blocker ${NB_BLOCKER_ISSUE}
+  critical-check:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: .circleci/check_violations.sh critical ${NB_CRITICAL_ISSUE}
+  major-check:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: .circleci/check_violations.sh major ${NB_MAJOR_ISSUE}
+  minor-check:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: .circleci/check_violations.sh minor ${NB_MINOR_ISSUE}
+  info-check:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: .circleci/check_violations.sh info ${NB_INFO_ISSUE}
+
   build-front:
     docker:
       - image: circleci/node:8.4.0
@@ -120,6 +192,24 @@ workflows:
       - test-back:
           requires:
             - build-back
+      - sonarqube-back:
+          requires:
+            - test-back
+      - blocker-check:
+          requires:
+            - sonarqube-back
+      - critical-check:
+          requires:
+            - sonarqube-back
+      - major-check:
+          requires:
+            - sonarqube-back
+      - minor-check:
+          requires:
+            - sonarqube-back
+      - info-check:
+          requires:
+            - sonarqube-back
       - test-front:
           requires:
             - build-front
