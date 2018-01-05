@@ -158,7 +158,31 @@ jobs:
           key: dependency-cache-{{ checksum "./front/package.json" }}
           paths:
             - ./front/node_modules
+  test-front:
+    docker:
+      - image: circleci/node:8.4.0
+    working_directory: ~/repo
 
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - dependency-cache-{{ checksum "./front/package.json" }}
+          - dependency-cache-
+
+      - run: cd ./front && npm install
+
+      # test
+      - run: cd ./front && npm run test-ci
+
+      # push code coverage to codecov
+      - run: cd ./front && bash <(curl -s https://codecov.io/bash)
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "./front/package.json" }}
+          paths:
+            - ./front/node_modules
 workflows:
   version: 2
   build_and_test:
@@ -186,3 +210,6 @@ workflows:
       - info-check:
           requires:
             - sonarqube-back
+      - test-front:
+          requires:
+            - build-front

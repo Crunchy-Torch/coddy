@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SnippetComponent } from './snippet.component';
+import { SharedModule } from "../../shared/shared.module";
+import { HttpModule } from "@angular/http";
+import { SnippetService } from "../shared/snippet.service";
+import { RouterTestingModule } from "@angular/router/testing";
+import { AuthModule } from "../../auth/auth.module";
 
 describe('SnippetComponent', () => {
   let component: SnippetComponent;
@@ -8,9 +13,11 @@ describe('SnippetComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SnippetComponent ]
+      declarations: [ SnippetComponent ],
+      imports: [ SharedModule, AuthModule, HttpModule, RouterTestingModule.withRoutes([]) ],
+      providers: [ SnippetService ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
