@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { BasicField } from '../basic-field.component';
+import { BasicFieldComponent } from '../basic-field.component';
 
 declare var jQuery: any;
 
@@ -10,7 +10,7 @@ declare var jQuery: any;
   templateUrl: './text-area.component.html',
   styleUrls: [ './text-area.component.scss' ]
 })
-export class TextAreaComponent extends BasicField {
+export class TextAreaComponent extends BasicFieldComponent {
 
   @Input() rows = 3;
 

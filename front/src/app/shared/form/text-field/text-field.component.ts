@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BasicField } from '../basic-field.component';
+import { BasicFieldComponent } from '../basic-field.component';
 
 @Component({
   /*tslint:disable:component-selector*/
@@ -8,7 +8,7 @@ import { BasicField } from '../basic-field.component';
   templateUrl: './text-field.component.html',
   styleUrls: ['./text-field.component.scss']
 })
-export class TextFieldComponent extends BasicField {
+export class TextFieldComponent extends BasicFieldComponent {
 
   constructor() {
     super();
