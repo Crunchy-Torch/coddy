@@ -32,6 +32,10 @@ build(){
 
     echo "generate application docker images"
     docker build -t ${l_docker_image_base_name}:${l_initial_tag} .
+    if [ $? != 0 ]; then
+        echo "something wrong with the docker's command"
+        exit 1
+    fi
 }
 
 function help {
