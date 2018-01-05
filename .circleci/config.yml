@@ -211,7 +211,6 @@ workflows:
   build_and_test:
     jobs:
       - build-back
-      - build-front
       - test-back:
           requires:
             - build-back
@@ -233,6 +232,7 @@ workflows:
       - info-check:
           requires:
             - sonarqube-back
+      - build-front
       - test-front:
           requires:
             - build-front
