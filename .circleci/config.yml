@@ -64,6 +64,41 @@ jobs:
             - /home/circleci/.gradle/caches/
             - /home/circleci/.gradle/wrapper/
           key: v2-dependencies-{{ checksum "./back/build.gradle" }}
+
+  package-back:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v2-dependencies-{{ checksum "./back/build.gradle" }}
+          # fallback to using the latest cache if no exact match is found
+          - v2-dependencies-
+
+      - run: cd back && gradle dependencies
+      # package the application
+      - run: cd back && gradle build -x test --parallel
+      # store the jar
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory
+          root: ~/repo
+          # Must be relative path from root
+          paths:
+            - back/build/
+
+      - save_cache:
+          paths:
+            - /home/circleci/.gradle/caches/
+            - /home/circleci/.gradle/wrapper/
+          key: v2-dependencies-{{ checksum "./back/build.gradle" }}
+
+  ###################################################
+  ###              Workflow front                 ###
+  ###################################################
+
   build-front:
     docker:
       - image: circleci/node:8.4.0
@@ -71,16 +106,20 @@ jobs:
 
     steps:
       - checkout
-
       - restore_cache:
           keys:
           - dependency-cache-{{ checksum "./front/package.json" }}
           - dependency-cache-
-
       - run: cd ./front && npm install
-
       # build
       - run: cd ./front && npm run-script build-prod
+      # store the jar
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory
+          root: ~/repo
+          # Must be relative path from root
+          paths:
+            - front/dist/
 
       - save_cache:
           key: dependency-cache-{{ checksum "./front/package.json" }}
@@ -96,3 +135,6 @@ workflows:
       - test-back:
           requires:
             - build-back
+      - package-back:
+          requires:
+            - test-back
