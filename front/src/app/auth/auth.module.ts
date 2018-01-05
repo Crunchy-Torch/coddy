@@ -1,13 +1,12 @@
 import { AuthRoutingModule } from './auth-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import { CoreModule } from '../core/core.module';
 import { TokenService } from './token.service';
 import { AuthHttpService } from './auth-http.service';
 import { LoginService } from './login/login.service';
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { Http, RequestOptions } from '@angular/http';
-import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { AuthHttp } from 'angular2-jwt';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttpService(http, options);
@@ -30,8 +29,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     {
       provide: AuthHttp,
       useFactory: authHttpServiceFactory,
-      deps: [Http, RequestOptions]
+      deps: [ Http, RequestOptions ]
     }
   ]
 })
-export class AuthModule { }
+export class AuthModule {
+}

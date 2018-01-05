@@ -1,6 +1,10 @@
 package org.crunchytorch.coddy.snippet.elasticsearch.entity;
 
-public class LanguageEntity {
+import java.io.Serializable;
+
+public class LanguageEntity implements Serializable {
+
+    private static final long serialVersionUID = -7491682007673179557L;
 
     private String name;
 

@@ -27,20 +27,21 @@ import java.io.IOException;
 import java.util.Arrays;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = Main.class)
 public class UserTest {
 
     private static final String USER_ENDPOINT = "/user";
 
-    private TestRestTemplate restTemplate = new TestRestTemplate();
+    @Autowired
+    private TestRestTemplate restTemplate;
 
     @Autowired
     private UserRepository repository;
 
     @Before
     public void populateDataBase() throws IOException {
-        UserEntity[] users = TestUtils.getObjecFromJson("user/user.database.json", UserEntity[].class);
+        UserEntity[] users = TestUtils.getObjectFromJson("user/user.database.json", UserEntity[].class);
 
         repository.save(Arrays.asList(users));
     }
@@ -68,7 +69,7 @@ public class UserTest {
         ResponseEntity<SimpleUser> response = restTemplate.exchange(TestUtils.getUrl(USER_ENDPOINT + "/ciceron"), HttpMethod.GET, entity, SimpleUser.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        MatcherAssert.assertThat(response.getBody(), Matchers.sameBeanAs(TestUtils.getObjecFromJson("user/getUserWithTokenExpected.json", SimpleUser.class)));
+        MatcherAssert.assertThat(response.getBody(), Matchers.sameBeanAs(TestUtils.getObjectFromJson("user/getUserWithTokenExpected.json", SimpleUser.class)));
     }
 
     @Test
@@ -93,7 +94,7 @@ public class UserTest {
 
         // check if the user is effectively deleted.
         UserEntity user = repository.findByLogin(login);
-        Assert.assertEquals(user, null);
+        Assert.assertEquals(null, user);
     }
 
     @Test
@@ -107,7 +108,7 @@ public class UserTest {
 
         // check if the user is effectively deleted.
         UserEntity user = repository.findByLogin(userToDelete);
-        Assert.assertEquals(user, null);
+        Assert.assertEquals(null, user);
     }
 
     @Test

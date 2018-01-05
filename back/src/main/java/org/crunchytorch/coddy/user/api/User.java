@@ -125,11 +125,11 @@ public class User {
     @GET
     @Path("/permission")
     public List<String> getAvailablePermissions() {
-        return new ArrayList<String>() {{
-            add(Permission.ADMIN);
-            add(Permission.MODERATION);
-            add(Permission.PERSO_ACCOUNT);
-            add(Permission.PERSO_SNIPPET);
-        }};
+        List<String> permissions = new ArrayList<>();
+        permissions.add(Permission.ADMIN);
+        permissions.add(Permission.MODERATION);
+        permissions.add(Permission.PERSO_ACCOUNT);
+        permissions.add(Permission.PERSO_SNIPPET);
+        return permissions;
     }
 }
