@@ -2,17 +2,17 @@ package org.crunchytorch.coddy.user.data.security;
 
 import java.io.Serializable;
 
-public class Token implements Serializable {
+public class JWTToken implements Serializable {
 
     private static final long serialVersionUID = 3959254859062107001L;
 
     private String token;
 
-    public Token() {
+    public JWTToken() {
         // this blank constructor is needed by the library jackson
     }
 
-    public Token(String token) {
+    public JWTToken(String token) {
         this.token = token;
     }
 
