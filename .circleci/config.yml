@@ -271,8 +271,7 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: .circleci/build-docker.sh --connect
-      - run: .circleci/build-docker.sh --tag dev-master ${CIRCLE_TAG}
-      - run: .circleci/build-docker.sh --push ${CIRCLE_TAG}
+      - run: .circleci/build-docker.sh --clever-tag ${CIRCLE_TAG}
 
 workflows:
   version: 2
