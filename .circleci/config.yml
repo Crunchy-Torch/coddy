@@ -277,52 +277,28 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - build-back:
-          filters:
-            tags:
-              only: /.*/
+      - build-back
       - test-back:
           requires:
             - build-back
-          filters:
-            tags:
-              only: /.*/
       - sonarqube-back:
           requires:
             - test-back
-          filters:
-            tags:
-              only: /.*/
       - blocker-check:
           requires:
             - sonarqube-back
-          filters:
-            tags:
-              only: /.*/
       - critical-check:
           requires:
             - sonarqube-back
-          filters:
-            tags:
-              only: /.*/
       - major-check:
           requires:
             - sonarqube-back
-          filters:
-            tags:
-              only: /.*/
       - minor-check:
           requires:
             - sonarqube-back
-          filters:
-            tags:
-              only: /.*/
       - info-check:
           requires:
             - sonarqube-back
-          filters:
-            tags:
-              only: /.*/
       - package-back:
           requires:
             - blocker-check
@@ -330,25 +306,13 @@ workflows:
             - major-check
             - minor-check
             - info-check
-          filters:
-            tags:
-              only: /.*/
-      - build-front:
-          filters:
-            tags:
-              only: /.*/
+      - build-front
       - test-front:
           requires:
             - build-front
-          filters:
-            tags:
-              only: /.*/
       - lint-front:
           requires:
             - test-front
-          filters:
-            tags:
-              only: /.*/
       - build-push-docker:
           requires:
             - package-back
@@ -356,11 +320,8 @@ workflows:
           filters:
             branches:
               only: master
-            tags:
-              only: /.*/
       - push-tag-docker:
-          requires:
-            - build-push-docker
+          type: approval
           filters:
             tags:
               only: /.*/
