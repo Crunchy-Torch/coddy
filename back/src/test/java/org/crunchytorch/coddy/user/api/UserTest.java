@@ -9,7 +9,7 @@ import org.crunchytorch.coddy.application.data.Response;
 import org.crunchytorch.coddy.application.utils.TestUtils;
 import org.crunchytorch.coddy.user.data.in.Credential;
 import org.crunchytorch.coddy.user.data.out.SimpleUser;
-import org.crunchytorch.coddy.user.data.security.Token;
+import org.crunchytorch.coddy.user.data.security.JWTToken;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.crunchytorch.coddy.user.elasticsearch.repository.UserRepository;
 import org.junit.After;
@@ -138,7 +138,7 @@ public class UserTest {
 
     @Test
     public void testAuthWithCorrectUser() {
-        ResponseEntity<Token> response = this.auth("ciceron", "tutu", Token.class);
+        ResponseEntity<JWTToken> response = this.auth("ciceron", "tutu", JWTToken.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assert.assertEquals(true, response.getBody() != null && StringUtils.isNotEmpty(response.getBody().getToken()));
@@ -163,9 +163,9 @@ public class UserTest {
     }
 
     private HttpEntity<String> getHttpEntityWithToken(final String login, final String password) {
-        Token token = this.auth(login, password, Token.class).getBody();
+        JWTToken JWTToken = this.auth(login, password, JWTToken.class).getBody();
         HttpHeaders headers = new HttpHeaders();
-        headers.add(javax.ws.rs.core.HttpHeaders.AUTHORIZATION, token.getToken());
+        headers.add(javax.ws.rs.core.HttpHeaders.AUTHORIZATION, JWTToken.getToken());
         headers.add(javax.ws.rs.core.HttpHeaders.CONTENT_TYPE, javax.ws.rs.core.MediaType.APPLICATION_JSON);
         return new HttpEntity<>("parameters", headers);
     }
