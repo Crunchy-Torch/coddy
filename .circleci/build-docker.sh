@@ -4,6 +4,7 @@ l_coddy_path=$PWD
 l_docker_image_base_name=crunchytorch/coddy
 l_default_tag="dev-master"
 
+# Connect to docker hub
 connect(){
     docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
 
@@ -13,13 +14,36 @@ connect(){
     fi
 }
 
+# Pull the given tag
+getDockerImage(){
+    l_initial_tag=$1
+    if [ -z "${l_initial_tag}" ]; then
+       echo "if you want to get an image, you need to provide the corresponding tag"
+    fi
+
+    docker pull ${l_docker_image_base_name}:${l_initial_tag}
+
+    if [ $? != 0 ]; then
+        echo "something wrong with the docker's command"
+        exit 1
+    fi
+}
+
+# Tag the image from an existing tag
 tag(){
     l_initial_tag=$1
     l_target_tag=$2
 
+    # check that the image exists, pull if not
+    if [[ "$(docker images -q ${l_docker_image_base_name}:${l_initial_tag} 2> /dev/null)" == "" ]]; then
+        echo "image ${l_docker_image_base_name}:${l_initial_tag} does not exist, I need to pull it"
+        getDockerImage l_initial_tag
+    fi
+
     docker tag ${l_docker_image_base_name}:${l_initial_tag}  ${l_docker_image_base_name}:${l_target_tag}
 }
 
+# Push the given tag
 push(){
     l_initial_tag=$1
 
@@ -35,6 +59,7 @@ push(){
     fi
 }
 
+# Build the docker images with the given tag
 build(){
     l_initial_tag=$1
 
