@@ -136,6 +136,40 @@ jobs:
       - checkout
       - run: .circleci/check_violations.sh info ${NB_INFO_ISSUE}
 
+  package-back:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v2-dependencies-{{ checksum "./back/build.gradle" }}
+          # fallback to using the latest cache if no exact match is found
+          - v2-dependencies-
+
+      - run: cd back && gradle dependencies
+      # package the application
+      - run: cd back && gradle build -x test --parallel
+      # store the jar
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory
+          root: ~/repo
+          # Must be relative path from root
+          paths:
+            - back/build/
+
+      - save_cache:
+          paths:
+            - /home/circleci/.gradle/caches/
+            - /home/circleci/.gradle/wrapper/
+          key: v2-dependencies-{{ checksum "./back/build.gradle" }}
+
+  ###################################################
+  ###              Workflow front                 ###
+  ###################################################
+
   build-front:
     docker:
       - image: circleci/node:8.4.0
@@ -143,16 +177,20 @@ jobs:
 
     steps:
       - checkout
-
       - restore_cache:
           keys:
           - dependency-cache-{{ checksum "./front/package.json" }}
           - dependency-cache-
-
       - run: cd ./front && npm install
-
       # build
       - run: cd ./front && npm run-script build-prod
+      # store the jar
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory
+          root: ~/repo
+          # Must be relative path from root
+          paths:
+            - front/dist/
 
       - save_cache:
           key: dependency-cache-{{ checksum "./front/package.json" }}
@@ -206,36 +244,125 @@ jobs:
           key: dependency-cache-{{ checksum "./front/package.json" }}
           paths:
             - ./front/node_modules
+
+  ###################################################
+  ###              Workflow Docker                ###
+  ###################################################
+
+  build-push-docker:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: ~/repo
+      - setup_remote_docker
+      - run: .circleci/build-docker.sh --build
+      - run: .circleci/build-docker.sh --connect
+      - run: .circleci/build-docker.sh --push
+
+  push-tag-docker:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: .circleci/build-docker.sh --connect
+      - run: .circleci/build-docker.sh --clever-tag ${CIRCLE_TAG}
+
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build-back
+      - build-back:
+          filters:
+            tags:
+              only: /.*/
       - test-back:
           requires:
             - build-back
+          filters:
+            tags:
+              only: /.*/
       - sonarqube-back:
           requires:
             - test-back
+          filters:
+            tags:
+              only: /.*/
       - blocker-check:
           requires:
             - sonarqube-back
+          filters:
+            tags:
+              only: /.*/
       - critical-check:
           requires:
             - sonarqube-back
+          filters:
+            tags:
+              only: /.*/
       - major-check:
           requires:
             - sonarqube-back
+          filters:
+            tags:
+              only: /.*/
       - minor-check:
           requires:
             - sonarqube-back
+          filters:
+            tags:
+              only: /.*/
       - info-check:
           requires:
             - sonarqube-back
-      - build-front
+          filters:
+            tags:
+              only: /.*/
+      - package-back:
+          requires:
+            - blocker-check
+            - critical-check
+            - major-check
+            - minor-check
+            - info-check
+          filters:
+            tags:
+              only: /.*/
+      - build-front:
+          filters:
+            tags:
+              only: /.*/
       - test-front:
           requires:
             - build-front
+          filters:
+            tags:
+              only: /.*/
       - lint-front:
           requires:
             - test-front
+          filters:
+            tags:
+              only: /.*/
+      - build-push-docker:
+          requires:
+            - package-back
+            - lint-front
+          filters:
+            branches:
+              only: master
+            tags:
+              only: /.*/
+      - push-tag-docker:
+          requires:
+            - build-push-docker
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
