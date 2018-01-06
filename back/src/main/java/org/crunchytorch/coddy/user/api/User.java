@@ -7,7 +7,7 @@ import org.crunchytorch.coddy.user.data.in.Credential;
 import org.crunchytorch.coddy.user.data.in.UpdateUser;
 import org.crunchytorch.coddy.user.data.out.SimpleUser;
 import org.crunchytorch.coddy.user.data.security.Permission;
-import org.crunchytorch.coddy.user.data.security.Token;
+import org.crunchytorch.coddy.user.data.security.JWTToken;
 import org.crunchytorch.coddy.user.filter.AuthorizationFilter;
 import org.crunchytorch.coddy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,7 @@ public class User {
      */
     @POST
     @Path("/auth")
-    public Token authentication(final Credential credential) {
+    public JWTToken authentication(final Credential credential) {
         return this.service.authenticate(credential);
     }
 

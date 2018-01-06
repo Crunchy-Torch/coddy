@@ -7,7 +7,7 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.crunchytorch.coddy.application.utils.AppUtils;
 import org.crunchytorch.coddy.user.data.IUser;
 import org.crunchytorch.coddy.user.data.security.JWTPrincipal;
-import org.crunchytorch.coddy.user.data.security.Token;
+import org.crunchytorch.coddy.user.data.security.JWTToken;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.crunchytorch.coddy.user.filter.JWTSecurityContext;
 import org.crunchytorch.coddy.user.utils.SecurityUtils;
@@ -61,9 +61,9 @@ public class JWTService {
      * All fields in the payload are personal data from the {@link IUser user}
      *
      * @param user : the {@link IUser user} who need a new token
-     * @return a new {@link Token token}
+     * @return a new {@link JWTToken token}
      */
-    public Token generateToken(IUser user) {
+    public JWTToken generateToken(IUser user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put(SecurityUtils.PayloadFields.LOGIN.getName(), user.getLogin());
         claims.put(SecurityUtils.PayloadFields.FIRST_NAME.getName(), user.getFirstName());
@@ -153,7 +153,7 @@ public class JWTService {
         }
     }
 
-    private Token generateToken(Map<String, Object> claims, Date notBefore) {
+    private JWTToken generateToken(Map<String, Object> claims, Date notBefore) {
 
         byte[] secret = DEFAULT_JWT_SECRET;
 
@@ -169,7 +169,7 @@ public class JWTService {
 
         LocalDateTime expiration = LocalDateTime.now().plusMinutes(sessionExpireMinutes);
 
-        return new Token(Jwts.builder()
+        return new JWTToken(Jwts.builder()
                 .setClaims(claims)
                 .setNotBefore(notBefore)
                 .setExpiration(Date.from(expiration.atZone(ZoneId.systemDefault()).toInstant()))

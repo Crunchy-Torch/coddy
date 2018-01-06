@@ -7,8 +7,8 @@ import org.crunchytorch.coddy.application.service.AbstractService;
 import org.crunchytorch.coddy.user.data.in.Credential;
 import org.crunchytorch.coddy.user.data.in.UpdateUser;
 import org.crunchytorch.coddy.user.data.out.SimpleUser;
+import org.crunchytorch.coddy.user.data.security.JWTToken;
 import org.crunchytorch.coddy.user.data.security.Permission;
-import org.crunchytorch.coddy.user.data.security.Token;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.crunchytorch.coddy.user.elasticsearch.repository.UserRepository;
 import org.crunchytorch.coddy.user.exception.AuthenticationException;
@@ -42,10 +42,10 @@ public class UserService extends AbstractService<UserEntity> {
      * 3. Generate the token from the {@link UserEntity user information}
      *
      * @param credential the credential used to authenticate the {@link UserEntity user}
-     * @return a valid {@link Token token}
+     * @return a valid {@link JWTToken token}
      * @throws AuthenticationException if the user is not found or the password is wrong.
      */
-    public Token authenticate(Credential credential) {
+    public JWTToken authenticate(Credential credential) {
         UserEntity entity = UserRepository.class.cast(this.repository).findByLogin(credential.getLogin());
 
         if (entity == null) {
