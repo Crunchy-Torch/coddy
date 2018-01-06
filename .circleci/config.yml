@@ -259,7 +259,9 @@ jobs:
           # Must be absolute path or relative path from working_directory
           at: ~/repo
       - setup_remote_docker
-      - run: .circleci/build-docker.sh -b dev-master
+      - run: .circleci/build-docker.sh --build
+      - run: .circleci/build-docker.sh --connect
+      - run: .circleci/build-docker.sh --push
 workflows:
   version: 2
   build_and_test:
