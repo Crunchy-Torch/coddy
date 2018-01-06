@@ -2,6 +2,7 @@
 
 l_coddy_path=$PWD
 l_docker_image_base_name=crunchytorch/coddy
+l_default_tag="dev-master"
 
 connect(){
     docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
@@ -23,7 +24,7 @@ push(){
     l_initial_tag=$1
 
     if [ -z "${l_initial_tag}" ]; then
-        l_initial_tag="dev-master"
+        l_initial_tag=${l_default_tag}
     fi
 
     docker push ${l_docker_image_base_name}:${l_initial_tag}
@@ -38,7 +39,7 @@ build(){
     l_initial_tag=$1
 
     if [ -z "${l_initial_tag}" ]; then
-        l_initial_tag="dev-master"
+        l_initial_tag=${l_default_tag}
     fi
 
     # ckeck that all front files exist
