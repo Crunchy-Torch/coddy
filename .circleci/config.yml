@@ -318,6 +318,9 @@ workflows:
           requires:
             - package-back
             - lint-front
+          filters:
+            branches:
+              only: master
       - push-tag-docker:
           requires:
             - build-push-docker
