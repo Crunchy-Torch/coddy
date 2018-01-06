@@ -262,6 +262,7 @@ jobs:
       - run: .circleci/build-docker.sh --build
       - run: .circleci/build-docker.sh --connect
       - run: .circleci/build-docker.sh --push
+
   push-tag-docker:
     docker:
       - image: circleci/openjdk:8-jdk
@@ -269,6 +270,10 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+      - run: .circleci/build-docker.sh --connect
+      - run: .circleci/build-docker.sh --tag dev-master ${CIRCLE_TAG}
+      - run: .circleci/build-docker.sh --push ${CIRCLE_TAG}
+
 workflows:
   version: 2
   build_and_test:
