@@ -1,0 +1,5 @@
+<label>{{improvedName}}</label>
+<select [formControl]="control" class="ui fluid search selection dropdown">
+  <option value="" disabled>{{placeholder}}</option>
+  <option *ngFor="let item of items" [attr.value]="item">{{item}}</option>
+</select>

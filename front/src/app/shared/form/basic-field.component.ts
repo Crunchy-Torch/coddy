@@ -5,12 +5,10 @@ declare var jQuery: any;
 
 @Component({
   /*tslint:disable:component-selector*/
-  selector: '[app-field]',
+  selector: '[app-field]'
   /*tslint:enable*/
-  templateUrl: './field.component.html',
-  styleUrls: [ './field.component.scss' ]
 })
-export class FieldComponent implements OnInit, AfterViewInit {
+export class BasicFieldComponent implements OnInit, AfterViewInit {
 
   @Input() control: AbstractControl;
 
@@ -19,12 +17,6 @@ export class FieldComponent implements OnInit, AfterViewInit {
   @Input() placeholder: string;
 
   @Input() help: string[];
-
-  @Input() type = 'text';
-
-  @Input() isTextArea = false;
-
-  @Input() rows = 3;
 
   improvedName: string;
 

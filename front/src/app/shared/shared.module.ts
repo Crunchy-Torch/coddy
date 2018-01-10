@@ -5,8 +5,10 @@ import { BaseService } from './base.service';
 import { ErrorComponent } from './error/error.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FieldComponent } from './field/field.component';
+import { TextFieldComponent } from './form/text-field/text-field.component';
 import { ToastComponent } from './toast/toast.component';
+import { TextAreaComponent } from './form/text-area/text-area.component';
+import { DropdownComponent } from './form/dropdown/dropdown.component';
 
 @NgModule({
   imports: [
@@ -21,15 +23,19 @@ import { ToastComponent } from './toast/toast.component';
     MessageComponent,
     ErrorComponent,
     TitleComponent,
-    FieldComponent,
-    ToastComponent
+    TextFieldComponent,
+    ToastComponent,
+    TextAreaComponent,
+    DropdownComponent
   ],
   declarations: [
     MessageComponent,
     ErrorComponent,
     TitleComponent,
-    FieldComponent,
-    ToastComponent
+    TextFieldComponent,
+    ToastComponent,
+    TextAreaComponent,
+    DropdownComponent
   ],
   providers: [BaseService],
 })

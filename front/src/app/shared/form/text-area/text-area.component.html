@@ -1,8 +1,7 @@
 <label class="inline">{{improvedName}}</label>
 <i [id]="name" *ngIf="help?.length > 0" class="info circle icon"></i>
 <div class="ui icon input">
-  <input *ngIf="!isTextArea" [type]="type" [placeholder]="placeholder" [formControl]="control">
-  <textarea *ngIf="isTextArea" [rows]="rows" [formControl]="control" [placeholder]="placeholder"></textarea>
+  <textarea [rows]="rows" [formControl]="control" [placeholder]="placeholder"></textarea>
   <i *ngIf="control?.invalid && (control?.dirty || control?.touched)" class="red remove icon"></i>
   <i *ngIf="control?.valid && control?.touched" class="green checkmark icon"></i>
 </div>
