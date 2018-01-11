@@ -1,6 +1,10 @@
 package org.crunchytorch.coddy.snippet.elasticsearch.entity;
 
-public class FileEntity {
+import java.io.Serializable;
+
+public class FileEntity implements Serializable {
+
+    private static final long serialVersionUID = -3901403840706517994L;
 
     private String filename;
 
