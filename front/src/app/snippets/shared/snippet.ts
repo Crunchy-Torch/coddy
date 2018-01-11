@@ -1,4 +1,3 @@
-
 export class Snippet {
   title: string;
   description: string;
@@ -12,7 +11,7 @@ export class Snippet {
   lastModified: string;
 
   static toObject(raw: any): Snippet {
-    let result: Snippet = new Snippet();
+    const result: Snippet = new Snippet();
     result.title = raw.title;
     result.description = raw.description;
     result.language = Language.toObject(raw.language);
@@ -37,7 +36,7 @@ export class Language {
   version: string;
 
   static toObject(raw: any): Language {
-    let result: Language = new Language();
+    const result: Language = new Language();
 
     if (typeof raw !== 'undefined') {
       result.name = raw.name;
@@ -53,10 +52,10 @@ export class Link {
   description: string;
 
   static toObject(raw: any): Link {
-    let result: Link = new Link();
+    const result: Link = new Link();
 
     if (typeof raw !== 'undefined') {
-      result.type = LinkType[raw.type as string];
+      result.type = LinkType[ raw.type as string ];
       result.value = raw.value;
       result.description = raw.description;
     }

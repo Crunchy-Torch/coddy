@@ -7,10 +7,6 @@ import java.io.InputStream;
 
 public class TestUtils {
 
-    private static final String SERVER_HOST = "localhost";
-
-    private static final int SERVER_PORT = 8888;
-
     private static final String API_PREFIX = "/api/v1";
 
     private TestUtils() {
@@ -22,7 +18,7 @@ public class TestUtils {
      * @return the built url with the given endpoint
      */
     public static String getUrl(final String endpoint) {
-        return "http://" + SERVER_HOST + ":" + SERVER_PORT + API_PREFIX + endpoint;
+        return API_PREFIX + endpoint;
     }
 
     /**
@@ -34,7 +30,7 @@ public class TestUtils {
      * @return an object instance by the data contains inside the json file
      * @throws IOException if the file doesn't exist
      */
-    public static <T> T getObjecFromJson(final String jsonFile, Class<T> object) throws IOException {
+    public static <T> T getObjectFromJson(final String jsonFile, Class<T> object) throws IOException {
         InputStream stream = null;
         try {
             ObjectMapper mapper = new ObjectMapper();

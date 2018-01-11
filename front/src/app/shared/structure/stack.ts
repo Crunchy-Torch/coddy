@@ -15,7 +15,7 @@ export class Stack<T> implements Collection<T> {
   }
 
   pop(): T {
-    let value: T = this.top.value;
+    const value: T = this.top.value;
     this.top = this.top.next;
     return value;
   }

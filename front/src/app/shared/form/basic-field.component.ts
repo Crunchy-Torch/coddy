@@ -4,32 +4,35 @@ import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 declare var jQuery: any;
 
 @Component({
-    selector: '[app-field]',
+  /*tslint:disable:component-selector*/
+  selector: '[app-field]'
+  /*tslint:enable*/
 })
-export class BasicField implements OnInit, AfterViewInit {
+export class BasicFieldComponent implements OnInit, AfterViewInit {
 
-    @Input() control: AbstractControl;
+  @Input() control: AbstractControl;
 
-    @Input() name: string;
+  @Input() name: string;
 
-    @Input() placeholder: string;
+  @Input() placeholder: string;
 
-    @Input() help: string[];
+  @Input() help: string[];
 
-    improvedName: string;
+  improvedName: string;
 
-    constructor() { }
+  constructor() {
+  }
 
-    ngOnInit() {
-        this.improvedName = this.isMandatory() ? this.name + ' *' : this.name;
-    }
+  ngOnInit() {
+    this.improvedName = this.isMandatory() ? this.name + ' *' : this.name;
+  }
 
-    isMandatory(): boolean {
-        let validator: any = this.control.validator && this.control.validator(this.control);
-        return validator && validator.required;
-    }
+  isMandatory(): boolean {
+    const validator: any = this.control.validator && this.control.validator(this.control);
+    return validator && validator.required;
+  }
 
-    ngAfterViewInit() {
-        jQuery('#' + this.name).popup({ popup: '#' + this.name + '-popup', position: 'right center' });
-    }
+  ngAfterViewInit() {
+    jQuery('#' + this.name).popup({popup: '#' + this.name + '-popup', position: 'right center'});
+  }
 }

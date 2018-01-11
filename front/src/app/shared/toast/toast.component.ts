@@ -11,7 +11,7 @@ export class ToastComponent {
 
   toasts: Queue<Toast> = new Queue<Toast>();
 
-  @Input() position = "bottom right";
+  @Input() position = 'bottom right';
 
   @Input() duration = 5000;
 
