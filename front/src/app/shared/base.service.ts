@@ -8,17 +8,7 @@ import { environment } from '../../environments/environment';
 export class BaseService {
 
   private static DEFAULT_ERROR = 'Something went horribly wrong...';
-  private static DEFAULT_DETAILS = 'A team of highly trained monkeys has been dispatched to deal with this situation.'
-
-  protected extractArray(res: Response) {
-    const body = res.json();
-    return body || [];
-  }
-
-  protected extractObject(res: Response) {
-    const body = res.json();
-    return body || {};
-  }
+  private static DEFAULT_DETAILS = 'A team of highly trained monkeys has been dispatched to deal with this situation.';
 
   protected extractError(res: Response) {
 

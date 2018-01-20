@@ -5,7 +5,8 @@ declare var jQuery: any;
 
 @Component({
   /*tslint:disable:component-selector*/
-  selector: '[app-field]'
+  selector: '[app-field]',
+  template: ''
   /*tslint:enable*/
 })
 export class BasicFieldComponent implements OnInit, AfterViewInit {

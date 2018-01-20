@@ -5,7 +5,7 @@ import { SnippetService } from '../../snippets/shared/snippet.service';
 import { SharedModule } from '../../shared/shared.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthModule } from '../../auth/auth.module';
-import { HttpModule } from '@angular/http';
+import {HttpClientModule} from "@angular/common/http";
 
 describe('OverviewComponent', () => {
   let component: OverviewComponent;
@@ -14,7 +14,7 @@ describe('OverviewComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ OverviewComponent ],
-      imports: [ SharedModule, RouterTestingModule.withRoutes([]), AuthModule, HttpModule ],
+      imports: [ SharedModule, RouterTestingModule.withRoutes([]), AuthModule, HttpClientModule ],
       providers: [ SnippetService ]
     })
       .compileComponents();

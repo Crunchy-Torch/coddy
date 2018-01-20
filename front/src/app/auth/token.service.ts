@@ -1,13 +1,13 @@
 import { Token } from './token';
 import { Injectable } from '@angular/core';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 @Injectable()
 export class TokenService {
 
   private token: Token = null;
 
-  constructor() {
+  constructor(private jwtHelper: JwtHelperService) {
   }
 
   setToken(token: string) {
@@ -49,8 +49,7 @@ export class TokenService {
     // Check if token is set
     if (typeof item !== 'undefined' && item !== null && item.length !== 0 && item !== 'undefined') {
       // Extract and decode token
-      const jwtHelper: JwtHelper = new JwtHelper();
-      const decodedToken: any = jwtHelper.decodeToken(item);
+      const decodedToken: any = this.jwtHelper.decodeToken(item);
       // Create typed token object
       const token: Token = new Token();
       token.raw = item;

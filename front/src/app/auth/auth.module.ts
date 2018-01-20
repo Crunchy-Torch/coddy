@@ -1,36 +1,30 @@
-import { AuthRoutingModule } from './auth-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import { TokenService } from './token.service';
-import { AuthHttpService } from './auth-http.service';
-import { LoginService } from './login/login.service';
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
-import { Http, RequestOptions } from '@angular/http';
-import { AuthHttp } from 'angular2-jwt';
+import {JwtModule} from "@auth0/angular-jwt";
+import {Token} from "./token";
 
-export function authHttpServiceFactory(http: Http, options: RequestOptions) {
-  return new AuthHttpService(http, options);
+export function tokenGetter() {
+  return localStorage.getItem(Token.TOKEN_KEY);
 }
 
 @NgModule({
   imports: [
     SharedModule,
-    AuthRoutingModule
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        //globalHeaders: [ {'Content-Type': 'application/json'} ],
+        throwNoTokenError: true,
+        whitelistedDomains: ['localhost:3001']
+      }
+    })
   ],
   exports: [
     LoginComponent
   ],
   declarations: [
     LoginComponent
-  ],
-  providers: [
-    LoginService,
-    TokenService,
-    {
-      provide: AuthHttp,
-      useFactory: authHttpServiceFactory,
-      deps: [ Http, RequestOptions ]
-    }
   ]
 })
 export class AuthModule {

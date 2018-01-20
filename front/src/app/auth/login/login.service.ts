@@ -21,10 +21,6 @@ export class LoginService extends BaseService {
       this.buildUrl(this.authEndpoint),
       JSON.stringify({ login: login, password: password }),
       { headers }
-    ).map(res => this.extractObject(res).token).catch(this.extractError);
-  }
-
-  private extractToken(res: Response): string {
-    return this.extractObject(res).token;
+    ).map((res: any) => res.token.catch(this.extractError));
   }
 }
