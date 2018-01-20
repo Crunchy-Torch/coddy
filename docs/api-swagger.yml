@@ -161,7 +161,7 @@ paths:
           $ref: "#/responses/InternalError"
   /user/search:
     get:
-      tags: 
+      tags:
       - "user"
       summary: "search user by login"
       operationId: "search"
@@ -182,7 +182,7 @@ paths:
         required: false
         description: "allows you to configure the maximum amount of hits to be returned."
         type: integer
-        default: 10      
+        default: 10
       responses:
         200:
           description: "Returns all users who have a login that starts or ends with the one in the query parameter"
@@ -604,13 +604,13 @@ definitions:
       title:
         type: "string"
       language:
-        type: "string"
+        $ref: "#/definitions/Language"
       keywors:
         type: "array"
         items:
           type: "string"
-      content:
-        type: "string"
+      files:
+        $ref: "#/definitions/File"
       associatedLinks:
         type: "array"
         items:
@@ -626,6 +626,22 @@ definitions:
       lastModified:
         type: "string"
         format: "date"
+  Language:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      version:
+        type: "string"
+  File:
+    type: "object"
+    properties:
+      filename:
+        type: "string"
+      language:
+        $ref: "#/definitions/Language"
+      content:
+        type: "string"
   ApiErrorResponse:
     type: "object"
     properties:
