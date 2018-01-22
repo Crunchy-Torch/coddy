@@ -13,7 +13,7 @@ export class LanguageService extends BaseService {
   }
 
   getLanguages(): Observable<string[]> {
-    return this.http.get(this.buildUrl(this.snippetEndpoint))
+    return this.http.get<string[]>(this.buildUrl(this.snippetEndpoint))
       .catch(this.extractError);
   }
 }

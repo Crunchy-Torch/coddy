@@ -20,7 +20,7 @@ export class UserService extends BaseService {
   }
 
   getUser(login: string): Observable<User> {
-    return this.http.get(this.buildUrl(UserService.userEndpoint + '/' + login))
+    return this.http.get<User>(this.buildUrl(UserService.userEndpoint + '/' + login))
       .catch(this.extractError)
   }
 }

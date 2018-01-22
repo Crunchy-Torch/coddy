@@ -13,12 +13,12 @@ export class AdminService extends BaseService {
   }
 
   getUsers(from = 0, size = 10): Observable<User[]> {
-    return this.http.get(this.buildUrl(UserService.userEndpoint) + '?from=' + from + '&size=' + size)
+    return this.http.get<User[]>(this.buildUrl(UserService.userEndpoint) + '?from=' + from + '&size=' + size)
       .catch(this.extractError)
   }
 
   count(): Observable<number> {
-    return this.http.get(this.buildUrl(UserService.userEndpoint + '/count'))
+    return this.http.get<number>(this.buildUrl(UserService.userEndpoint + '/count'))
       .catch(this.extractError)
   }
 }
