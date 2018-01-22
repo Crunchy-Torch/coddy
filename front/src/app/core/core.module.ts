@@ -8,8 +8,8 @@ import { CoreRoutingModule } from './core-routing.module';
 import { HomeComponent } from './home/home.component';
 import { OverviewComponent } from './overview/overview.component';
 import { NgModule } from '@angular/core';
-import { HeadersInterceptor } from "./headers.interceptor";
-import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HeadersInterceptor } from './headers.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   imports: [

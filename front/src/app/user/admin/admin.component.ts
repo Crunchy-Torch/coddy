@@ -47,8 +47,8 @@ export class AdminComponent implements OnInit {
     ).subscribe(
       users => this.users = users,
       error => this.error = error
-    )
-  };
+    );
+  }
 
   getUsers(pageNumber?: number) {
     if (pageNumber) {
@@ -64,7 +64,7 @@ export class AdminComponent implements OnInit {
       .subscribe(
         users => this.users = users,
         error => this.error = error
-      )
+      );
   }
 
   previousPage() {
@@ -96,7 +96,7 @@ export class AdminComponent implements OnInit {
       }
     ).subscribe(
       error => this.error = error
-    )
+    );
   }
 
   countUser() {
@@ -113,7 +113,7 @@ export class AdminComponent implements OnInit {
       }
     ).subscribe(
       nbUser => this.nbUser = nbUser
-    )
+    );
   }
 
 }

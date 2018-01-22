@@ -1,5 +1,14 @@
 import { Collection } from './collection';
 
+class Node<T> {
+  value: T;
+  next: Node<T>;
+  constructor(value: T) {
+    this.value = value;
+    this.next = null;
+  }
+}
+
 export class Queue<T> implements Collection<T>, Iterable<T> {
 
   front: Node<T>;
@@ -62,14 +71,5 @@ export class Queue<T> implements Collection<T>, Iterable<T> {
 
   isEmpty() {
     return this.rear === null;
-  }
-}
-
-class Node<T> {
-  value: T;
-  next: Node<T>;
-  constructor(value: T) {
-    this.value = value;
-    this.next = null;
   }
 }

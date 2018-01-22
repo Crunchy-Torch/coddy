@@ -9,7 +9,7 @@ import { TextFieldComponent } from './form/text-field/text-field.component';
 import { ToastComponent } from './toast/toast.component';
 import { TextAreaComponent } from './form/text-area/text-area.component';
 import { DropdownComponent } from './form/dropdown/dropdown.component';
-import { BasicFieldComponent } from "./form/basic-field.component";
+import { BasicFieldComponent } from './form/basic-field.component';
 
 @NgModule({
   imports: [

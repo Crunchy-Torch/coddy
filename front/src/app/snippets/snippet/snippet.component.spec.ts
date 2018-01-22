@@ -5,7 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { SnippetService } from '../shared/snippet.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthModule } from '../../auth/auth.module';
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from '@angular/common/http';
 
 describe('SnippetComponent', () => {
   let component: SnippetComponent;

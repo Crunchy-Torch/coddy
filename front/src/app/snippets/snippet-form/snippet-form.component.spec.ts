@@ -7,7 +7,7 @@ import { SnippetService } from '../shared/snippet.service';
 import { AuthModule } from '../../auth/auth.module';
 import { LanguageService } from '../shared/language.service';
 import { ToastService } from '../../core/template/toast.service';
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from '@angular/common/http';
 
 describe('SnippetFormComponent', () => {
   let component: SnippetFormComponent;

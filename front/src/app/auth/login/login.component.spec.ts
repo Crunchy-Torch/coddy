@@ -5,7 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { LoginService } from './login.service';
 import { TokenService } from '../token.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from '@angular/common/http';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
