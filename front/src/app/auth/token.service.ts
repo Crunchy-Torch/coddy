@@ -27,14 +27,13 @@ export class TokenService {
   }
 
   hasToken(): boolean {
-    return localStorage.getItem(Token.TOKEN_KEY) !== null;
+    return this.getToken() !== null;
   }
 
   hasNotExpired(): boolean {
-    const token: Token = this.getToken();
     // Token 'not before' and 'expiration time' are in seconds
-    const now: number = Date.now() / 1000;
-    return token.exp > now && token.nbf < now;
+    const now: number = (Date.now() / 1000) + 100; // Hack: add 100ms to prevent error due to token.nbf rounded value
+    return this.token.exp > now && this.token.nbf < now;
   }
 
   clearToken(): void {

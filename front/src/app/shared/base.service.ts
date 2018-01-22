@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Error } from './error/error';
 import { Observable } from 'rxjs/Rx';
 import { environment } from '../../environments/environment';
-import { HttpResponse } from "@angular/common/http";
+import { HttpErrorResponse, HttpResponse } from "@angular/common/http";
 
 @Injectable()
 export class BaseService {
@@ -10,14 +10,14 @@ export class BaseService {
   private static DEFAULT_ERROR = 'Something went horribly wrong...';
   private static DEFAULT_DETAILS = 'A team of highly trained monkeys has been dispatched to deal with this situation.';
 
-  protected extractError(res: HttpResponse<any>) {
-
+  protected extractError(res: HttpErrorResponse) {
+    console.log(res);
     const error: Error = new Error();
-    if (res instanceof HttpResponse) {
+    if (res instanceof HttpErrorResponse) {
       // Extract error message
       error.status = res.status;
       error.message = res.statusText || BaseService.DEFAULT_ERROR;
-      error.details = res.body.message || BaseService.DEFAULT_DETAILS;
+      error.details = res.error.message || BaseService.DEFAULT_DETAILS;
     } else {
       error.message = BaseService.DEFAULT_ERROR;
       error.details = res as string || BaseService.DEFAULT_DETAILS;
