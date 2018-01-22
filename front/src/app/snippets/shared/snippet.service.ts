@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Snippet } from './snippet';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class SnippetService extends BaseService {
@@ -15,16 +16,22 @@ export class SnippetService extends BaseService {
 
   getSnippets(): Observable<Snippet[]> {
     return this.http.get<Snippet[]>(this.buildUrl(this.snippetEndpoint))
-      .catch(this.extractError);
+      .pipe(
+        catchError(this.extractError)
+      );
   }
 
   getSnippet(id: string): Observable<Snippet> {
     return this.http.get<Snippet>(this.buildUrl(this.snippetEndpoint) + '/' + id)
-      .catch(this.extractError);
+      .pipe(
+        catchError(this.extractError)
+      );
   }
 
   createSnippet(snippet: Snippet): Observable<Snippet> {
     return this.http.post<Snippet>(this.buildUrl(this.snippetEndpoint), snippet)
-      .catch(this.extractError);
+      .pipe(
+        catchError(this.extractError)
+      );
   }
 }

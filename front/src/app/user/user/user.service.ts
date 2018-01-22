@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { User } from './user';
 import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 
 
 @Injectable()
@@ -16,11 +17,15 @@ export class UserService extends BaseService {
 
   deleteUser(login: string) {
     return this.http.delete(this.buildUrl(UserService.userEndpoint + '/' + login))
-      .catch(this.extractError);
+      .pipe(
+        catchError(this.extractError)
+      );
   }
 
   getUser(login: string): Observable<User> {
     return this.http.get<User>(this.buildUrl(UserService.userEndpoint + '/' + login))
-      .catch(this.extractError);
+      .pipe(
+        catchError(this.extractError)
+      );
   }
 }

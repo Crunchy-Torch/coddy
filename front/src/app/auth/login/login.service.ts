@@ -2,6 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import { BaseService } from '../../shared/base.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class LoginService extends BaseService {
@@ -17,6 +18,9 @@ export class LoginService extends BaseService {
     return this.http.post<any>(
       this.buildUrl(this.authEndpoint),
       JSON.stringify({ login: login, password: password })
-    ).map(res => res.token).catch(this.extractError);
+    ).pipe(
+      map(res => (res as any).token),
+      catchError(this.extractError)
+    );
   }
 }
