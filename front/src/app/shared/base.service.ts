@@ -4,6 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import { HttpErrorResponse } from '@angular/common/http';
 
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/finally';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+
 @Injectable()
 export class BaseService {
 
@@ -11,7 +16,6 @@ export class BaseService {
   private static DEFAULT_DETAILS = 'A team of highly trained monkeys has been dispatched to deal with this situation.';
 
   protected extractError(res: HttpErrorResponse) {
-    console.log(res);
     const error: Error = new Error();
     if (res instanceof HttpErrorResponse) {
       // Extract error message
