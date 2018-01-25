@@ -1,20 +1,22 @@
-import { Http } from '@angular/http';
 import { BaseService } from '../../shared/base.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class LanguageService extends BaseService {
 
   snippetEndpoint = '/language';
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
     super();
   }
 
   getLanguages(): Observable<string[]> {
-    return this.http.get(this.buildUrl(this.snippetEndpoint))
-      .map(this.extractArray)
-      .catch(this.extractError);
+    return this.http.get<string[]>(this.buildUrl(this.snippetEndpoint))
+      .pipe(
+        catchError(this.extractError)
+      );
   }
 }

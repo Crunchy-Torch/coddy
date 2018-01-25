@@ -9,7 +9,7 @@ import * as hljs from 'highlight.js';
 @Component({
   selector: 'app-snippet',
   templateUrl: './snippet.component.html',
-  styleUrls: [ './snippet.component.scss' ]
+  styleUrls: ['./snippet.component.scss']
 })
 export class SnippetComponent implements OnInit {
 
@@ -61,6 +61,9 @@ export class SnippetComponent implements OnInit {
   }
 
   highlightCode(code: string) {
-    return hljs.highlightAuto(code).value;
+    if (code != null && code.length <= 0) {
+      return hljs.highlightAuto(code).value;
+    }
+    return '';
   }
 }

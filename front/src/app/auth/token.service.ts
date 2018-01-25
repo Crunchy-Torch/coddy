@@ -1,13 +1,13 @@
 import { Token } from './token';
 import { Injectable } from '@angular/core';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class TokenService {
 
   private token: Token = null;
 
-  constructor() {
+  constructor(private jwtHelper: JwtHelperService) {
   }
 
   setToken(token: string) {
@@ -27,14 +27,13 @@ export class TokenService {
   }
 
   hasToken(): boolean {
-    return localStorage.getItem(Token.TOKEN_KEY) !== null;
+    return this.getToken() !== null;
   }
 
   hasNotExpired(): boolean {
-    const token: Token = this.getToken();
     // Token 'not before' and 'expiration time' are in seconds
-    const now: number = Date.now() / 1000;
-    return token.exp > now && token.nbf < now;
+    const now: number = (Date.now() / 1000) + 100; // Hack: add 100ms to prevent error due to token.nbf rounded value
+    return this.token.exp > now && this.token.nbf < now;
   }
 
   clearToken(): void {
@@ -49,8 +48,7 @@ export class TokenService {
     // Check if token is set
     if (typeof item !== 'undefined' && item !== null && item.length !== 0 && item !== 'undefined') {
       // Extract and decode token
-      const jwtHelper: JwtHelper = new JwtHelper();
-      const decodedToken: any = jwtHelper.decodeToken(item);
+      const decodedToken: any = this.jwtHelper.decodeToken(item);
       // Create typed token object
       const token: Token = new Token();
       token.raw = item;

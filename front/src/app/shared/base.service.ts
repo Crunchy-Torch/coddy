@@ -1,33 +1,27 @@
 import { Injectable } from '@angular/core';
 import { Error } from './error/error';
-import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
+import { HttpErrorResponse } from '@angular/common/http';
+
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/finally';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class BaseService {
 
   private static DEFAULT_ERROR = 'Something went horribly wrong...';
-  private static DEFAULT_DETAILS = 'A team of highly trained monkeys has been dispatched to deal with this situation.'
+  private static DEFAULT_DETAILS = 'A team of highly trained monkeys has been dispatched to deal with this situation.';
 
-  protected extractArray(res: Response) {
-    const body = res.json();
-    return body || [];
-  }
-
-  protected extractObject(res: Response) {
-    const body = res.json();
-    return body || {};
-  }
-
-  protected extractError(res: Response) {
-
+  protected extractError(res: HttpErrorResponse) {
     const error: Error = new Error();
-    if (res instanceof Response) {
+    if (res instanceof HttpErrorResponse) {
       // Extract error message
-      error.status = res.status
+      error.status = res.status;
       error.message = res.statusText || BaseService.DEFAULT_ERROR;
-      error.details = res.json().message || BaseService.DEFAULT_DETAILS;
+      error.details = res.error.message || BaseService.DEFAULT_DETAILS;
     } else {
       error.message = BaseService.DEFAULT_ERROR;
       error.details = res as string || BaseService.DEFAULT_DETAILS;

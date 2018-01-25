@@ -1,3 +1,39 @@
+export enum LinkType {
+  DOCUMENTATION, STACK_OVERFLOW, GITHUB, OTHER
+}
+
+export class Link {
+  type: LinkType;
+  value: string;
+  description: string;
+
+  static toObject(raw: any): Link {
+    const result: Link = new Link();
+
+    if (typeof raw !== 'undefined') {
+      result.type = LinkType[ raw.type as string ];
+      result.value = raw.value;
+      result.description = raw.description;
+    }
+    return result;
+  }
+}
+
+export class Language {
+  name: string;
+  version: string;
+
+  static toObject(raw: any): Language {
+    const result: Language = new Language();
+
+    if (typeof raw !== 'undefined') {
+      result.name = raw.name;
+      result.version = raw.version;
+    }
+    return result;
+  }
+}
+
 export class Snippet {
   title: string;
   description: string;
@@ -29,40 +65,4 @@ export class Snippet {
     result.lastModified = raw.lastModified;
     return result;
   }
-}
-
-export class Language {
-  name: string;
-  version: string;
-
-  static toObject(raw: any): Language {
-    const result: Language = new Language();
-
-    if (typeof raw !== 'undefined') {
-      result.name = raw.name;
-      result.version = raw.version;
-    }
-    return result;
-  }
-}
-
-export class Link {
-  type: LinkType;
-  value: string;
-  description: string;
-
-  static toObject(raw: any): Link {
-    const result: Link = new Link();
-
-    if (typeof raw !== 'undefined') {
-      result.type = LinkType[ raw.type as string ];
-      result.value = raw.value;
-      result.description = raw.description;
-    }
-    return result;
-  }
-}
-
-export enum LinkType {
-  DOCUMENTATION, STACK_OVERFLOW, GITHUB, OTHER
 }

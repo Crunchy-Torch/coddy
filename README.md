@@ -22,7 +22,7 @@ Coddy is a community-driven platform that allow users to share code snippets. It
   * Jwt
   * ElasticSearch
 * Front-end:
-  * Angular 4 with Typescript
+  * Angular 5 with Typescript
   * angular-cli
   * semantic-ui
 * Integration:
