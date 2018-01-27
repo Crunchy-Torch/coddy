@@ -75,7 +75,6 @@ export class Snippet {
         result.files.push(File.toObject(rawFile));
       });
     }
-    result.files = raw.content;
     result.associatedLinks = [];
     if (raw.associatedLinks instanceof Array) {
       raw.associatedLinks.forEach(rawLink => {

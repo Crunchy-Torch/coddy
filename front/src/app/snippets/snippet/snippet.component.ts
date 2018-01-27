@@ -41,7 +41,8 @@ export class SnippetComponent implements OnInit {
     ).subscribe(
       snippet => {
         this.snippet = snippet;
-        setTimeout(() => jQuery('.menu .item').tab(), 1000);
+        // Wait DOM is fully updated before calling tab method.
+        setTimeout(() => jQuery('.menu .item').tab(), 500);
       },
       error => this.error = error
     );
@@ -66,9 +67,9 @@ export class SnippetComponent implements OnInit {
   }
 
   highlightCode(code: string) {
-    if (code != null && code.length <= 0) {
+    if (code != null && code.length > 0) {
       return hljs.highlightAuto(code).value;
     }
-    return '';
+    return 'no content';
   }
 }

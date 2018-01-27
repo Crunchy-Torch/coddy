@@ -5,7 +5,7 @@ import { Toast } from '../../shared/toast/toast';
 import { Error } from '../../shared/error/error';
 import { Snippet } from '../shared/snippet';
 import { SnippetService } from '../shared/snippet.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
 
 declare var jQuery: any;
@@ -13,7 +13,7 @@ declare var jQuery: any;
 @Component({
   selector: 'app-snippet-form',
   templateUrl: './snippet-form.component.html',
-  styleUrls: [ './snippet-form.component.scss' ]
+  styleUrls: ['./snippet-form.component.scss']
 })
 export class SnippetFormComponent implements OnInit {
 
@@ -35,11 +35,7 @@ export class SnippetFormComponent implements OnInit {
     ],
     'keywords': [
       'Provide a coma separated list of keywords'
-    ],
-    'content': [
-      'Must be at least 10 characters long.',
-      'Must be at most 500 characters long.'
-    ],
+    ]
   };
 
   constructor(private formBuilder: FormBuilder, private snippetService: SnippetService,
@@ -59,15 +55,28 @@ export class SnippetFormComponent implements OnInit {
 
   createForm() {
     this.snippetForm = this.formBuilder.group({
-      title: [ '', [ Validators.required, Validators.minLength(5), Validators.maxLength(140) ] ],
-      description: [ '', [ Validators.required, Validators.minLength(10), Validators.maxLength(400) ] ],
+      title: ['First snippet multi-file!', [Validators.required, Validators.minLength(5), Validators.maxLength(140)]],
+      description: ['First snippet multi-file, created through UI', [Validators.required, Validators.minLength(10), Validators.maxLength(400)]],
       language: this.formBuilder.group({
-        name: [ '', Validators.required ],
-        version: '',
+        name: ['java', Validators.required],
+        version: '8',
       }),
-      keywords: [ '', Validators.required ],
-      content: [ '', [ Validators.required, Validators.minLength(10), Validators.maxLength(500) ] ]
+      keywords: ['hello, world', Validators.required],
+      files: this.formBuilder.array([this.createFile()])
     });
+  }
+
+  createFile() {
+    return this.formBuilder.group({
+      filename: ['Main.java', Validators.required],
+      content: ['System.out.println("Hello world!");', Validators.required]
+    });
+  }
+
+  addFile() {
+    let files = this.snippetForm.get('files') as FormArray;
+    files.push(this.createFile());
+    setTimeout(() => jQuery('.menu .item').tab('change tab', 'tab' + (files.length - 1)), 50);
   }
 
   onSubmit() {
@@ -79,7 +88,7 @@ export class SnippetFormComponent implements OnInit {
       }).subscribe(
         res => {
           this.pushToast();
-          this.router.navigate([ '/overview' ]);
+          this.router.navigate(['/overview']);
         },
         error => this.error = error
       );
@@ -88,7 +97,9 @@ export class SnippetFormComponent implements OnInit {
 
   buildSnippet(): Snippet {
     const formModel = this.snippetForm.value;
-    formModel.keywords = formModel.keywords.split(',');
+    if(!(formModel.keywords instanceof Array)) {
+      formModel.keywords = formModel.keywords.split(',');
+    }
     return Snippet.toObject(formModel);
   }
 

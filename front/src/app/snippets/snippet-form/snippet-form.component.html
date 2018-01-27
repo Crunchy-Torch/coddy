@@ -6,25 +6,44 @@
   <form [formGroup]="snippetForm" [ngClass]="{'loading': isLoading}" (ngSubmit)="onSubmit()" class="ui form" novalidate>
 
     <div class="two fields">
-      <div app-text-field class="field" [control]="snippetForm?.get('title')" [name]="'Title'" [placeholder]="'Title'" [help]="validationMessages.title"></div>
-      <div app-text-field class="field" [control]="snippetForm?.get('keywords')" [name]="'Keywords'" [placeholder]="'Loop, responsive, etc.'"></div>
+      <div app-text-field class="field" [control]="snippetForm?.get('title')" [name]="'Title'" [placeholder]="'Title'"
+           [help]="validationMessages.title"></div>
+      <div app-text-field class="field" [control]="snippetForm?.get('keywords')" [name]="'Keywords'"
+           [placeholder]="'Loop, responsive, etc.'"></div>
     </div>
 
     <div class="two fields">
       <div app-text-area class="field" [control]="snippetForm?.get('description')" [name]="'Description'"
-        [placeholder]="'Write a few words to describe your snippet'" [help]="validationMessages.description"></div>
-      
+           [placeholder]="'Write a few words to describe your snippet'" [help]="validationMessages.description"></div>
+
       <div class="field">
         <div class="two fields">
           <div app-dropdown class="field" [control]="snippetForm?.get('language')?.get('name')" [name]="'Language'"
                [placeholder]="'Select a language'" [items]="languages"></div>
-          <div app-text-field class="field" [control]="snippetForm?.get('language')?.get('version')" [name]="'Version'" [placeholder]="'Number or name'"></div>
+          <div app-text-field class="field" [control]="snippetForm?.get('language')?.get('version')" [name]="'Version'"
+               [placeholder]="'Number or name'"></div>
         </div>
       </div>
     </div>
 
-    <div app-text-area class="field" [control]="snippetForm?.get('content')" [name]="'Code'"
-    [placeholder]="'Write / Paste your code here'" [help]="validationMessages.content" [rows]="8"></div>
+    <div class="field">
+      <div id="files" class="ui top attached tabular menu">
+        <a *ngFor="let file of snippetForm?.get('files').controls; let first = first; let i = index" class="item"
+           [ngClass]="{ active: first }" [attr.data-tab]="'tab' + i">
+          {{file.value.filename}}
+        </a>
+        <div class="padded">
+          <button class="ui small teal icon button" (click)="addFile()"><i class="plus icon"></i></button>
+        </div>
+      </div>
+      <div *ngFor="let file of snippetForm?.get('files').controls; let first = first; let i = index"
+           class="ui bottom attached tab segment"
+           [ngClass]="{ active: first }" [attr.data-tab]="'tab' + i">
+        <div app-text-field class="field" [control]="file.get('filename')" [placeholder]="'Filename'"></div>
+        <div app-text-area class="field" [control]="file.get('content')" [placeholder]="'Write / paste your code here'"
+             [rows]="8"></div>
+      </div>
+    </div>
 
     <button class="ui button" type="submit" [disabled]="!snippetForm.valid">Submit</button>
   </form>
