@@ -11,7 +11,7 @@ export class Link {
     const result: Link = new Link();
 
     if (typeof raw !== 'undefined') {
-      result.type = LinkType[ raw.type as string ];
+      result.type = LinkType[raw.type as string];
       result.value = raw.value;
       result.description = raw.description;
     }
@@ -34,12 +34,29 @@ export class Language {
   }
 }
 
+export class File {
+  filename: string;
+  language: Language;
+  content: string;
+
+  static toObject(raw: any): File {
+    const result: File = new File();
+
+    if (typeof raw !== 'undefined') {
+      result.filename = raw.filename;
+      result.language = Language.toObject(raw.language);
+      result.content = raw.content;
+    }
+    return result;
+  }
+}
+
 export class Snippet {
   title: string;
   description: string;
   language: Language;
   keywords: string[];
-  content: string;
+  files: File[];
   associatedLinks: Link[];
   rate: number;
   author: string;
@@ -52,7 +69,13 @@ export class Snippet {
     result.description = raw.description;
     result.language = Language.toObject(raw.language);
     result.keywords = raw.keywords;
-    result.content = raw.content;
+    result.files = [];
+    if (raw.files instanceof Array) {
+      raw.files.forEach(rawFile => {
+        result.files.push(File.toObject(rawFile));
+      });
+    }
+    result.files = raw.content;
     result.associatedLinks = [];
     if (raw.associatedLinks instanceof Array) {
       raw.associatedLinks.forEach(rawLink => {

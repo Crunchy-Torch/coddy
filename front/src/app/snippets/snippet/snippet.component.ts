@@ -1,10 +1,12 @@
-import { Error } from '../../shared/error/error';
-import { ActivatedRoute } from '@angular/router';
-import { SnippetService } from '../shared/snippet.service';
-import { LinkType, Snippet } from '../shared/snippet';
+import {Error} from '../../shared/error/error';
+import {ActivatedRoute} from '@angular/router';
+import {SnippetService} from '../shared/snippet.service';
+import {LinkType, Snippet} from '../shared/snippet';
 
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as hljs from 'highlight.js';
+
+declare var jQuery: any;
 
 @Component({
   selector: 'app-snippet',
@@ -37,7 +39,10 @@ export class SnippetComponent implements OnInit {
     this.snippetService.getSnippet(this.id).finally(
       () => this.isLoading = false
     ).subscribe(
-      snippet => this.snippet = snippet,
+      snippet => {
+        this.snippet = snippet;
+        setTimeout(() => jQuery('.menu .item').tab(), 1000);
+      },
       error => this.error = error
     );
   }
