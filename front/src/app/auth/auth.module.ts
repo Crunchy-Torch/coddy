@@ -12,6 +12,16 @@ export function tokenGetter() {
   return localStorage.getItem(Token.TOKEN_KEY);
 }
 
+function getHostName(url) {
+  const match = url.match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/i);
+  if (match != null && match.length > 2 && typeof match[2] === 'string' && match[2].length > 0) {
+    return match[2];
+  }
+  else {
+    return '';
+  }
+}
+
 @NgModule({
   imports: [
     SharedModule,
@@ -20,7 +30,7 @@ export function tokenGetter() {
       config: {
         tokenGetter: tokenGetter,
         throwNoTokenError: false,
-        whitelistedDomains: [environment.serverUrl]
+        whitelistedDomains: [getHostName(environment.serverUrl)]
       }
     })
   ],
