@@ -56,7 +56,8 @@ export class SnippetFormComponent implements OnInit {
   createForm() {
     this.snippetForm = this.formBuilder.group({
       title: ['First snippet multi-file!', [Validators.required, Validators.minLength(5), Validators.maxLength(140)]],
-      description: ['First snippet multi-file, created through UI', [Validators.required, Validators.minLength(10), Validators.maxLength(400)]],
+      description: ['First snippet multi-file, created through UI',
+        [Validators.required, Validators.minLength(10), Validators.maxLength(400)]],
       language: this.formBuilder.group({
         name: ['java', Validators.required],
         version: '8',
@@ -74,7 +75,7 @@ export class SnippetFormComponent implements OnInit {
   }
 
   addFile() {
-    let files = this.snippetForm.get('files') as FormArray;
+    const files = this.snippetForm.get('files') as FormArray;
     files.push(this.createFile());
     setTimeout(() => jQuery('.menu .item').tab('change tab', 'tab' + (files.length - 1)), 50);
   }
@@ -97,7 +98,7 @@ export class SnippetFormComponent implements OnInit {
 
   buildSnippet(): Snippet {
     const formModel = this.snippetForm.value;
-    if(!(formModel.keywords instanceof Array)) {
+    if (!(formModel.keywords instanceof Array)) {
       formModel.keywords = formModel.keywords.split(',');
     }
     return Snippet.toObject(formModel);
