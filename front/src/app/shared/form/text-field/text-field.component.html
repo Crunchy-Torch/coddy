@@ -1,4 +1,4 @@
-<label class="inline">{{improvedName}}</label>
+<label *ngIf="name" class="inline">{{improvedName}}</label>
 <i [id]="name" *ngIf="help?.length > 0" class="info circle icon"></i>
 <div class="ui icon input">
   <input type="text" [placeholder]="placeholder" [formControl]="control">
