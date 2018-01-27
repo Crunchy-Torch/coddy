@@ -33,7 +33,7 @@
           {{file.value.filename}}
         </a>
         <div class="padded">
-          <button class="ui small teal icon button" (click)="addFile()"><i class="plus icon"></i></button>
+          <a class="ui small teal icon button" (click)="addFile()"><i class="plus icon"></i></a>
         </div>
       </div>
       <div *ngFor="let file of snippetForm?.get('files').controls; let first = first; let i = index"
