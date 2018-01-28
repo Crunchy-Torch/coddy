@@ -1,9 +1,9 @@
-import {Error} from '../../shared/error/error';
-import {ActivatedRoute} from '@angular/router';
-import {SnippetService} from '../shared/snippet.service';
-import {LinkType, Snippet} from '../shared/snippet';
+import { Error } from '../../shared/error/error';
+import { ActivatedRoute } from '@angular/router';
+import { SnippetService } from '../shared/snippet.service';
+import { LinkType, Snippet } from '../shared/snippet';
 
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as hljs from 'highlight.js';
 
 declare var jQuery: any;
