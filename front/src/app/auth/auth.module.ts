@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { Http, RequestOptions } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
+import { SignupComponent } from './signup/signup.component';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttpService(http, options);
@@ -18,10 +19,12 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     AuthRoutingModule
   ],
   exports: [
-    LoginComponent
+    LoginComponent,
+    SignupComponent
   ],
   declarations: [
-    LoginComponent
+    LoginComponent,
+    SignupComponent
   ],
   providers: [
     LoginService,
