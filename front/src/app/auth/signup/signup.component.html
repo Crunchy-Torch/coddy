@@ -1,0 +1,87 @@
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+
+    <h2 class="ui header">
+      <i class="circular large ui icon inverted teal code icon"></i>
+      <div class="content">
+        Coddy
+        <div class="sub header">Create new account</div>
+      </div>
+    </h2>
+
+    <app-error [error]="error"></app-error>
+
+    <div class="ui form error" [formGroup]="signupForm" *ngIf="signupForm">
+      <div class="ui stacked segment">
+        <div class="field">
+          <div class="ui left icon input">
+            <input [(ngModel)]="login" formControlName="loginValidator" type="text" placeholder="Username">
+            <i class="user icon"></i>
+          </div>
+        </div>
+        <div *ngIf="loginValidator.invalid && (loginValidator.dirty || loginValidator.touched)"
+             class="ui error message">
+          <div class="header">Action Forbidden</div>
+          <div *ngIf="loginValidator.errors.required">
+            Login is required.
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <input [(ngModel)]="email" formControlName="emailValidator" placeholder="Email">
+            <i class="mail icon"></i>
+          </div>
+        </div>
+        <div *ngIf="emailValidator.invalid && (emailValidator.dirty || emailValidator.touched)"
+             class="ui error message">
+          <div class="header">Action Forbidden</div>
+          <div *ngIf="emailValidator.errors.required">
+            Email is required.
+          </div>
+          <div *ngIf="emailValidator.errors.email">
+           The email has a wrong syntax
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <input [(ngModel)]="password" formControlName="passwordValidator" type="password" placeholder="Password">
+            <i class="lock icon"></i>
+          </div>
+        </div>
+        <div *ngIf="passwordValidator.invalid && (passwordValidator.dirty || passwordValidator.touched)"
+             class="ui error message">
+          <div class="header">Action Forbidden</div>
+          <div *ngIf="passwordValidator.errors.required">
+            Password is required.
+          </div>
+          <div *ngIf="passwordValidator.errors.minlength">
+            Password must contain at least 8 characters
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <input [(ngModel)]="confirmPassword" formControlName="confirmPasswordValidator" type="password"
+                   placeholder="Confirm Password">
+            <i class="lock icon"></i>
+          </div>
+        </div>
+        <div *ngIf="confirmPasswordValidator.invalid && (confirmPasswordValidator.dirty || confirmPasswordValidator.touched)"
+             class="ui error message">
+          <div class="header">Action Forbidden</div>
+          <div *ngIf="confirmPasswordValidator.errors.required">
+            Confirm password is required.
+          </div>
+          <div *ngIf="confirmPasswordValidator.errors.confirmPasswordNotEquals">
+            Confirm password equals the password
+          </div>
+        </div>
+        <button
+                [disabled]="signupForm.invalid"
+                [ngClass]="{'loading': isLoading }" class="ui large fluid teal submit button">
+          Sign Up
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
