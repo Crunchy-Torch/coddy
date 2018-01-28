@@ -6,6 +6,8 @@ import { LinkType, Snippet } from '../shared/snippet';
 import { Component, OnInit } from '@angular/core';
 import * as hljs from 'highlight.js';
 
+declare var jQuery: any;
+
 @Component({
   selector: 'app-snippet',
   templateUrl: './snippet.component.html',
@@ -37,7 +39,11 @@ export class SnippetComponent implements OnInit {
     this.snippetService.getSnippet(this.id).finally(
       () => this.isLoading = false
     ).subscribe(
-      snippet => this.snippet = snippet,
+      snippet => {
+        this.snippet = snippet;
+        // Wait DOM is fully updated before calling tab method.
+        setTimeout(() => jQuery('.menu .item').tab(), 500);
+      },
       error => this.error = error
     );
   }
@@ -61,9 +67,9 @@ export class SnippetComponent implements OnInit {
   }
 
   highlightCode(code: string) {
-    if (code != null && code.length <= 0) {
+    if (code != null && code.length > 0) {
       return hljs.highlightAuto(code).value;
     }
-    return '';
+    return 'no content';
   }
 }
