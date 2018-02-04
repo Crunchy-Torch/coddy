@@ -1,12 +1,7 @@
-# Java Gradle CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-java/ for more details
-#
 version: 2
 jobs:
   build-back:
     docker:
-      # specify the version you desire here
       - image: circleci/openjdk:8-jdk
     working_directory: ~/repo
     environment:
@@ -16,7 +11,6 @@ jobs:
 
     steps:
       - checkout
-
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -25,8 +19,6 @@ jobs:
           - v2-dependencies-
 
       - run: cd back && gradle dependencies
-
-      # run tests!
       - run: cd back && gradle compileJava
 
       - save_cache:
@@ -36,7 +28,6 @@ jobs:
           key: v2-dependencies-{{ checksum "./back/build.gradle" }}
   test-back:
     docker:
-      # specify the version you desire here
       - image: circleci/openjdk:8-jdk
     working_directory: ~/repo
     environment:
@@ -46,7 +37,6 @@ jobs:
 
     steps:
       - checkout
-
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -55,8 +45,6 @@ jobs:
           - v2-dependencies-
 
       - run: cd back && gradle dependencies
-
-      # run tests!
       - run: cd back && gradle test
 
       # run code-coverage generation
@@ -73,7 +61,6 @@ jobs:
 
   sonarqube-back:
     docker:
-      # specify the version you desire here
       - image: circleci/openjdk:8-jdk
     working_directory: ~/repo
     environment:
@@ -83,7 +70,6 @@ jobs:
 
     steps:
       - checkout
-
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -100,6 +86,7 @@ jobs:
             - /home/circleci/.gradle/caches/
             - /home/circleci/.gradle/wrapper/
           key: v2-dependencies-{{ checksum "./back/build.gradle" }}
+
   blocker-check:
     docker:
       - image: circleci/openjdk:8-jdk
