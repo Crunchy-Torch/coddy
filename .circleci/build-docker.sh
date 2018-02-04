@@ -37,7 +37,7 @@ tag(){
     # check that the image exists, pull if not
     if [[ "$(docker images -q ${l_docker_image_base_name}:${l_initial_tag} 2> /dev/null)" == "" ]]; then
         echo "image ${l_docker_image_base_name}:${l_initial_tag} does not exist, I need to pull it"
-        getDockerImage l_initial_tag
+        getDockerImage ${l_initial_tag}
     fi
 
     docker tag ${l_docker_image_base_name}:${l_initial_tag}  ${l_docker_image_base_name}:${l_target_tag}
