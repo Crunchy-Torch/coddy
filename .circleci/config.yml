@@ -331,6 +331,8 @@ workflows:
           requires:
             - package-back
             - lint-front
+            - analyze_encoding_utf8
+            - analyze_eol
           filters:
             branches:
               only: master
