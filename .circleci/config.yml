@@ -233,6 +233,25 @@ jobs:
             - ./front/node_modules
 
   ###################################################
+  ###            Independent Analyzer             ###
+  ###################################################
+  analyze_eol:
+    docker:
+      - image: nexucis/ci-checkfiles:1.1.0-alpine
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: checkEOL *.md *.ts *.js *.json *.html *.sh *.gradle *.java *.properties Dockerfile *.tpl *.conf
+
+  analyze_encoding_utf8:
+    docker:
+      - image: nexucis/ci-checkfiles:1.1.0-alpine
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: checkEncoding utf-8 *.md *.ts *.js *.json *.html *.sh *.gradle *.java *.properties Dockerfile *.tpl *.conf
+
+  ###################################################
   ###              Workflow Docker                ###
   ###################################################
 
@@ -300,6 +319,14 @@ workflows:
       - lint-front:
           requires:
             - test-front
+      - analyze_eol:
+          requires:
+            - test-front
+            - test-back
+      - analyze_encoding_utf8:
+          requires:
+            - test-front
+            - test-back
       - build-push-docker:
           requires:
             - package-back
