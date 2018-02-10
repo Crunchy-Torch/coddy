@@ -1,22 +1,48 @@
+.white {
+  color: white;
+}
+
+.uppercase {
+  text-transform: uppercase !important;
+}
+
+.brand.logo {
+  .icon {
+    font-weight: bold;
+    font-size: 1rem !important;
+  }
+  padding: 0.8rem 4rem;
+}
+
+.item.ui.search {
+  width: 30%;
+}
+
+.borderless  {
+  border: none !important;
+  box-shadow: none !important;
+}
+
 .ui.menu {
   margin-bottom: 0;
   border: none;
 
-  &.homepage {
+  /*&.homepage {
     position: absolute;
     width: 100%;
     z-index: 9999;
     background-color: rgba(255, 255, 255, 0.25);
-  } 
+  }
 
   &:not(.logged) .item:before {
     width: 0;
-  }
-}
+  }*/
 
-.brand.logo .icon {
-  font-weight: bold;
-  font-size: 1rem !important;
+  .item {
+    &:before {
+      width: 0;
+    }
+  }
 }
 
 .item .small.button {
