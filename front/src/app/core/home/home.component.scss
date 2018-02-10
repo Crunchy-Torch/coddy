@@ -1,8 +1,48 @@
-$wallpaper-width: 1920px;
-$wallpaper-height: 1280px;
+//$wallpaper-width: 1920px;
+//$wallpaper-height: 1280px;
+
+.white {
+  color: white;
+}
+
+.emphasis {
+  color: #fbbd08;
+  font-weight: bold;
+
+  .blinker {
+    background: #fbbd08;
+  }
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+h1.ui.header {
+  font-size: 4rem;
+  font-weight: lighter;
+  margin: 0;
+}
+
+h2.ui.header {
+  margin: 0 0 1rem 0;
+}
 
 .ui.attached.segment {
-  max-width: $wallpaper-width;
+
+  &.top {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    .text.container {
+      position: absolute;
+      left: 5%;
+      bottom: 20%;
+    }
+  }
+
+  /*max-width: $wallpaper-width;
   margin: auto;
   border-left: none;
   border-right: none;
@@ -23,10 +63,34 @@ $wallpaper-height: 1280px;
     max-height: 1280px;
     position: absolute;
     background-position: center;
+  }*/
+}
+
+.ui.horizontal.segments {
+  padding: 0 4rem;
+  border: none;
+  box-shadow: none;
+
+  .segment {
+    border: none;
+    padding: 2rem;
+
+    .content {
+      text-transform: uppercase;
+    }
+
+    .sub.header {
+      text-transform: none;
+      font-size: 1.3rem;
+    }
   }
 }
 
-.ui.text.container {
+.icon.no.margin {
+  margin-right: 0 !important;
+}
+
+/*.ui.text.container {
   margin-top: 5em;
   text-align: center;
 
@@ -39,48 +103,9 @@ $wallpaper-height: 1280px;
     color: #666;
     font-weight: 500;
   }
-}
+}*/
 
-// Arrow down button (with animation)
-.scroll.button.container {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-
-  >.align {
-    position: relative;
-    left: -50%;
-  }
-
-  .transparent.button {
-    border: none;
-    background-color: transparent;
-    color: white;
-  
-    &:focus {
-      outline: none;
-    }
-  
-    .bounce {
-      -moz-animation: bounce 2s infinite;
-      -webkit-animation: bounce 2s infinite;
-      animation: bounce 2s infinite;
-    }
-  
-    i.big.icon {
-      font-size: 3em;
-    }
-  }
-}
-
-// Hide arrow if the display is large enough to see below content
-@media only screen and (min-height: 1280px) {
-  .scroll.button.container {
-    display: none;
-  }
-}
-
-.image.logo {
+/*.image.logo {
   max-width: 100px;
   max-height: 100px;
 
@@ -116,4 +141,4 @@ $wallpaper-height: 1280px;
   padding: 0 4rem;
   border: none;
   box-shadow: none;
-}
+}*/
