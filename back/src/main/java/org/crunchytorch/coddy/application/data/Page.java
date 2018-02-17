@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Page<T> implements Serializable {
+public class Page<T extends Serializable> implements Serializable {
 
     private static final long serialVersionUID = -808950184664034440L;
 
