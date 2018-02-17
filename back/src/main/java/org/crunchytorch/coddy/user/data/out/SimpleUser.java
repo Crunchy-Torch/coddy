@@ -5,12 +5,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SimpleUser {
+public class SimpleUser implements Serializable {
+
+    private static final long serialVersionUID = -1026848360977278590L;
 
     private String login;
     private String firstName;

@@ -5,7 +5,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
-public class AbstractService<T> {
+import java.io.Serializable;
+
+public class AbstractService<T extends Serializable> {
 
     protected ElasticsearchRepository<T, String> repository;
 
