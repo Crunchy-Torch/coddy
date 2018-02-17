@@ -1,6 +1,7 @@
 package org.crunchytorch.coddy.snippet.elasticsearch.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.annotation.Id;
@@ -81,6 +82,26 @@ public class SnippetEntity implements Serializable {
         this.rate = newSnippet.getRate();
 
         this.lastModified = new Date();
+    }
+
+    @JsonIgnore
+    public static String getTitleField(){
+        return "title";
+    }
+
+    @JsonIgnore
+    public static String getDescriptionField(){
+        return "description";
+    }
+
+    @JsonIgnore
+    public static String getKeywordsField(){
+        return "keywords";
+    }
+
+    @JsonIgnore
+    public static String getAuthorField(){
+        return "author";
     }
 
     public String getId() {

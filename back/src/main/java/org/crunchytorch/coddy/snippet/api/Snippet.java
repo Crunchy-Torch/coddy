@@ -1,5 +1,6 @@
 package org.crunchytorch.coddy.snippet.api;
 
+import org.apache.commons.lang.StringUtils;
 import org.crunchytorch.coddy.application.data.Page;
 import org.crunchytorch.coddy.snippet.elasticsearch.entity.SnippetEntity;
 import org.crunchytorch.coddy.snippet.service.SnippetService;
@@ -25,8 +26,12 @@ public class Snippet {
 
     @GET
     public Page<SnippetEntity> getSnippets(@DefaultValue("0") @QueryParam("from") final int from,
-                                           @DefaultValue("10") @QueryParam("size") final int size) {
-        return snippetService.getEntity(from, size);
+                                           @DefaultValue("10") @QueryParam("size") final int size,
+                                           @QueryParam("query") final String query) {
+        if (StringUtils.isEmpty(query) || StringUtils.isEmpty(query.replaceAll("\\s+", ""))) {
+            return snippetService.getEntity(from, size);
+        }
+        return snippetService.search(query, from, size);
     }
 
     @POST
