@@ -1,13 +1,15 @@
 package org.crunchytorch.coddy.user.api;
 
+import org.crunchytorch.coddy.application.data.Page;
 import org.crunchytorch.coddy.application.exception.EntityExistsException;
 import org.crunchytorch.coddy.application.exception.EntityNotFoundException;
 import org.crunchytorch.coddy.application.utils.AppUtils;
 import org.crunchytorch.coddy.user.data.in.Credential;
 import org.crunchytorch.coddy.user.data.in.UpdateUser;
 import org.crunchytorch.coddy.user.data.out.SimpleUser;
-import org.crunchytorch.coddy.user.data.security.Permission;
 import org.crunchytorch.coddy.user.data.security.JWTToken;
+import org.crunchytorch.coddy.user.data.security.Permission;
+import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.crunchytorch.coddy.user.filter.AuthorizationFilter;
 import org.crunchytorch.coddy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,9 +98,11 @@ public class User {
     @GET
     @AuthorizationFilter
     @RolesAllowed(Permission.ADMIN)
-    public List<SimpleUser> getUsers(@DefaultValue("0") @QueryParam("from") final int from,
+    public Page<SimpleUser> getUsers(@DefaultValue("0") @QueryParam("from") final int from,
                                      @DefaultValue("10") @QueryParam("size") final int size) {
-        return this.service.getEntity(from, size).stream().map(SimpleUser::new).collect(Collectors.toList());
+        Page<UserEntity> oldPage = this.service.getEntity(from, size);
+        return new Page<>(oldPage.getTotalElement(),
+                oldPage.getTotalPage(), oldPage.getHits().stream().map(SimpleUser::new).collect(Collectors.toList()));
     }
 
     @GET

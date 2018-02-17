@@ -25,6 +25,12 @@ public class Page<T> implements Serializable {
         page.forEach(hits::add);
     }
 
+    public Page(long totalElement, long totalPage, List<T> hits) {
+        this.totalElement = totalElement;
+        this.totalPage = totalPage;
+        this.hits = hits;
+    }
+
     public long getTotalElement() {
         return totalElement;
     }

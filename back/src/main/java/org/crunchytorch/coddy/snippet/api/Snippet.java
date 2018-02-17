@@ -1,5 +1,6 @@
 package org.crunchytorch.coddy.snippet.api;
 
+import org.crunchytorch.coddy.application.data.Page;
 import org.crunchytorch.coddy.snippet.elasticsearch.entity.SnippetEntity;
 import org.crunchytorch.coddy.snippet.service.SnippetService;
 import org.crunchytorch.coddy.user.data.security.Permission;
@@ -12,7 +13,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
-import java.util.List;
 
 @Component
 @Path("/snippet")
@@ -24,7 +24,7 @@ public class Snippet {
     private SnippetService snippetService;
 
     @GET
-    public List<SnippetEntity> getSnippets(@DefaultValue("0") @QueryParam("from") final int from,
+    public Page<SnippetEntity> getSnippets(@DefaultValue("0") @QueryParam("from") final int from,
                                            @DefaultValue("10") @QueryParam("size") final int size) {
         return snippetService.getEntity(from, size);
     }
