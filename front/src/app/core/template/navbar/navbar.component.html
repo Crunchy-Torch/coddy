@@ -1,4 +1,4 @@
-<div *ngIf="isHomepage" class="ui fixed borderless transparent menu" [ngClass]="{'logged': isLogged}">
+<div *ngIf="isHomepage" class="ui borderless transparent menu" [ngClass]="{'homepage': isHomepage}">
 
   <div class="item">
     <a class="brand logo" [routerLink]="['/']">
@@ -24,10 +24,10 @@
       </a>
     </div>
   </div>
+
 </div>
 
-<!--
-<div class="ui menu" [ngClass]="{'homepage': isHomepage, 'logged': isLogged}">
+<div *ngIf="!isHomepage" class="ui borderless transparent menu" [ngClass]="{'logged': isLogged}">
 
   <div class="item">
     <a class="brand logo" [routerLink]="['/']">
@@ -60,5 +60,5 @@
       </a>
     </div>
   </div>
+
 </div>
--->
