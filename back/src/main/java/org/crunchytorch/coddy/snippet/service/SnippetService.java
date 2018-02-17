@@ -52,6 +52,12 @@ public class SnippetService extends AbstractService<SnippetEntity> {
         return super.create(new SnippetEntity(snippetUpdated, oldSnippet));
     }
 
+    /**
+     * @param words : a list of word separate by space
+     * @param from  : the offset from the first result you want to fetch
+     * @param size  : allows you to configure the maximum amount of hits to be returned
+     * @return a page with the result of the research and the number of entity found.
+     */
     public Page<SnippetEntity> search(String words, int from, int size) {
         final Pageable page = new PageRequest(from, size);
         final BoolQueryBuilder queryBuilder = new BoolQueryBuilder();
