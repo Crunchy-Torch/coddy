@@ -33,7 +33,6 @@
 .ui.menu {
 
   margin-bottom: 0;
-  padding: 0 5%;
 
   .item {
     &:before {
@@ -46,6 +45,7 @@
     position: absolute;
     width: 100%;
     z-index: 10;
+    padding: 0 5%;
   }
 
   a {
@@ -53,15 +53,26 @@
   }
 }
 
-.ui.menu .item:first-child {
-  padding-left: 0;
+.ui.menu {
+
+  .item:first-child {
+    padding-left: 0;
+  }
+
+  .right.menu .item:last-child {
+    padding-right: 0;
+    a {
+      padding-right: 0;
+    }
+  }
+
+  .item.ui.search {
+    width: 30%;
+  }
 }
 
-.item.ui.search {
-  width: 30%;
-}
-
-.borderless  {
+.borderless {
   border: none !important;
   box-shadow: none !important;
 }
+

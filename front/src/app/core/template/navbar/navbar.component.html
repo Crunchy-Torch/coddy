@@ -27,38 +27,40 @@
 
 </div>
 
-<div *ngIf="!isHomepage" class="ui borderless transparent menu" [ngClass]="{'logged': isLogged}">
+<div *ngIf="!isHomepage" class="ui container">
+  <div class="ui borderless transparent menu" [ngClass]="{'logged': isLogged}">
 
-  <div class="item">
-    <a class="brand logo" [routerLink]="['/']">
-      <h3 class="ui teal header">
-        <i class="mini circular inverted teal code icon"></i>
-        <div class="uppercase content">
-          Coddy
-        </div>
-      </h3>
-    </a>
-  </div>
-
-  <div class="item ui search">
-    <div class="ui icon input">
-      <input class="prompt" placeholder="You know... for search." type="text">
-      <i class="search icon"></i>
-    </div>
-  </div>
-
-  <div class="right menu">
-    <div *ngIf="!isLogged" class="item">
-      <a class="ui basic borderless uppercase button" [routerLink]="['/login']">
-        Login
+    <div class="item">
+      <a class="brand logo" [routerLink]="['/']">
+        <h3 class="ui teal header">
+          <i class="mini circular inverted teal code icon"></i>
+          <div class="uppercase content">
+            Coddy
+          </div>
+        </h3>
       </a>
     </div>
 
-    <div class="item" *ngIf="isLogged && token !== null">
-      <a class="ui basic borderless icon button" (click)="signout()">
-        <i class="large red power icon"></i>
-      </a>
+    <div class="item ui search">
+      <div class="ui icon input">
+        <input class="prompt" placeholder="You know... for search." type="text">
+        <i class="search icon"></i>
+      </div>
     </div>
-  </div>
 
+    <div class="right menu">
+      <div *ngIf="!isLogged" class="item">
+        <a class="ui basic borderless uppercase button" [routerLink]="['/login']">
+          Login
+        </a>
+      </div>
+
+      <div class="item" *ngIf="isLogged && token !== null">
+        <a class="ui basic borderless icon button" (click)="signout()">
+          <i class="large red power icon"></i>
+        </a>
+      </div>
+    </div>
+
+  </div>
 </div>
