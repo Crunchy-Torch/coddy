@@ -2,6 +2,14 @@
   color: white;
 }
 
+.button.white {
+  background-color: white !important;
+}
+
+.button.padded {
+  padding: 0.8rem 2rem !important;
+}
+
 .uppercase {
   text-transform: uppercase !important;
 }
@@ -10,9 +18,36 @@
   .icon {
     font-weight: bold;
     font-size: 1rem !important;
+
+    &.white {
+      background-color: white !important;
+    }
+
+    &.white:before {
+      color: #363636;
+    }
   }
-  padding: 0.8rem 4rem;
+  padding: 0.8rem 0;
 }
+
+.ui.menu.transparent {
+  background: transparent;
+
+  a {
+    font-weight: bold;
+  }
+}
+
+.ui.menu .item:first-child {
+  padding-left: 0;
+}
+
+
+
+
+
+
+
 
 .item.ui.search {
   width: 30%;
@@ -25,7 +60,7 @@
 
 .ui.menu {
   margin-bottom: 0;
-  border: none;
+  padding: 0 5%;
 
   /*&.homepage {
     position: absolute;
