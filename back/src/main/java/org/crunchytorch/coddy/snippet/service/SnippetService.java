@@ -4,10 +4,13 @@ import org.crunchytorch.coddy.application.data.Page;
 import org.crunchytorch.coddy.application.exception.EntityNotFoundException;
 import org.crunchytorch.coddy.application.service.AbstractService;
 import org.crunchytorch.coddy.snippet.elasticsearch.entity.SnippetEntity;
+import org.crunchytorch.coddy.snippet.elasticsearch.query.BoolOperand;
+import org.crunchytorch.coddy.snippet.elasticsearch.query.SnippetQueryFieldBuilder;
+import org.crunchytorch.coddy.snippet.elasticsearch.query.field.KeywordsFieldBuilder;
+import org.crunchytorch.coddy.snippet.elasticsearch.query.field.TitleFieldBuilder;
 import org.crunchytorch.coddy.snippet.elasticsearch.repository.SnippetRepository;
 import org.crunchytorch.coddy.user.data.security.JWTPrincipal;
 import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.ws.rs.core.SecurityContext;
 import java.util.Date;
+import java.util.stream.Stream;
 
 @Service
 public class SnippetService extends AbstractService<SnippetEntity> {
@@ -59,13 +63,28 @@ public class SnippetService extends AbstractService<SnippetEntity> {
      * @return a page with the result of the research and the number of entity found.
      */
     public Page<SnippetEntity> search(String words, int from, int size) {
+        SnippetQueryFieldBuilder<TitleFieldBuilder> titleBuilder =
+                new TitleFieldBuilder()
+                        .addWord(words)
+                        .setOperand(BoolOperand.OR)
+                        .buildQuery();
+
+        SnippetQueryFieldBuilder<KeywordsFieldBuilder> keywordsBuilder =
+                new KeywordsFieldBuilder();
+
+        Stream.of(words.split(" ")).forEach(keywordsBuilder::addWord);
+
+        keywordsBuilder
+                .setOperand(BoolOperand.OR)
+                .buildQuery();
+
+        return this.search(from, size, keywordsBuilder, titleBuilder);
+    }
+
+    private Page<SnippetEntity> search(int from, int size, SnippetQueryFieldBuilder... queryFieldBuilders) {
         final Pageable page = new PageRequest(from, size);
         final BoolQueryBuilder queryBuilder = new BoolQueryBuilder();
-        queryBuilder.should(QueryBuilders.termQuery(SnippetEntity.getTitleField(), words));
-
-        for (String word : words.split(" ")) {
-            queryBuilder.should(QueryBuilders.matchQuery(SnippetEntity.getKeywordsField(), word));
-        }
+        Stream.of(queryFieldBuilders).forEach(snippetQueryFieldBuilder -> snippetQueryFieldBuilder.appendQueryBuilder(queryBuilder));
 
         return new Page<>(this.repository.search(queryBuilder, page));
     }
