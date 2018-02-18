@@ -4,7 +4,6 @@ import org.crunchytorch.coddy.application.data.Page;
 import org.crunchytorch.coddy.application.exception.EntityNotFoundException;
 import org.crunchytorch.coddy.application.service.AbstractService;
 import org.crunchytorch.coddy.snippet.elasticsearch.entity.SnippetEntity;
-import org.crunchytorch.coddy.snippet.elasticsearch.query.BoolOperand;
 import org.crunchytorch.coddy.snippet.elasticsearch.query.SnippetQueryFieldBuilder;
 import org.crunchytorch.coddy.snippet.elasticsearch.query.field.KeywordsFieldBuilder;
 import org.crunchytorch.coddy.snippet.elasticsearch.query.field.TitleFieldBuilder;
@@ -63,19 +62,19 @@ public class SnippetService extends AbstractService<SnippetEntity> {
      * @return a page with the result of the research and the number of entity found.
      */
     public Page<SnippetEntity> search(String words, int from, int size) {
-        SnippetQueryFieldBuilder<TitleFieldBuilder> titleBuilder =
+        TitleFieldBuilder titleBuilder =
                 new TitleFieldBuilder()
                         .addWord(words)
-                        .setOperand(BoolOperand.OR)
+                        .useOrBoolOperand()
                         .buildQuery();
 
-        SnippetQueryFieldBuilder<KeywordsFieldBuilder> keywordsBuilder =
+        KeywordsFieldBuilder keywordsBuilder =
                 new KeywordsFieldBuilder();
 
         Stream.of(words.split(" ")).forEach(keywordsBuilder::addWord);
 
         keywordsBuilder
-                .setOperand(BoolOperand.OR)
+                .useOrBoolOperand()
                 .buildQuery();
 
         return this.search(from, size, keywordsBuilder, titleBuilder);
