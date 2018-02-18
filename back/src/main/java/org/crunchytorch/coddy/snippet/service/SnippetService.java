@@ -1,10 +1,13 @@
 package org.crunchytorch.coddy.snippet.service;
 
+import io.jsonwebtoken.lang.Collections;
 import org.crunchytorch.coddy.application.data.Page;
 import org.crunchytorch.coddy.application.exception.EntityNotFoundException;
 import org.crunchytorch.coddy.application.service.AbstractService;
+import org.crunchytorch.coddy.snippet.data.SearchBody;
 import org.crunchytorch.coddy.snippet.elasticsearch.entity.SnippetEntity;
 import org.crunchytorch.coddy.snippet.elasticsearch.query.SnippetQueryFieldBuilder;
+import org.crunchytorch.coddy.snippet.elasticsearch.query.field.AuthorFieldBuilder;
 import org.crunchytorch.coddy.snippet.elasticsearch.query.field.KeywordsFieldBuilder;
 import org.crunchytorch.coddy.snippet.elasticsearch.query.field.TitleFieldBuilder;
 import org.crunchytorch.coddy.snippet.elasticsearch.repository.SnippetRepository;
@@ -17,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 import javax.ws.rs.core.SecurityContext;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Stream;
 
 @Service
@@ -80,10 +85,55 @@ public class SnippetService extends AbstractService<SnippetEntity> {
         return this.search(from, size, keywordsBuilder, titleBuilder);
     }
 
+    public Page<SnippetEntity> search(SearchBody searchBody, int from, int size) {
+
+        List<SnippetQueryFieldBuilder> queryFieldBuilders = new LinkedList<>();
+
+        if (!Collections.isEmpty(searchBody.getAuthors())) {
+            AuthorFieldBuilder authorBuilder = new AuthorFieldBuilder().useAndBoolOperand();
+            searchBody.getAuthors().forEach(authorBuilder::addWord);
+
+            if (searchBody.getAuthors().size() > 1) {
+                authorBuilder.useOrBoolOperand();
+            }
+
+            authorBuilder.buildQuery();
+            queryFieldBuilders.add(authorBuilder);
+        }
+
+        if (!Collections.isEmpty(searchBody.getKeywords())) {
+            KeywordsFieldBuilder keywordsBuilder = new KeywordsFieldBuilder().useAndBoolOperand();
+
+            searchBody.getKeywords().forEach(keywordsBuilder::addWord);
+            keywordsBuilder.buildQuery();
+            queryFieldBuilders.add(keywordsBuilder);
+        }
+
+        if (!Collections.isEmpty(searchBody.getTitles())) {
+            TitleFieldBuilder titleBuilder = new TitleFieldBuilder().useAndBoolOperand();
+
+            searchBody.getTitles().forEach(titleBuilder::addWord);
+
+            if (searchBody.getTitles().size() > 1) {
+                titleBuilder.useOrBoolOperand();
+            }
+
+            titleBuilder.buildQuery();
+            queryFieldBuilders.add(titleBuilder);
+        }
+
+        return this.search(from, size, queryFieldBuilders);
+
+    }
+
     private Page<SnippetEntity> search(int from, int size, SnippetQueryFieldBuilder... queryFieldBuilders) {
+        return this.search(from, size, Collections.arrayToList(queryFieldBuilders));
+    }
+
+    private Page<SnippetEntity> search(int from, int size, List<SnippetQueryFieldBuilder> queryFieldBuilders) {
         final Pageable page = new PageRequest(from, size);
         final BoolQueryBuilder queryBuilder = new BoolQueryBuilder();
-        Stream.of(queryFieldBuilders).forEach(snippetQueryFieldBuilder -> snippetQueryFieldBuilder.appendQueryBuilder(queryBuilder));
+        queryFieldBuilders.forEach(snippetQueryFieldBuilder -> snippetQueryFieldBuilder.appendQueryBuilder(queryBuilder));
 
         return new Page<>(this.repository.search(queryBuilder, page));
     }

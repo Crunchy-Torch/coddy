@@ -2,12 +2,14 @@ package org.crunchytorch.coddy.snippet.api;
 
 import org.apache.commons.lang.StringUtils;
 import org.crunchytorch.coddy.application.data.Page;
+import org.crunchytorch.coddy.snippet.data.SearchBody;
 import org.crunchytorch.coddy.snippet.elasticsearch.entity.SnippetEntity;
 import org.crunchytorch.coddy.snippet.service.SnippetService;
 import org.crunchytorch.coddy.user.data.security.Permission;
 import org.crunchytorch.coddy.user.filter.AuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
@@ -32,6 +34,14 @@ public class Snippet {
             return snippetService.getEntity(from, size);
         }
         return snippetService.search(query, from, size);
+    }
+
+    @GET
+    @Path("/search")
+    public Page<SnippetEntity> search(@DefaultValue("0") @QueryParam("from") final int from,
+                                      @DefaultValue("10") @QueryParam("size") final int size,
+                                      @RequestBody SearchBody searchBody){
+        return snippetService.search(searchBody, from, size);
     }
 
     @POST
