@@ -19,6 +19,14 @@ public abstract class AbstractSnippetQueryFieldBuilder<T> implements SnippetQuer
         this.queryBuilderList = new LinkedList<>();
     }
 
+    public T useAndBoolOperand() {
+        return this.setOperand(BoolOperand.AND);
+    }
+
+    public T useOrBoolOperand() {
+        return this.setOperand(BoolOperand.OR);
+    }
+
     @Override
     public void appendQueryBuilder(BoolQueryBuilder queryBuilder) {
         if (BoolOperand.AND.equals(this.getOperand())) {
