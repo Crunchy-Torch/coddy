@@ -73,8 +73,7 @@ public class SnippetService extends AbstractService<SnippetEntity> {
                         .useOrBoolOperand()
                         .buildQuery();
 
-        KeywordsFieldBuilder keywordsBuilder =
-                new KeywordsFieldBuilder();
+        KeywordsFieldBuilder keywordsBuilder = new KeywordsFieldBuilder();
 
         Stream.of(words.split(" ")).forEach(keywordsBuilder::addWord);
 
@@ -82,7 +81,12 @@ public class SnippetService extends AbstractService<SnippetEntity> {
                 .useOrBoolOperand()
                 .buildQuery();
 
-        return this.search(from, size, keywordsBuilder, titleBuilder);
+        AuthorFieldBuilder authorBuilder = new AuthorFieldBuilder()
+                .useOrBoolOperand()
+                .addWord(words)
+                .buildQuery();
+
+        return this.search(from, size, titleBuilder, keywordsBuilder, authorBuilder);
     }
 
     public Page<SnippetEntity> search(SearchBody searchBody, int from, int size) {
@@ -123,7 +127,6 @@ public class SnippetService extends AbstractService<SnippetEntity> {
         }
 
         return this.search(from, size, queryFieldBuilders);
-
     }
 
     private Page<SnippetEntity> search(int from, int size, SnippetQueryFieldBuilder... queryFieldBuilders) {
