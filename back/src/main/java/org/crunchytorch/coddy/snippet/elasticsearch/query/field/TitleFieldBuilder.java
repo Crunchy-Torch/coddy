@@ -16,7 +16,7 @@ public class TitleFieldBuilder extends AbstractSnippetQueryFieldBuilder<TitleFie
 
     @Override
     public TitleFieldBuilder buildQuery() {
-        this.words.forEach(word -> queryBuilderList.add(QueryBuilders.regexpQuery(TitleFieldBuilder.FIELD, ".*" + word + ".*")));
+        this.words.forEach(word -> queryBuilderList.add(QueryBuilders.termQuery(TitleFieldBuilder.FIELD, word)));
         return this;
     }
 
