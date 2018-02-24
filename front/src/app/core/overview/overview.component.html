@@ -1,6 +1,6 @@
 <div class="ui container">
   <app-title [text]="'Overview'" [inline]="true"></app-title>
-  <button class="ui right floated teal icon button" [routerLink]="['/snippet/create']">    
+  <button class="ui right floated teal icon button" [routerLink]="['/snippet/create']">
     <i class="add circle icon"></i>
     Add snippet
   </button>
@@ -8,10 +8,12 @@
   <div class="ui segments">
 
     <div class="ui attached header">
-      <h3 class="inline">Last snippets</h3>
+      <h3 class="inline" *ngIf="!isSearch">Last snippets</h3>
+      <h3 class="inline" *ngIf="isSearch">Searching snippets</h3>
+
       <button (click)="getSnippets()" class="ui basic right floated icon button">
-      <i class="refresh icon"></i>
-    </button>
+        <i class="refresh icon"></i>
+      </button>
     </div>
 
     <div class="ui attached segment">
@@ -19,23 +21,24 @@
       <div *ngIf="isLoading" class="ui active centered inline loader"></div>
       <table *ngIf="!isLoading" class="ui celled table">
         <thead>
-          <tr>
-            <th>Title</th>
-            <th>Language</th>
-            <th>Author</th>
-          </tr>
+        <tr>
+          <th>Title</th>
+          <th>Language</th>
+          <th>Author</th>
+        </tr>
         </thead>
-        <tbody>
-          <tr *ngFor="let snippet of pageSnippets.hits">
-            <td>
-              <a [routerLink]="['/snippet', snippet.id]">{{snippet.title}}</a>
-            </td>
-            <td>
-              <div class="ui orange label" tabindex="0">{{snippet.language.name}}</div>
-              <div class="ui basic left pointing label" *ngIf="snippet.language.version">{{snippet.language.version}}</div>
-            </td>
-            <td>{{snippet.author}}</td>
-          </tr>
+        <tbody *ngIf="pageSnippets">
+        <tr *ngFor="let snippet of pageSnippets.hits">
+          <td>
+            <a [routerLink]="['/snippet', snippet.id]">{{snippet.title}}</a>
+          </td>
+          <td>
+            <div class="ui orange label" tabindex="0">{{snippet.language.name}}</div>
+            <div class="ui basic left pointing label" *ngIf="snippet.language.version">{{snippet.language.version}}
+            </div>
+          </td>
+          <td>{{snippet.author}}</td>
+        </tr>
         </tbody>
       </table>
     </div>
