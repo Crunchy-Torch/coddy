@@ -1,36 +1,78 @@
+.white {
+  color: white;
+}
+
+.button.white {
+  background-color: white !important;
+}
+
+.button.padded {
+  padding: 0.8rem 2rem !important;
+}
+
+.uppercase {
+  text-transform: uppercase !important;
+}
+
+.brand.logo {
+  .icon {
+    font-weight: bold;
+    font-size: 1rem !important;
+
+    &.white {
+      background-color: white !important;
+    }
+
+    &.white:before {
+      color: #363636;
+    }
+  }
+  padding: 0.8rem 0;
+}
+
 .ui.menu {
+
   margin-bottom: 0;
-  border: none;
+
+  .item {
+    &:before {
+      width: 0;
+    }
+  }
 
   &.homepage {
+    background: transparent;
     position: absolute;
     width: 100%;
-    z-index: 9999;
-    background-color: rgba(255, 255, 255, 0.25);
-  } 
+    z-index: 10;
+    padding: 0 5%;
+  }
 
-  &:not(.logged) .item:before {
-    width: 0;
+  a {
+    font-weight: bold;
   }
 }
 
-.brand.logo .icon {
-  font-weight: bold;
-  font-size: 1rem !important;
+.ui.menu {
+
+  .item:first-child {
+    padding-left: 0;
+  }
+
+  .right.menu .item:last-child {
+    padding-right: 0;
+    a {
+      padding-right: 0;
+    }
+  }
+
+  .item.ui.search {
+    width: 30%;
+  }
 }
 
-.item .small.button {
-  padding: .5em .7em;
+.borderless {
+  border: none !important;
+  box-shadow: none !important;
 }
 
-.ui.label + .ui.label {
-  margin-left: .2rem;
-}
-
-.toto {
-  margin-top: 52px !important;
-}
-
-[data-position="bottom center"][data-tooltip]:before {
-  left: 20%;
-}
