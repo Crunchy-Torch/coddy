@@ -6,11 +6,12 @@ import { Page } from '../../shared/structure/page';
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.scss']
+  styleUrls: [ './overview.component.scss' ]
 })
 export class OverviewComponent implements OnInit {
 
   isLoading: boolean;
+  isSearch: boolean;
   pageSnippets: Page<Snippet>;
   error: Error;
 
@@ -21,12 +22,15 @@ export class OverviewComponent implements OnInit {
     this.getSnippets();
   }
 
-  getSnippets() {
+  getSnippets(word?: string, from: number = 0, size: number = 10) {
     this.isLoading = true;
     this.pageSnippets = null;
     this.error = null;
-    this.snippetService.getSnippets().finally(
-      () => this.isLoading = false
+    this.snippetService.getSnippets(word, from, size).finally(
+      () => {
+        this.isLoading = false;
+        this.isSearch = word && word !== '';
+      }
     ).subscribe(
       pageSnippets => this.pageSnippets = pageSnippets,
       error => this.error = error
