@@ -12,14 +12,28 @@ export class OverviewComponent implements OnInit {
 
   isLoading: boolean;
   isSearch: boolean;
+  query: string;
   pageSnippets: Page<Snippet>;
   error: Error;
+
+  timeout: any;
 
   constructor(private snippetService: SnippetService) {
   }
 
   ngOnInit() {
     this.getSnippets();
+  }
+
+  searchSnippets(query: string) {
+    clearTimeout(this.timeout);
+
+    this.timeout = setTimeout(() => {
+      this.query = query;
+      if (this.query && this.query.length > 2) {
+        this.getSnippets(this.query);
+      }
+    }, 500);
   }
 
   getSnippets(word?: string, from: number = 0, size: number = 10) {
