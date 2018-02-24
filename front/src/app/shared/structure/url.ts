@@ -36,10 +36,6 @@ export class URL {
       }
 
       url = url + entries[ i ][ 0 ] + '=' + entries[ i ][ 1 ];
-
-      this.parameter.forEach((value, key) => {
-        url = url + value + '=' + key;
-      });
     }
 
     return url;
