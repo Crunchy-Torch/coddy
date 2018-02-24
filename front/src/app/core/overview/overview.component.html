@@ -30,6 +30,7 @@
         <thead>
         <tr>
           <th>Title</th>
+          <th>Description</th>
           <th>Language</th>
           <th>Author</th>
         </tr>
@@ -39,6 +40,7 @@
           <td>
             <a [routerLink]="['/snippet', snippet.id]">{{snippet.title}}</a>
           </td>
+          <td>{{snippet.description}}</td>
           <td>
             <div class="ui orange label" tabindex="0">{{snippet.language.name}}</div>
             <div class="ui basic left pointing label" *ngIf="snippet.language.version">{{snippet.language.version}}
