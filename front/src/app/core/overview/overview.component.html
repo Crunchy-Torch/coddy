@@ -26,7 +26,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let snippet of snippets">
+          <tr *ngFor="let snippet of pageSnippets.hits">
             <td>
               <a [routerLink]="['/snippet', snippet.id]">{{snippet.title}}</a>
             </td>

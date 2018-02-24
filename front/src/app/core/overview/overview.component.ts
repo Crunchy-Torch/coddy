@@ -1,6 +1,7 @@
 import { SnippetService } from '../../snippets/shared/snippet.service';
 import { Snippet } from '../../snippets/shared/snippet';
 import { Component, OnInit } from '@angular/core';
+import { Page } from '../../shared/structure/page';
 
 @Component({
   selector: 'app-overview',
@@ -10,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export class OverviewComponent implements OnInit {
 
   isLoading: boolean;
-  snippets: Snippet[];
+  pageSnippets: Page<Snippet>;
   error: Error;
 
   constructor(private snippetService: SnippetService) {
@@ -22,12 +23,12 @@ export class OverviewComponent implements OnInit {
 
   getSnippets() {
     this.isLoading = true;
-    this.snippets = null;
+    this.pageSnippets = null;
     this.error = null;
     this.snippetService.getSnippets().finally(
       () => this.isLoading = false
     ).subscribe(
-      snippets => this.snippets = snippets,
+      pageSnippets => this.pageSnippets = pageSnippets,
       error => this.error = error
     );
   }

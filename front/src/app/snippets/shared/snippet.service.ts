@@ -4,6 +4,7 @@ import { Snippet } from './snippet';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
+import { Page } from '../../shared/structure/page';
 
 @Injectable()
 export class SnippetService extends BaseService {
@@ -14,7 +15,7 @@ export class SnippetService extends BaseService {
     super();
   }
 
-  getSnippets(): Observable<Snippet[]> {
+  getSnippets(): Observable<Page<Snippet>> {
     return this.http.get<Snippet[]>(this.buildUrl(this.snippetEndpoint))
       .pipe(
         catchError(this.extractError)
