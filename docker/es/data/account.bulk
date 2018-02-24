@@ -1,2 +1,0 @@
-{"index":{"_index":"account","_type":"user","_id":"1"}}
-{"login":"jdoe","password":"hfDhxzwt/90XYxVgOS4sxoWBTnYyZ63EhN4+eqscgAQb6QGrGMx+agyXm9N0M3sQY6CO3ZDnfrSvl2tcncmK2g==","firstName":"John","lastName":"Doe","email":"john.doe@mail.com","salt":"osU7KE6Gtb4cKMocpWPKC0L10aaEFMd7Az5P8VQiXAA=","permissions":["personal_account","personal_snippet"],"createDate":1502559848208,"updateDate":1502559848208}

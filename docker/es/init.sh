@@ -4,17 +4,26 @@ ES_HOST=localhost
 ES_PORT=9200
 
 ACCOUNT_INDEX=account
+USER_TYPE=user
 CONTENT_INDEX=content
+SNIPPET_TYPE=snippet
 
 
 function populateIndex(){
     local_index=$1
+    local_type=$2
 
     if curl -sI http://${ES_HOST}:${ES_PORT}/${local_index} | grep 200 > /dev/null;  then
         echo "index ${local_index} exists, push corresponding data in this index"
 
-        cd ./data/ && curl -XPOST http://${ES_HOST}:${ES_PORT}/_bulk --data-binary @${local_index}.bulk
-        cd ..
+        if command -v jq > /dev/null; then
+            echo "command jq founded, populate the index ${local_index}"
+            cd ./data/ && cat ${local_index}.json | jq -c ".[] | {\"index\": {\"_index\": \"${local_index}\", \"_type\": \"${local_type}\"}}, ." | curl -XPOST localhost:9200/_bulk --data-binary @-
+            cd ..
+        else
+            echo "command jq doesn't exist, you need to install it first"
+            exit 1;
+        fi
     else
         echo  "index ${local_index} doesn't exist, failed to push corresponding data in this index. Maybe you should considerate to create it with the command ./init.sh -c or ./init.sh --create"
         exit 1;
@@ -23,8 +32,8 @@ function populateIndex(){
 }
 
 function populate {
-    populateIndex ${ACCOUNT_INDEX}
-    populateIndex ${CONTENT_INDEX}
+    populateIndex ${ACCOUNT_INDEX} ${USER_TYPE}
+    populateIndex ${CONTENT_INDEX} ${SNIPPET_TYPE}
 }
 
 function createIndex {
