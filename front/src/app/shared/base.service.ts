@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Error } from './error/error';
 import { Observable } from 'rxjs/Observable';
-import { environment } from '../../environments/environment';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import { URL } from './structure/url';
 
 @Injectable()
 export class BaseService {
@@ -30,6 +30,6 @@ export class BaseService {
   }
 
   protected buildUrl(endpoint: string): string {
-    return environment.serverUrl + endpoint;
+    return new URL().setUri(endpoint).buildUrl();
   }
 }
