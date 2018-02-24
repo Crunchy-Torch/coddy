@@ -1,0 +1,28 @@
+package org.crunchytorch.coddy.snippet.elasticsearch.query.field;
+
+import org.crunchytorch.coddy.snippet.elasticsearch.query.AbstractSnippetQueryFieldBuilder;
+import org.crunchytorch.coddy.snippet.elasticsearch.query.BoolOperand;
+import org.elasticsearch.index.query.QueryBuilders;
+
+public class DescriptionFieldBuilder extends AbstractSnippetQueryFieldBuilder<DescriptionFieldBuilder> {
+
+    private static final String FIELD = "description";
+
+    @Override
+    public DescriptionFieldBuilder addWord(String word) {
+        this.words.add(word);
+        return this;
+    }
+
+    @Override
+    public DescriptionFieldBuilder buildQuery() {
+        this.words.forEach(word -> queryBuilderList.add(QueryBuilders.matchPhraseQuery(DescriptionFieldBuilder.FIELD, word)));
+        return this;
+    }
+
+    @Override
+    public DescriptionFieldBuilder setOperand(BoolOperand operand) {
+        this.operand = operand;
+        return this;
+    }
+}

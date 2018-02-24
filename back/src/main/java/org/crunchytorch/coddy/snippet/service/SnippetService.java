@@ -8,6 +8,7 @@ import org.crunchytorch.coddy.snippet.data.SearchBody;
 import org.crunchytorch.coddy.snippet.elasticsearch.entity.SnippetEntity;
 import org.crunchytorch.coddy.snippet.elasticsearch.query.SnippetQueryFieldBuilder;
 import org.crunchytorch.coddy.snippet.elasticsearch.query.field.AuthorFieldBuilder;
+import org.crunchytorch.coddy.snippet.elasticsearch.query.field.DescriptionFieldBuilder;
 import org.crunchytorch.coddy.snippet.elasticsearch.query.field.KeywordsFieldBuilder;
 import org.crunchytorch.coddy.snippet.elasticsearch.query.field.TitleFieldBuilder;
 import org.crunchytorch.coddy.snippet.elasticsearch.repository.SnippetRepository;
@@ -73,6 +74,12 @@ public class SnippetService extends AbstractService<SnippetEntity> {
                         .useOrBoolOperand()
                         .buildQuery();
 
+        DescriptionFieldBuilder descriptionBuilder =
+                new DescriptionFieldBuilder()
+                        .addWord(words)
+                        .useOrBoolOperand()
+                        .buildQuery();
+
         KeywordsFieldBuilder keywordsBuilder = new KeywordsFieldBuilder();
 
         Stream.of(words.split(" ")).forEach(keywordsBuilder::addWord);
@@ -86,7 +93,7 @@ public class SnippetService extends AbstractService<SnippetEntity> {
                 .addWord(words)
                 .buildQuery();
 
-        return this.search(from, size, titleBuilder, keywordsBuilder, authorBuilder);
+        return this.search(from, size, titleBuilder, descriptionBuilder, keywordsBuilder, authorBuilder);
     }
 
     public Page<SnippetEntity> search(SearchBody searchBody, int from, int size) {
