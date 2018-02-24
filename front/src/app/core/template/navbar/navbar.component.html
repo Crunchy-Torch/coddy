@@ -1,53 +1,66 @@
-<div class="ui menu" [ngClass]="{'homepage': isHomepage, 'logged': isLogged}">
-  <a class="item brand logo" [routerLink]="['/']">
-    <h5 class="ui teal header">
-      <i class="mini circular inverted teal code icon"></i>
-      <div class="content">
-        Coddy
-      </div>
-    </h5>
-  </a>
+<div *ngIf="isHomepage" class="ui borderless transparent menu" [ngClass]="{'homepage': isHomepage}">
 
-  <ng-container *ngIf="isLogged && token !== null">
-    <div class="item">
-      <div class="ui transparent icon input">
-        <input type="text" placeholder="Search...">
-        <i class="search icon"></i>
-      </div>
-    </div>
-    <a class="item">
-      Favorites
-      <div class="ui teal label">12</div>
+  <div class="item">
+    <a class="brand logo" [routerLink]="['/']">
+      <h3 class="ui white header">
+        <i class="mini circular inverted white code icon"></i>
+        <div class="uppercase content">
+          Coddy
+        </div>
+      </h3>
     </a>
-    <a class="item">
-      Notifications
-      <div class="ui orange label">4</div>
-    </a>
-  </ng-container>
+  </div>
 
   <div class="right menu">
-    <div *ngIf="!isLogged" class="item">
-      <a class="ui small teal button" [routerLink]="['/login']">
-        <i class="sign in icon"></i>
+    <div class="item">
+      <a class="padded white borderless uppercase" [routerLink]="['/login']">
         Login
       </a>
     </div>
 
-    <ng-container *ngIf="isLogged && token !== null">
-      <a class="item">
-        {{token.firstname}} {{token.lastname}}
-        <div *ngIf="hasAccountPermission()" class="ui compact yellow circular label" data-tooltip="Manage your account!" data-position="bottom center">a</div>
-        <div *ngIf="hasSnippetPermission()" class="ui compact olive circular label" data-tooltip="Manage your snippets!" data-position="bottom center">s</div>
+    <div class="item">
+      <a class="ui basic padded white borderless uppercase button" [routerLink]="['/overview']">
+        Let's go!
       </a>
-      <a class="item">
-        <i class="settings icon"></i>
-        Settings
+    </div>
+  </div>
+
+</div>
+
+<div *ngIf="!isHomepage" class="ui container">
+  <div class="ui borderless transparent menu" [ngClass]="{'logged': isLogged}">
+
+    <div class="item">
+      <a class="brand logo" [routerLink]="['/']">
+        <h3 class="ui teal header">
+          <i class="mini circular inverted teal code icon"></i>
+          <div class="uppercase content">
+            Coddy
+          </div>
+        </h3>
       </a>
-      <div class="item">
-        <a class="ui small red icon button" (click)="signout()">
-          <i class="sign out icon"></i>
+    </div>
+
+    <div class="item ui search">
+      <div class="ui icon input">
+        <input class="prompt" placeholder="You know... for search." type="text">
+        <i class="search icon"></i>
+      </div>
+    </div>
+
+    <div class="right menu">
+      <div *ngIf="!isLogged" class="item">
+        <a class="ui basic borderless uppercase button" [routerLink]="['/login']">
+          Login
         </a>
       </div>
-    </ng-container>
+
+      <div class="item" *ngIf="isLogged && token !== null">
+        <a class="ui basic borderless icon button" (click)="signout()">
+          <i class="large red power icon"></i>
+        </a>
+      </div>
+    </div>
+
   </div>
 </div>
