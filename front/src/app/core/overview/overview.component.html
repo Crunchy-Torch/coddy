@@ -13,12 +13,13 @@
 
       <div class="item ui search">
         <div class="ui icon input">
-          <input class="prompt" #query (keyup)="searchSnippets(query.value)" placeholder="You know... for search." type="text">
+          <input class="prompt" #query (keyup)="searchSnippets(query.value)" placeholder="You know... for search."
+                 type="text">
           <i class="search icon"></i>
         </div>
       </div>
 
-      <button (click)="getSnippets()" class="ui basic right floated icon button">
+      <button (click)="reloadSnippets()" class="ui basic right floated icon button">
         <i class="refresh icon"></i>
       </button>
     </div>
@@ -49,6 +50,21 @@
           <td>{{snippet.author}}</td>
         </tr>
         </tbody>
+        <tfoot *ngIf="pageSnippets && pageSnippets.totalPage > 1">
+        <tr>
+          <th colspan="3">
+            <div class="ui right floated pagination menu">
+              <a (click)="previousPage()" class="icon item">
+                <i class="left chevron icon"></i>
+              </a>
+              <a *ngFor="let i of pageArray" (click)="getSnippetsByPage(i)" class="item">{{i}}</a>
+              <a (click)="nextPage()" class="icon item">
+                <i class="right chevron icon"></i>
+              </a>
+            </div>
+          </th>
+        </tr>
+        </tfoot>
       </table>
     </div>
   </div>
