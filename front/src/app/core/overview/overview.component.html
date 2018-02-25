@@ -13,7 +13,11 @@
 
       <div class="item ui search">
         <div class="ui icon input">
-          <input class="prompt" #query (keyup)="searchSnippets(query.value)" placeholder="You know... for search."
+          <input class="prompt" #query
+                 (keyup)="delaySearchSnippets(query.value)"
+                 (keyup.enter)="enterSearchSnippets(query.value)"
+                 (blur)="enterSearchSnippets(query.value)"
+                 placeholder="You know... for search."
                  type="text">
           <i class="search icon"></i>
         </div>

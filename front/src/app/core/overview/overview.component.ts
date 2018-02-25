@@ -30,16 +30,27 @@ export class OverviewComponent implements OnInit {
     this.getSnippets();
   }
 
-  searchSnippets(query: string) {
+  delaySearchSnippets(query: string) {
     clearTimeout(this.timeout);
-
     this.timeout = setTimeout(() => {
       this.query = query;
-      if (this.query && this.query.length > 2) {
-        this.pageNumber = 1;
-        this.getSnippets(this.query);
-      }
+      this.searchSnippets();
     }, 500);
+  }
+
+  // when the user presses on enter or quit the input
+  enterSearchSnippets(query: string) {
+    clearTimeout(this.timeout);
+    this.query = query;
+    this.searchSnippets();
+  }
+
+  searchSnippets() {
+    if (this.query) {
+      this.query = this.query.trim();
+    }
+    this.pageNumber = 1;
+    this.getSnippets(this.query);
   }
 
   reloadSnippets() {
