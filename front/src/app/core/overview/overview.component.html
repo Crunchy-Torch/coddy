@@ -11,7 +11,7 @@
       <h3 class="inline" *ngIf="!isSearch">Last snippets</h3>
       <h3 class="inline" *ngIf="isSearch">Searching snippets</h3>
 
-      <div class="item ui search">
+      <div class="item inline ui search">
         <div class="ui icon input">
           <input class="prompt" #query
                  (keyup)="delaySearchSnippets(query.value)"
