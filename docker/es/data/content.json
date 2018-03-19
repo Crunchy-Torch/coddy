@@ -1,0 +1,84 @@
+[
+  {
+    "title": "my first snippet",
+    "description": "Hourra!",
+    "language": {
+      "name": "java",
+      "version": "1.8"
+    },
+    "keywords": [
+      "key",
+      "word"
+    ],
+    "files": [
+      {
+        "filename": "page 1",
+        "language": {
+          "name": "java",
+          "version": "1.8"
+        },
+        "content": "my first snippet - page 1"
+      },
+      {
+        "filename": "page 2",
+        "language": {
+          "name": "python"
+        },
+        "content": "my first snippet - page 2"
+      }
+    ],
+    "associatedLinks": [
+      {
+        "type": "DOCUMENTATION",
+        "description": "Read the official doc!",
+        "value": "http://perdu.com"
+      },
+      {
+        "type": "GITHUB",
+        "description": "Repo",
+        "value": "http://github.com"
+      }
+    ],
+    "rate": 3,
+    "author": "David LEVAYER",
+    "created": "2017-07-16T13:24:10Z",
+    "lastModified": "2017-07-16T13:24:10Z"
+  },
+  {
+    "title": "my second snippet",
+    "description": "Hourra!",
+    "language": {
+      "name": "python"
+    },
+    "keywords": [
+      "key",
+      "word"
+    ],
+    "files": [
+      {
+        "filename": "page 1",
+        "language": {
+          "name": "java",
+          "version": "1.8"
+        },
+        "content": "my first snippet - page 1"
+      }
+    ],
+    "associatedLinks": [
+      {
+        "type": "DOCUMENTATION",
+        "description": "Read the official doc!",
+        "value": "http://perdu.com"
+      },
+      {
+        "type": "GITHUB",
+        "description": "Repo",
+        "value": "http://github.com"
+      }
+    ],
+    "rate": 3,
+    "author": "David LEVAYER",
+    "created": "2017-07-16T13:24:10Z",
+    "lastModified": "2017-07-16T13:24:10Z"
+  }
+]
