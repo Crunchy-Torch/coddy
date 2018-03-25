@@ -49,6 +49,7 @@ function createIndex {
 
 function create {
     createIndex ${ACCOUNT_INDEX}
+    createIndex ${CONTENT_INDEX}
 }
 
 function deleteIndex {
@@ -66,6 +67,7 @@ function deleteIndex {
 
 function delete {
     deleteIndex ${ACCOUNT_INDEX}
+    deleteIndex ${CONTENT_INDEX}
 }
 
 function help {
