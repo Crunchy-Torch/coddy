@@ -1,0 +1,41 @@
+{
+  "mappings": {
+    "snippet": {
+      "properties": {
+        "associatedLinks": {
+          "type": "nested"
+        },
+        "author": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "created": {
+          "type": "date",
+          "format": "strict_date_optional_time||epoch_millis"
+        },
+        "description": {
+          "type": "string"
+        },
+        "files": {
+          "type": "nested"
+        },
+        "keywords": {
+          "type": "string"
+        },
+        "language": {
+          "type": "nested"
+        },
+        "lastModified": {
+          "type": "date",
+          "format": "strict_date_optional_time||epoch_millis"
+        },
+        "rate": {
+          "type": "float"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
