@@ -4,7 +4,7 @@ import org.crunchytorch.coddy.snippet.elasticsearch.query.AbstractSnippetQueryFi
 import org.crunchytorch.coddy.snippet.elasticsearch.query.BoolOperand;
 import org.elasticsearch.index.query.QueryBuilders;
 
-public class KeywordsFieldBuilder extends AbstractSnippetQueryFieldBuilder<KeywordsFieldBuilder> {
+public class KeywordsFieldBuilder extends AbstractSnippetQueryFieldBuilder {
 
     private static final String FIELD = "keywords";
 
@@ -17,12 +17,6 @@ public class KeywordsFieldBuilder extends AbstractSnippetQueryFieldBuilder<Keywo
     @Override
     public KeywordsFieldBuilder buildQuery() {
         this.words.forEach(word -> queryBuilderList.add(QueryBuilders.matchQuery(KeywordsFieldBuilder.FIELD, word)));
-        return this;
-    }
-
-    @Override
-    public KeywordsFieldBuilder setOperand(BoolOperand operand) {
-        this.operand = operand;
         return this;
     }
 }

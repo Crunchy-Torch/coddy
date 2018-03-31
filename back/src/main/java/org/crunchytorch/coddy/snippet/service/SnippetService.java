@@ -68,13 +68,13 @@ public class SnippetService extends AbstractService<SnippetEntity> {
      * @return a page with the result of the research and the number of entity found.
      */
     public Page<SnippetEntity> search(String words, int from, int size) {
-        TitleFieldBuilder titleBuilder =
+        SnippetQueryFieldBuilder titleBuilder =
                 new TitleFieldBuilder()
                         .addWord(words)
                         .useOrBoolOperand()
                         .buildQuery();
 
-        DescriptionFieldBuilder descriptionBuilder =
+        SnippetQueryFieldBuilder descriptionBuilder =
                 new DescriptionFieldBuilder()
                         .addWord(words)
                         .useOrBoolOperand()
@@ -88,7 +88,7 @@ public class SnippetService extends AbstractService<SnippetEntity> {
                 .useOrBoolOperand()
                 .buildQuery();
 
-        AuthorFieldBuilder authorBuilder = new AuthorFieldBuilder()
+        SnippetQueryFieldBuilder authorBuilder = new AuthorFieldBuilder()
                 .useOrBoolOperand()
                 .addWord(words)
                 .buildQuery();
@@ -101,7 +101,7 @@ public class SnippetService extends AbstractService<SnippetEntity> {
         List<SnippetQueryFieldBuilder> queryFieldBuilders = new LinkedList<>();
 
         if (!Collections.isEmpty(searchBody.getAuthors())) {
-            AuthorFieldBuilder authorBuilder = new AuthorFieldBuilder().useAndBoolOperand();
+            SnippetQueryFieldBuilder authorBuilder = new AuthorFieldBuilder().useAndBoolOperand();
             searchBody.getAuthors().forEach(authorBuilder::addWord);
 
             if (searchBody.getAuthors().size() > 1) {
@@ -113,7 +113,7 @@ public class SnippetService extends AbstractService<SnippetEntity> {
         }
 
         if (!Collections.isEmpty(searchBody.getKeywords())) {
-            KeywordsFieldBuilder keywordsBuilder = new KeywordsFieldBuilder().useAndBoolOperand();
+            SnippetQueryFieldBuilder keywordsBuilder = new KeywordsFieldBuilder().useAndBoolOperand();
 
             searchBody.getKeywords().forEach(keywordsBuilder::addWord);
             keywordsBuilder.buildQuery();
@@ -121,7 +121,7 @@ public class SnippetService extends AbstractService<SnippetEntity> {
         }
 
         if (!Collections.isEmpty(searchBody.getTitles())) {
-            TitleFieldBuilder titleBuilder = new TitleFieldBuilder().useAndBoolOperand();
+            SnippetQueryFieldBuilder titleBuilder = new TitleFieldBuilder().useAndBoolOperand();
 
             searchBody.getTitles().forEach(titleBuilder::addWord);
 

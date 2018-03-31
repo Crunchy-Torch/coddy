@@ -2,15 +2,19 @@ package org.crunchytorch.coddy.snippet.elasticsearch.query;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
 
-public interface SnippetQueryFieldBuilder<T> {
+public interface SnippetQueryFieldBuilder {
 
-    T addWord(String word);
+    SnippetQueryFieldBuilder addWord(String word);
 
-    T buildQuery();
+    SnippetQueryFieldBuilder buildQuery();
 
     void appendQueryBuilder(BoolQueryBuilder queryBuilder);
 
     BoolOperand getOperand();
 
-    T setOperand(BoolOperand operand);
+    SnippetQueryFieldBuilder setOperand(BoolOperand operand);
+
+    SnippetQueryFieldBuilder useAndBoolOperand();
+
+    SnippetQueryFieldBuilder useOrBoolOperand();
 }

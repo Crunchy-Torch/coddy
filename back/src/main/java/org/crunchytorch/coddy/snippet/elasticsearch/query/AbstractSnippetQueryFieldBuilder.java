@@ -6,7 +6,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class AbstractSnippetQueryFieldBuilder<T> implements SnippetQueryFieldBuilder<T> {
+public abstract class AbstractSnippetQueryFieldBuilder implements SnippetQueryFieldBuilder {
 
     protected List<String> words;
 
@@ -19,14 +19,6 @@ public abstract class AbstractSnippetQueryFieldBuilder<T> implements SnippetQuer
         this.queryBuilderList = new LinkedList<>();
     }
 
-    public T useAndBoolOperand() {
-        return this.setOperand(BoolOperand.AND);
-    }
-
-    public T useOrBoolOperand() {
-        return this.setOperand(BoolOperand.OR);
-    }
-
     @Override
     public void appendQueryBuilder(BoolQueryBuilder queryBuilder) {
         if (BoolOperand.AND.equals(this.getOperand())) {
@@ -34,6 +26,22 @@ public abstract class AbstractSnippetQueryFieldBuilder<T> implements SnippetQuer
         } else {
             this.queryBuilderList.forEach(queryBuilder::should);
         }
+    }
+
+    @Override
+    public SnippetQueryFieldBuilder useAndBoolOperand() {
+        return this.setOperand(BoolOperand.AND);
+    }
+
+    @Override
+    public SnippetQueryFieldBuilder useOrBoolOperand() {
+        return this.setOperand(BoolOperand.OR);
+    }
+
+    @Override
+    public SnippetQueryFieldBuilder setOperand(BoolOperand operand) {
+        this.operand = operand;
+        return this;
     }
 
     @Override
