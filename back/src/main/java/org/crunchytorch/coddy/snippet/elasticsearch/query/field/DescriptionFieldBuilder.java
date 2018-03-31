@@ -1,7 +1,6 @@
 package org.crunchytorch.coddy.snippet.elasticsearch.query.field;
 
 import org.crunchytorch.coddy.snippet.elasticsearch.query.AbstractSnippetQueryFieldBuilder;
-import org.crunchytorch.coddy.snippet.elasticsearch.query.BoolOperand;
 import org.elasticsearch.index.query.QueryBuilders;
 
 public class DescriptionFieldBuilder extends AbstractSnippetQueryFieldBuilder {
