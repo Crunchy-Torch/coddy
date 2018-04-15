@@ -31,7 +31,8 @@
     <div class="ui attached segment">
       <app-error [error]="error"></app-error>
       <div *ngIf="isLoading" class="ui active centered inline loader"></div>
-      <table *ngIf="!isLoading" class="ui celled table">
+      <h3 class="no-result" *ngIf="!isLoading && pageSnippets.hits.length == 0">No result found for "{{pastQuery}}"</h3>
+      <table id="snippets-table" *ngIf="!isLoading && pageSnippets.hits.length > 0" class="ui celled table">
         <thead>
         <tr>
           <th>Title</th>

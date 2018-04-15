@@ -12,3 +12,20 @@
     padding-top: inherit;
     vertical-align: inherit;
 }
+
+.inline.ui.search {
+    margin-left: 2rem;
+}
+
+.no-result {
+    color: lightgrey;
+    text-align: center;
+}
+
+#snippets-table {
+    -webkit-animation: fadein 0.8s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 0.8s; /* Firefox < 16 */
+    -ms-animation: fadein 0.8s; /* Internet Explorer */
+    -o-animation: fadein 0.8s; /* Opera < 12.1 */
+    animation: fadein 0.8s;
+}

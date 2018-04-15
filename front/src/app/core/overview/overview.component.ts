@@ -13,6 +13,7 @@ export class OverviewComponent implements OnInit {
   isLoading: boolean;
   isSearch: boolean;
   query: string;
+  pastQuery: string;
   pageSnippets: Page<Snippet>;
   error: Error;
 
@@ -51,6 +52,7 @@ export class OverviewComponent implements OnInit {
     }
     this.pageNumber = 1;
     this.getSnippets(this.query);
+    this.pastQuery = this.query;
   }
 
   reloadSnippets() {
