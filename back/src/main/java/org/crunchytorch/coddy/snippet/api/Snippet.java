@@ -1,18 +1,21 @@
 package org.crunchytorch.coddy.snippet.api;
 
+import org.apache.commons.lang.StringUtils;
+import org.crunchytorch.coddy.application.data.Page;
+import org.crunchytorch.coddy.snippet.data.SearchBody;
 import org.crunchytorch.coddy.snippet.elasticsearch.entity.SnippetEntity;
 import org.crunchytorch.coddy.snippet.service.SnippetService;
 import org.crunchytorch.coddy.user.data.security.Permission;
 import org.crunchytorch.coddy.user.filter.AuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
-import java.util.List;
 
 @Component
 @Path("/snippet")
@@ -24,9 +27,21 @@ public class Snippet {
     private SnippetService snippetService;
 
     @GET
-    public List<SnippetEntity> getSnippets(@DefaultValue("0") @QueryParam("from") final int from,
-                                           @DefaultValue("10") @QueryParam("size") final int size) {
-        return snippetService.getEntity(from, size);
+    public Page<SnippetEntity> getSnippets(@DefaultValue("0") @QueryParam("from") final int from,
+                                           @DefaultValue("10") @QueryParam("size") final int size,
+                                           @QueryParam("query") final String query) {
+        if (StringUtils.isEmpty(query) || StringUtils.isEmpty(query.replaceAll("\\s+", ""))) {
+            return snippetService.getEntity(from, size);
+        }
+        return snippetService.search(query, from, size);
+    }
+
+    @GET
+    @Path("/search")
+    public Page<SnippetEntity> search(@DefaultValue("0") @QueryParam("from") final int from,
+                                      @DefaultValue("10") @QueryParam("size") final int size,
+                                      @RequestBody SearchBody searchBody){
+        return snippetService.search(searchBody, from, size);
     }
 
     @POST

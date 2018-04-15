@@ -1,6 +1,6 @@
 <div class="ui container">
   <app-title [text]="'Overview'" [inline]="true"></app-title>
-  <button class="ui right floated teal icon button" [routerLink]="['/snippet/create']">    
+  <button class="ui right floated teal icon button" [routerLink]="['/snippet/create']">
     <i class="add circle icon"></i>
     Add snippet
   </button>
@@ -8,35 +8,68 @@
   <div class="ui segments">
 
     <div class="ui attached header">
-      <h3 class="inline">Last snippets</h3>
-      <button (click)="getSnippets()" class="ui basic right floated icon button">
-      <i class="refresh icon"></i>
-    </button>
+      <h3 class="inline" *ngIf="!isSearch">Last snippets</h3>
+      <h3 class="inline" *ngIf="isSearch">Searching snippets</h3>
+
+      <div class="item inline ui search">
+        <div class="ui icon input">
+          <input class="prompt" #query
+                 (keyup)="delaySearchSnippets(query.value)"
+                 (keyup.enter)="enterSearchSnippets(query.value)"
+                 (blur)="enterSearchSnippets(query.value)"
+                 placeholder="You know... for search."
+                 type="text">
+          <i class="search icon"></i>
+        </div>
+      </div>
+
+      <button (click)="reloadSnippets()" class="ui basic right floated icon button">
+        <i class="refresh icon"></i>
+      </button>
     </div>
 
     <div class="ui attached segment">
       <app-error [error]="error"></app-error>
       <div *ngIf="isLoading" class="ui active centered inline loader"></div>
-      <table *ngIf="!isLoading" class="ui celled table">
+      <h3 class="no-result" *ngIf="!isLoading && pageSnippets.hits.length == 0">No result found for "{{pastQuery}}"</h3>
+      <table id="snippets-table" *ngIf="!isLoading && pageSnippets.hits.length > 0" class="ui celled table">
         <thead>
-          <tr>
-            <th>Title</th>
-            <th>Language</th>
-            <th>Author</th>
-          </tr>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Language</th>
+          <th>Author</th>
+        </tr>
         </thead>
-        <tbody>
-          <tr *ngFor="let snippet of snippets">
-            <td>
-              <a [routerLink]="['/snippet', snippet.id]">{{snippet.title}}</a>
-            </td>
-            <td>
-              <div class="ui orange label" tabindex="0">{{snippet.language.name}}</div>
-              <div class="ui basic left pointing label" *ngIf="snippet.language.version">{{snippet.language.version}}</div>
-            </td>
-            <td>{{snippet.author}}</td>
-          </tr>
+        <tbody *ngIf="pageSnippets">
+        <tr *ngFor="let snippet of pageSnippets.hits">
+          <td>
+            <a [routerLink]="['/snippet', snippet.id]">{{snippet.title}}</a>
+          </td>
+          <td>{{snippet.description}}</td>
+          <td>
+            <div class="ui orange label" tabindex="0">{{snippet.language.name}}</div>
+            <div class="ui basic left pointing label" *ngIf="snippet.language.version">{{snippet.language.version}}
+            </div>
+          </td>
+          <td>{{snippet.author}}</td>
+        </tr>
         </tbody>
+        <tfoot *ngIf="pageSnippets && pageSnippets.totalPage > 1">
+        <tr>
+          <th colspan="3">
+            <div class="ui right floated pagination menu">
+              <a (click)="previousPage()" class="icon item">
+                <i class="left chevron icon"></i>
+              </a>
+              <a *ngFor="let i of pageArray" (click)="getSnippetsByPage(i)" class="item">{{i}}</a>
+              <a (click)="nextPage()" class="icon item">
+                <i class="right chevron icon"></i>
+              </a>
+            </div>
+          </th>
+        </tr>
+        </tfoot>
       </table>
     </div>
   </div>
