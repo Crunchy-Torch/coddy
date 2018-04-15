@@ -255,6 +255,18 @@ jobs:
   ###              Workflow Docker                ###
   ###################################################
 
+  build-docker:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: ~/repo
+      - setup_remote_docker
+      - run: .circleci/build-docker.sh --build
+
   build-push-docker:
     docker:
       - image: circleci/openjdk:8-jdk
@@ -327,6 +339,15 @@ workflows:
           requires:
             - test-front
             - test-back
+      - build-docker:
+          requires:
+            - package-back
+            - lint-front
+            - analyze_encoding_utf8
+            - analyze_eol
+          filters:
+            branches:
+              ignore: master
       - build-push-docker:
           requires:
             - package-back
