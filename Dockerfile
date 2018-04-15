@@ -33,7 +33,6 @@ RUN apt-get update && \
                 libxslt-dev \
                 libgd-dev \
                 libgeoip-dev && \
-        pip install --upgrade pip && \
         pip install envtpl && \
         pip install supervisor supervisor-stdout && \
         curl "http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz" -o nginx-${NGINX_VERSION}.tar.gz && \
