@@ -1,5 +1,6 @@
 package org.crunchytorch.coddy.user.api;
 
+import org.crunchytorch.coddy.application.data.MediaType;
 import org.crunchytorch.coddy.application.data.Page;
 import org.crunchytorch.coddy.application.exception.EntityExistsException;
 import org.crunchytorch.coddy.application.exception.EntityNotFoundException;
@@ -10,14 +11,10 @@ import org.crunchytorch.coddy.user.data.out.SimpleUser;
 import org.crunchytorch.coddy.user.data.security.JWTToken;
 import org.crunchytorch.coddy.user.data.security.Permission;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
-import org.crunchytorch.coddy.user.filter.AuthorizationFilter;
 import org.crunchytorch.coddy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,10 +23,8 @@ import java.util.stream.Collectors;
  * This class is the endpoint api which contains all method in order to manage the {@link org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity users}
  * All the business code is in the service part, especially in the class {@link UserService}.
  */
-@Component
-@Path("/user")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
+@RestController
+@RequestMapping(path = "/user", produces = MediaType.APPLICATION_JSON)
 public class User {
 
     @Autowired
@@ -48,8 +43,7 @@ public class User {
      *                   }
      *                   </p>
      */
-    @POST
-    @Path("/auth")
+    @RequestMapping(path = "/auth", method = RequestMethod.POST)
     public JWTToken authentication(final Credential credential) {
         return this.service.authenticate(credential);
     }
@@ -61,16 +55,15 @@ public class User {
      * @return the {@link SimpleUser user} created
      * @throws EntityExistsException if the given user already exists
      */
-    @POST
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON)
     public SimpleUser create(UpdateUser user) {
         return this.service.create(user);
     }
 
-    @PUT
-    @Path("{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}")
-    @AuthorizationFilter
-    @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
-    public SimpleUser update(@PathParam(AppUtils.API_USER_LOGIN_PATH_PARAM) final String login, final UpdateUser user) {
+    @RequestMapping(path = "{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON)
+    //@AuthorizationFilter
+    //@RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
+    public SimpleUser update(@PathVariable final String login, final UpdateUser user) {
         user.setLogin(login);
         return this.service.update(user);
     }
@@ -81,35 +74,27 @@ public class User {
      * @param login the user's login
      * @throws EntityNotFoundException if the given login is not associated to a {@link SimpleUser user}
      */
-    @DELETE
-    @Path("{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}")
-    @AuthorizationFilter
-    @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
-    public void delete(@PathParam(AppUtils.API_USER_LOGIN_PATH_PARAM) final String login) {
+    @RequestMapping(path = "{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}", method = RequestMethod.DELETE)
+    //@AuthorizationFilter
+    //@RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
+    public void delete(@PathVariable final String login) {
         this.service.delete(login);
     }
 
-    @GET
-    @Path("/count")
-    public long count() {
-        return this.service.count();
-    }
-
-    @GET
-    @AuthorizationFilter
-    @RolesAllowed(Permission.ADMIN)
-    public Page<SimpleUser> getUsers(@DefaultValue("0") @QueryParam("from") final int from,
-                                     @DefaultValue("10") @QueryParam("size") final int size) {
+    @RequestMapping(method = RequestMethod.GET)
+    //@AuthorizationFilter
+    //@RolesAllowed(Permission.ADMIN)
+    public Page<SimpleUser> getUsers(@RequestParam(value = "from", defaultValue = "0") final int from,
+                                     @RequestParam(value = "size", defaultValue = "10") final int size) {
         Page<UserEntity> oldPage = this.service.getEntity(from, size);
         return new Page<>(oldPage.getTotalElement(),
                 oldPage.getTotalPage(), oldPage.getHits().stream().map(SimpleUser::new).collect(Collectors.toList()));
     }
 
-    @GET
-    @Path("/search")
-    public List<SimpleUser> search(@QueryParam("login") final String loginToSearch,
-                                   @DefaultValue("0") @QueryParam("from") final int from,
-                                   @DefaultValue("10") @QueryParam("size") final int size) {
+    @RequestMapping(path = "/search", method = RequestMethod.GET)
+    public List<SimpleUser> search(@RequestParam(value = "login") final String loginToSearch,
+                                   @RequestParam(value = "from", defaultValue = "0") final int from,
+                                   @RequestParam(value = "size", defaultValue = "10") final int size) {
         return this.service.search(loginToSearch, from, size);
     }
 
@@ -118,16 +103,14 @@ public class User {
      * @return the {@link SimpleUser user} associated to the given login. All critical information such as his password
      * or the salt has been deleted previously
      */
-    @GET
-    @Path("{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}")
-    @AuthorizationFilter
-    @RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
-    public SimpleUser getUserByLogin(@PathParam(AppUtils.API_USER_LOGIN_PATH_PARAM) final String login) {
+    @RequestMapping(path = "{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}", method = RequestMethod.GET)
+    //@AuthorizationFilter
+    //@RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
+    public SimpleUser getUserByLogin(@PathVariable final String login) {
         return this.service.getUserByLogin(login);
     }
 
-    @GET
-    @Path("/permission")
+    @RequestMapping(path = "/permission", method = RequestMethod.GET)
     public List<String> getAvailablePermissions() {
         List<String> permissions = new ArrayList<>();
         permissions.add(Permission.ADMIN);

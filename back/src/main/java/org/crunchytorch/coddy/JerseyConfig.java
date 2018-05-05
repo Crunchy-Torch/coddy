@@ -1,3 +1,4 @@
+/*
 package org.crunchytorch.coddy;
 
 import org.crunchytorch.coddy.application.api.Hello;
@@ -52,3 +53,4 @@ public class JerseyConfig extends ResourceConfig {
         register(TokenResponseFilter.class);
     }
 }
+*/
