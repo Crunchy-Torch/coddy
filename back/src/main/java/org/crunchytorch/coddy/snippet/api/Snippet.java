@@ -47,7 +47,7 @@ public class Snippet {
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON)
     //@AuthorizationFilter
     //@RolesAllowed({Permission.ADMIN, Permission.PERSO_SNIPPET})
-    public SnippetEntity updateSnippet(@PathVariable("id") String id, SnippetEntity snippet) {
+    public SnippetEntity updateSnippet(@PathVariable("id") String id, @RequestBody SnippetEntity snippet) {
         snippet.setId(id);
         return this.snippetService.update(snippet);
     }
