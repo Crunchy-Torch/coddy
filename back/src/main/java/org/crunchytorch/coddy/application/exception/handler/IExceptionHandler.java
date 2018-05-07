@@ -9,6 +9,10 @@ public interface IExceptionHandler<T extends Throwable> {
     ResponseEntity<Response> handler(T t);
 
     default ResponseEntity<Response> handler(T t, HttpStatus status) {
-        return new ResponseEntity<>(new Response(t.getMessage()), status);
+        return this.handler(t.getMessage(), status);
+    }
+
+    default ResponseEntity<Response> handler(String message, HttpStatus status) {
+        return new ResponseEntity<>(new Response(message), status);
     }
 }
