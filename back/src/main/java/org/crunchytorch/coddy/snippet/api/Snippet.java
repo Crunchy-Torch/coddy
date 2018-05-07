@@ -52,7 +52,7 @@ public class Snippet {
         return this.snippetService.update(snippet);
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     //@AuthorizationFilter
     //@RolesAllowed({Permission.ADMIN, Permission.PERSO_SNIPPET})
     public void delete(@PathVariable("id") String id) {
