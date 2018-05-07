@@ -1,4 +1,4 @@
-package org.crunchytorch.coddy.user.utils;
+package org.crunchytorch.coddy.security.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

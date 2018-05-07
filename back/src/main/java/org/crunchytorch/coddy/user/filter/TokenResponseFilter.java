@@ -1,7 +1,7 @@
 package org.crunchytorch.coddy.user.filter;
 
 import org.crunchytorch.coddy.user.data.security.JWTPrincipal;
-import org.crunchytorch.coddy.user.service.JWTService;
+import org.crunchytorch.coddy.security.service.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.container.ContainerRequestContext;

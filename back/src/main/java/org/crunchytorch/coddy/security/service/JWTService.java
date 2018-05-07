@@ -1,4 +1,4 @@
-package org.crunchytorch.coddy.user.service;
+package org.crunchytorch.coddy.security.service;
 
 
 import io.jsonwebtoken.*;
@@ -10,7 +10,7 @@ import org.crunchytorch.coddy.user.data.security.JWTPrincipal;
 import org.crunchytorch.coddy.user.data.security.JWTToken;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.crunchytorch.coddy.user.filter.JWTSecurityContext;
-import org.crunchytorch.coddy.user.utils.SecurityUtils;
+import org.crunchytorch.coddy.security.utils.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

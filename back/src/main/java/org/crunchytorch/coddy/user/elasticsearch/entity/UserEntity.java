@@ -2,7 +2,7 @@ package org.crunchytorch.coddy.user.elasticsearch.entity;
 
 import org.crunchytorch.coddy.user.data.IUser;
 import org.crunchytorch.coddy.user.data.in.UpdateUser;
-import org.crunchytorch.coddy.user.utils.SecurityUtils;
+import org.crunchytorch.coddy.security.utils.SecurityUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
