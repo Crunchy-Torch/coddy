@@ -1,16 +1,17 @@
-package org.crunchytorch.coddy.user.exception.mapper;
+package org.crunchytorch.coddy.user.exception.handler.impl;
 
-import javax.ws.rs.ForbiddenException;
+import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class ForbiddenMapper implements ExceptionMapper<ForbiddenException> {
+public class NotAuthorizedMapper implements ExceptionMapper<NotAuthorizedException> {
+
     @Override
-    public Response toResponse(ForbiddenException exception) {
-        return Response.status(Response.Status.FORBIDDEN)
+    public Response toResponse(NotAuthorizedException exception) {
+        return Response.status(Response.Status.UNAUTHORIZED)
                 .entity(new org.crunchytorch.coddy.application.data.Response(exception.getMessage()))
                 .type(MediaType.APPLICATION_JSON)
                 .build();

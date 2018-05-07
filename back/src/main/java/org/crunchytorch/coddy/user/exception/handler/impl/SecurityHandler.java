@@ -1,4 +1,4 @@
-package org.crunchytorch.coddy.user.exception.mapper;
+package org.crunchytorch.coddy.user.exception.handler.impl;
 
 import org.crunchytorch.coddy.application.data.Response;
 import org.crunchytorch.coddy.application.exception.handler.IExceptionHandler;
