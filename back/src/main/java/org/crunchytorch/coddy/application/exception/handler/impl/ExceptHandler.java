@@ -20,7 +20,7 @@ public class ExceptHandler implements IExceptionHandler<Exception> {
     @Override
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Response> handler(Exception e) {
-        LOGGER.debug(e.getMessage(), e);
+        LOGGER.error(e.getMessage(), e);
         return this.handler(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
