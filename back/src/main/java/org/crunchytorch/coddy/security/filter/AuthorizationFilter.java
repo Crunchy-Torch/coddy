@@ -1,4 +1,4 @@
-package org.crunchytorch.coddy.user.filter;
+package org.crunchytorch.coddy.security.filter;
 
 import javax.ws.rs.NameBinding;
 import java.lang.annotation.ElementType;

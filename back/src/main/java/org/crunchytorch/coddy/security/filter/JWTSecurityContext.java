@@ -1,4 +1,4 @@
-package org.crunchytorch.coddy.user.filter;
+package org.crunchytorch.coddy.security.filter;
 
 import org.crunchytorch.coddy.application.utils.AppUtils;
 import org.crunchytorch.coddy.snippet.service.SnippetService;
