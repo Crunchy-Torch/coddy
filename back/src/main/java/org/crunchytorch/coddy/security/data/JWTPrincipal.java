@@ -1,10 +1,8 @@
-package org.crunchytorch.coddy.user.data.security;
+package org.crunchytorch.coddy.security.data;
 
-import org.crunchytorch.coddy.security.data.Permission;
 import org.crunchytorch.coddy.user.data.IUser;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

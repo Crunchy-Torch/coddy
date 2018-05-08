@@ -1,6 +1,6 @@
 package org.crunchytorch.coddy.security.filter;
 
-import org.crunchytorch.coddy.user.data.security.JWTPrincipal;
+import org.crunchytorch.coddy.security.data.JWTPrincipal;
 import org.crunchytorch.coddy.security.service.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
 

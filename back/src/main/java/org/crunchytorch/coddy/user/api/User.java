@@ -9,7 +9,7 @@ import org.crunchytorch.coddy.security.data.Permission;
 import org.crunchytorch.coddy.user.data.in.Credential;
 import org.crunchytorch.coddy.user.data.in.UpdateUser;
 import org.crunchytorch.coddy.user.data.out.SimpleUser;
-import org.crunchytorch.coddy.user.data.security.JWTToken;
+import org.crunchytorch.coddy.security.data.JWTToken;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.crunchytorch.coddy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

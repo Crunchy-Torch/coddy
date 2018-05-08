@@ -9,7 +9,7 @@ import org.crunchytorch.coddy.application.data.Response;
 import org.crunchytorch.coddy.application.utils.TestUtils;
 import org.crunchytorch.coddy.user.data.in.Credential;
 import org.crunchytorch.coddy.user.data.out.SimpleUser;
-import org.crunchytorch.coddy.user.data.security.JWTToken;
+import org.crunchytorch.coddy.security.data.JWTToken;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.crunchytorch.coddy.user.elasticsearch.repository.UserRepository;
 import org.junit.After;

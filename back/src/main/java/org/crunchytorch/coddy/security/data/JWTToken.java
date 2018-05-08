@@ -1,4 +1,4 @@
-package org.crunchytorch.coddy.user.data.security;
+package org.crunchytorch.coddy.security.data;
 
 import java.io.Serializable;
 

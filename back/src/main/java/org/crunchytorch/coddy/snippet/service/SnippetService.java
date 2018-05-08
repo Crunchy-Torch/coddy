@@ -12,7 +12,7 @@ import org.crunchytorch.coddy.snippet.elasticsearch.query.field.DescriptionField
 import org.crunchytorch.coddy.snippet.elasticsearch.query.field.KeywordsFieldBuilder;
 import org.crunchytorch.coddy.snippet.elasticsearch.query.field.TitleFieldBuilder;
 import org.crunchytorch.coddy.snippet.elasticsearch.repository.SnippetRepository;
-import org.crunchytorch.coddy.user.data.security.JWTPrincipal;
+import org.crunchytorch.coddy.security.data.JWTPrincipal;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
