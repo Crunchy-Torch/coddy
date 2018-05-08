@@ -1,3 +1,4 @@
+/*
 package org.crunchytorch.coddy.security.filter;
 
 import org.crunchytorch.coddy.application.utils.AppUtils;
@@ -29,7 +30,8 @@ public class JWTSecurityContext implements SecurityContext {
         return this.jwtPrincipal;
     }
 
-    /**
+    */
+/**
      * Returns a boolean indicating if the current user can access to the api method annoted by {@link javax.annotation.security.RolesAllowed}.
      *
      * @param role a <code>String</code> specifying the name of the role which is given by the annotation {@link javax.annotation.security.RolesAllowed}.
@@ -37,7 +39,8 @@ public class JWTSecurityContext implements SecurityContext {
      * the request belongs to a given role; <code>true</code> if the current permission user
      * match the given role;
      * <code>false</code> if it doesn't
-     */
+     *//*
+
     @Override
     public boolean isUserInRole(String role) {
         if (jwtPrincipal.getPermissions() == null) {
@@ -75,3 +78,4 @@ public class JWTSecurityContext implements SecurityContext {
         return "JWT";
     }
 }
+*/

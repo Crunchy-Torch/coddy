@@ -5,17 +5,17 @@ import org.crunchytorch.coddy.application.data.Page;
 import org.crunchytorch.coddy.application.exception.EntityExistsException;
 import org.crunchytorch.coddy.application.exception.EntityNotFoundException;
 import org.crunchytorch.coddy.application.utils.AppUtils;
+import org.crunchytorch.coddy.security.data.Permission;
 import org.crunchytorch.coddy.user.data.in.Credential;
 import org.crunchytorch.coddy.user.data.in.UpdateUser;
 import org.crunchytorch.coddy.user.data.out.SimpleUser;
 import org.crunchytorch.coddy.user.data.security.JWTToken;
-import org.crunchytorch.coddy.user.data.security.Permission;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.crunchytorch.coddy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,7 +44,7 @@ public class User {
      *                   </p>
      */
     @RequestMapping(path = "/auth", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON)
-    public JWTToken authentication(final Credential credential) {
+    public JWTToken authentication(@RequestBody final Credential credential) {
         return this.service.authenticate(credential);
     }
 
@@ -61,8 +61,7 @@ public class User {
     }
 
     @RequestMapping(path = "{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON)
-    //@AuthorizationFilter
-    //@RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
+    @RolesAllowed({Permission.ADMIN, Permission.USER})
     public SimpleUser update(@PathVariable final String login, final UpdateUser user) {
         user.setLogin(login);
         return this.service.update(user);
@@ -75,15 +74,13 @@ public class User {
      * @throws EntityNotFoundException if the given login is not associated to a {@link SimpleUser user}
      */
     @RequestMapping(path = "{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}", method = RequestMethod.DELETE)
-    //@AuthorizationFilter
-    //@RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
+    @RolesAllowed({Permission.ADMIN, Permission.USER})
     public void delete(@PathVariable final String login) {
         this.service.delete(login);
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    //@AuthorizationFilter
-    //@RolesAllowed(Permission.ADMIN)
+    @RolesAllowed(Permission.ADMIN)
     public Page<SimpleUser> getUsers(@RequestParam(value = "from", defaultValue = "0") final int from,
                                      @RequestParam(value = "size", defaultValue = "10") final int size) {
         Page<UserEntity> oldPage = this.service.getEntity(from, size);
@@ -92,6 +89,7 @@ public class User {
     }
 
     @RequestMapping(path = "/search", method = RequestMethod.GET)
+    @RolesAllowed(Permission.ADMIN)
     public List<SimpleUser> search(@RequestParam(value = "login") final String loginToSearch,
                                    @RequestParam(value = "from", defaultValue = "0") final int from,
                                    @RequestParam(value = "size", defaultValue = "10") final int size) {
@@ -104,19 +102,8 @@ public class User {
      * or the salt has been deleted previously
      */
     @RequestMapping(path = "{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}", method = RequestMethod.GET)
-    //@AuthorizationFilter
-    //@RolesAllowed({Permission.ADMIN, Permission.PERSO_ACCOUNT})
+    @RolesAllowed({Permission.ADMIN, Permission.USER})
     public SimpleUser getUserByLogin(@PathVariable final String login) {
         return this.service.getUserByLogin(login);
-    }
-
-    @RequestMapping(path = "/permission", method = RequestMethod.GET)
-    public List<String> getAvailablePermissions() {
-        List<String> permissions = new ArrayList<>();
-        permissions.add(Permission.ADMIN);
-        permissions.add(Permission.MODERATION);
-        permissions.add(Permission.PERSO_ACCOUNT);
-        permissions.add(Permission.PERSO_SNIPPET);
-        return permissions;
     }
 }

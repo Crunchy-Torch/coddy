@@ -1,8 +1,10 @@
 package org.crunchytorch.coddy.user.data.security;
 
+import org.crunchytorch.coddy.security.data.Permission;
 import org.crunchytorch.coddy.user.data.IUser;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +13,7 @@ public class JWTPrincipal implements Principal, IUser {
     private final String login;
     private final String firstName;
     private final String lastName;
-    private final List<String> permissions;
+    private final List<Permission> permissions;
     private final Date beginActivationSession;
 
     public JWTPrincipal(
@@ -23,7 +25,7 @@ public class JWTPrincipal implements Principal, IUser {
         this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.permissions = permissions;
+        this.permissions = Permission.convertStringToPerm(permissions);
         this.beginActivationSession = beginActivationSession != null ? (Date) beginActivationSession.clone() : null;
     }
 
@@ -49,6 +51,10 @@ public class JWTPrincipal implements Principal, IUser {
 
     @Override
     public List<String> getPermissions() {
+        return null;
+    }
+
+    public List<Permission> getAuthority() {
         return this.permissions;
     }
 

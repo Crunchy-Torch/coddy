@@ -4,12 +4,12 @@ import org.crunchytorch.coddy.application.data.Response;
 import org.crunchytorch.coddy.application.exception.EntityExistsException;
 import org.crunchytorch.coddy.application.exception.EntityNotFoundException;
 import org.crunchytorch.coddy.application.service.AbstractService;
+import org.crunchytorch.coddy.security.data.Permission;
 import org.crunchytorch.coddy.security.service.JWTService;
 import org.crunchytorch.coddy.user.data.in.Credential;
 import org.crunchytorch.coddy.user.data.in.UpdateUser;
 import org.crunchytorch.coddy.user.data.out.SimpleUser;
 import org.crunchytorch.coddy.user.data.security.JWTToken;
-import org.crunchytorch.coddy.user.data.security.Permission;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.crunchytorch.coddy.user.elasticsearch.repository.UserRepository;
 import org.crunchytorch.coddy.user.exception.AuthenticationException;
@@ -71,8 +71,7 @@ public class UserService extends AbstractService<UserEntity> {
      */
     public SimpleUser create(UpdateUser user) {
         List<String> permissions = new ArrayList<>();
-        permissions.add(Permission.PERSO_ACCOUNT);
-        permissions.add(Permission.PERSO_SNIPPET);
+        permissions.add(Permission.USER);
         return this.create(user, permissions);
     }
 

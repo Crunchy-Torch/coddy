@@ -3,8 +3,8 @@ package org.crunchytorch.coddy.user.runner;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.crunchytorch.coddy.application.utils.AppUtils;
+import org.crunchytorch.coddy.security.data.Permission;
 import org.crunchytorch.coddy.user.data.in.UpdateUser;
-import org.crunchytorch.coddy.user.data.security.Permission;
 import org.crunchytorch.coddy.user.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,7 @@ public class AdminCreationOnStartup implements ApplicationRunner {
     private String adminEmail;
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         this.createAdmin();
     }
 
@@ -47,8 +47,7 @@ public class AdminCreationOnStartup implements ApplicationRunner {
         LOGGER.info("create admin user if exists");
         if (!service.exists(adminUsername)) {
             List<String> permissions = new ArrayList<>();
-            permissions.add(Permission.PERSO_ACCOUNT);
-            permissions.add(Permission.PERSO_SNIPPET);
+            permissions.add(Permission.USER);
             permissions.add(Permission.ADMIN);
             service.create(new UpdateUser(adminUsername, adminPassword, adminEmail), permissions);
         }

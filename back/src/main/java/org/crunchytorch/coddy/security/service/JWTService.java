@@ -9,7 +9,6 @@ import org.crunchytorch.coddy.user.data.IUser;
 import org.crunchytorch.coddy.user.data.security.JWTPrincipal;
 import org.crunchytorch.coddy.user.data.security.JWTToken;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
-import org.crunchytorch.coddy.security.filter.JWTSecurityContext;
 import org.crunchytorch.coddy.security.utils.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,7 +80,6 @@ public class JWTService {
 
     /**
      * if the token is valid, return a new instance of {@link JWTPrincipal} from JSON Web Token
-     * which is needed by {@link JWTSecurityContext}.
      *
      * @param token : the token to validate
      * @return a new instance of {@link JWTPrincipal} from JSON Web Token
