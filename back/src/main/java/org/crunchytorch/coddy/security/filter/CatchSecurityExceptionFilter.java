@@ -1,9 +1,11 @@
 package org.crunchytorch.coddy.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.crunchytorch.coddy.application.data.MediaType;
 import org.crunchytorch.coddy.application.data.Response;
 import org.crunchytorch.coddy.security.exception.ForbiddenException;
 import org.crunchytorch.coddy.security.exception.NotAuthorizedException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -30,6 +32,7 @@ public class CatchSecurityExceptionFilter extends OncePerRequestFilter {
     private void injectResponse(HttpServletResponse response, int statusCode, Throwable t) throws IOException {
         Response errorResponse = new Response(t.getMessage());
         response.setStatus(statusCode);
+        response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
         response.getWriter().write(MAPPER.writeValueAsString(errorResponse));
     }
 }
