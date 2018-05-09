@@ -4,6 +4,7 @@ import org.crunchytorch.coddy.security.data.JWTPrincipal;
 import org.crunchytorch.coddy.security.exception.NotAuthorizedException;
 import org.crunchytorch.coddy.security.service.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -43,7 +44,7 @@ public class AuthorizationRequestFilter extends GenericFilterBean {
      */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String token = ((HttpServletRequest) request).getHeader(org.springframework.http.HttpHeaders.AUTHORIZATION);
+        String token = ((HttpServletRequest) request).getHeader(HttpHeaders.AUTHORIZATION);
 
         if (token == null) {
             throw new NotAuthorizedException("user is not authenticated");
