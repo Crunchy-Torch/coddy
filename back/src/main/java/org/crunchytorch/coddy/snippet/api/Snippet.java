@@ -9,9 +9,8 @@ import org.crunchytorch.coddy.snippet.elasticsearch.entity.SnippetEntity;
 import org.crunchytorch.coddy.snippet.service.SnippetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.security.RolesAllowed;
 
 @RestController
 @RequestMapping(path = "/snippet", produces = MediaType.APPLICATION_JSON)
@@ -48,14 +47,14 @@ public class Snippet {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON)
-    @RolesAllowed({Permission.ADMIN, Permission.USER})
+    @PreAuthorize("hasRole('" + Permission.ADMIN + "') or (hasRole('" + Permission.USER + "') and @snippetSecurityService.ownsSnippet(#id))")
     public SnippetEntity updateSnippet(@PathVariable("id") String id, @RequestBody SnippetEntity snippet) {
         snippet.setId(id);
         return this.snippetService.update(snippet);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
-    @RolesAllowed({Permission.ADMIN, Permission.USER})
+    @PreAuthorize("hasRole('" + Permission.ADMIN + "') or (hasRole('" + Permission.USER + "') and @snippetSecurityService.ownsSnippet(#id))")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") String id) {
         snippetService.delete(id);

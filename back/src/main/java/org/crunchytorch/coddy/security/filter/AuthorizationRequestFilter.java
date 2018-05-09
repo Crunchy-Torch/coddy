@@ -33,7 +33,7 @@ public class AuthorizationRequestFilter extends GenericFilterBean {
     /**
      * This method will catch any request and will analyse the header value of "Authorization" key.
      * If the key is valid, then it will extract the permission user from the token (see {@link JWTService#validateToken(String)}  validateToken()})
-     * and put in a Jwt Security Context. see : {@link JWTSecurityContext}
+     * and put in {@link SecurityContextHolder}.
      *
      * @param request
      * @param response
