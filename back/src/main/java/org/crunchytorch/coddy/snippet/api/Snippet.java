@@ -37,10 +37,10 @@ public class Snippet {
         return snippetService.search(searchBody, from, size);
     }
 
-/*    @RequestMapping(method = RequestMethod.POST)
-    public SnippetEntity create(@Context SecurityContext securityContext, @RequestBody SnippetEntity snippet) {
-        return snippetService.create(snippet, securityContext);
-    }*/
+    @RequestMapping(method = RequestMethod.POST)
+    public SnippetEntity create(@RequestBody SnippetEntity snippet) {
+        return snippetService.createSnippet(snippet);
+    }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public SnippetEntity getSnippet(@PathVariable("id") String id) {
