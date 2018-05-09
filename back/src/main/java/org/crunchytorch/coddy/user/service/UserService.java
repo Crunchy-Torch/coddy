@@ -1,26 +1,26 @@
 package org.crunchytorch.coddy.user.service;
 
 import org.crunchytorch.coddy.application.data.Response;
+import org.crunchytorch.coddy.application.exception.BadRequestException;
 import org.crunchytorch.coddy.application.exception.EntityExistsException;
 import org.crunchytorch.coddy.application.exception.EntityNotFoundException;
 import org.crunchytorch.coddy.application.service.AbstractService;
+import org.crunchytorch.coddy.security.data.JWTToken;
 import org.crunchytorch.coddy.security.data.Permission;
 import org.crunchytorch.coddy.security.service.JWTService;
+import org.crunchytorch.coddy.security.utils.SecurityUtils;
 import org.crunchytorch.coddy.user.data.in.Credential;
 import org.crunchytorch.coddy.user.data.in.UpdateUser;
 import org.crunchytorch.coddy.user.data.out.SimpleUser;
-import org.crunchytorch.coddy.security.data.JWTToken;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.crunchytorch.coddy.user.elasticsearch.repository.UserRepository;
 import org.crunchytorch.coddy.user.exception.AuthenticationException;
-import org.crunchytorch.coddy.security.utils.SecurityUtils;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.ws.rs.BadRequestException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

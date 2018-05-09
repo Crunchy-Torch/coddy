@@ -1,3 +1,4 @@
+/*
 package org.crunchytorch.coddy.security.filter;
 
 import org.crunchytorch.coddy.security.data.JWTPrincipal;
@@ -18,14 +19,16 @@ public class TokenResponseFilter implements ContainerResponseFilter {
     @Autowired
     private JWTService jwtService;
 
-    /**
+    */
+/**
      * Filter method called after a response has been provided for a request.
      * This method will refresh the session of the current token and put in the header with the key Authorization
      *
      * @param requestContext  request context.
      * @param responseContext response context.
      * @throws IOException if an I/O exception occurs.
-     */
+     *//*
+
     @Override
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
 
@@ -36,3 +39,4 @@ public class TokenResponseFilter implements ContainerResponseFilter {
         }
     }
 }
+*/
