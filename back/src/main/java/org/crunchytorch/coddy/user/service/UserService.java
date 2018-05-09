@@ -123,10 +123,6 @@ public class UserService extends AbstractService<UserEntity> {
         super.delete(this.getUserEntityByLogin(login));
     }
 
-    public long count() {
-        return this.repository.count();
-    }
-
     public List<SimpleUser> search(final String loginToSearch, final int from, final int size) {
         final Pageable page = new PageRequest(from, size);
         final List<SimpleUser> list = new ArrayList<>();
