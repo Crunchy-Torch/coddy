@@ -165,8 +165,8 @@ public class UserTest {
     private HttpEntity<String> getHttpEntityWithToken(final String login, final String password) {
         JWTToken JWTToken = this.auth(login, password, JWTToken.class).getBody();
         HttpHeaders headers = new HttpHeaders();
-        headers.add(javax.ws.rs.core.HttpHeaders.AUTHORIZATION, JWTToken.getToken());
-        headers.add(javax.ws.rs.core.HttpHeaders.CONTENT_TYPE, javax.ws.rs.core.MediaType.APPLICATION_JSON);
+        headers.add(HttpHeaders.AUTHORIZATION, JWTToken.getToken());
+        headers.add(HttpHeaders.CONTENT_TYPE, String.valueOf(MediaType.APPLICATION_JSON));
         return new HttpEntity<>("parameters", headers);
     }
 
