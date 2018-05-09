@@ -24,7 +24,7 @@ public class LanguageWithoutPropertiesTest {
 
     @Test
     public void getLanguagesTest() {
-        ResponseEntity<String[]> response = this.restTemplate.getForEntity(TestUtils.getUrl(LANGUAGE_ENDPOINT), String[].class);
+        ResponseEntity<String[]> response = this.restTemplate.getForEntity(LANGUAGE_ENDPOINT, String[].class);
         String[] expected = new String[]{"java", "cpp", "python", "go"};
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());

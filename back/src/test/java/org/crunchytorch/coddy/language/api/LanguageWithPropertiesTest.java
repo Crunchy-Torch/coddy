@@ -26,7 +26,7 @@ public class LanguageWithPropertiesTest {
 
     @Test
     public void getLanguagesTest() {
-        ResponseEntity<String[]> response = this.restTemplate.getForEntity(TestUtils.getUrl(LANGUAGE_ENDPOINT), String[].class);
+        ResponseEntity<String[]> response = this.restTemplate.getForEntity(LANGUAGE_ENDPOINT, String[].class);
         String[] expected = new String[]{"1c", "abnf", "accesslog", "actionscript", "ada", "apache", "applescript", "arduino", "armasm", "asciidoc"};
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());

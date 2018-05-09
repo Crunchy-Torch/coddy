@@ -13,6 +13,7 @@ import org.crunchytorch.coddy.security.data.JWTToken;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.crunchytorch.coddy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
@@ -56,7 +57,7 @@ public class User {
      * @throws EntityExistsException if the given user already exists
      */
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON)
-    public SimpleUser create(UpdateUser user) {
+    public SimpleUser create(@RequestBody UpdateUser user) {
         return this.service.create(user);
     }
 
@@ -75,6 +76,7 @@ public class User {
      */
     @RequestMapping(path = "{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}", method = RequestMethod.DELETE)
     @RolesAllowed({Permission.ADMIN, Permission.USER})
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable final String login) {
         this.service.delete(login);
     }

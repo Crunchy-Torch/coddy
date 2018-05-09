@@ -8,6 +8,7 @@ import org.crunchytorch.coddy.snippet.data.SearchBody;
 import org.crunchytorch.coddy.snippet.elasticsearch.entity.SnippetEntity;
 import org.crunchytorch.coddy.snippet.service.SnippetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
@@ -55,6 +56,7 @@ public class Snippet {
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     @RolesAllowed({Permission.ADMIN, Permission.USER})
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") String id) {
         snippetService.delete(id);
     }
