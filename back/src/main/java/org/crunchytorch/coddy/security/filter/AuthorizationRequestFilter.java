@@ -1,7 +1,8 @@
 package org.crunchytorch.coddy.security.filter;
 
-import org.crunchytorch.coddy.security.service.JWTService;
 import org.crunchytorch.coddy.security.data.JWTPrincipal;
+import org.crunchytorch.coddy.security.exception.NotAuthorizedException;
+import org.crunchytorch.coddy.security.service.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,7 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AuthorizationRequestFilter extends GenericFilterBean {
@@ -38,14 +38,15 @@ public class AuthorizationRequestFilter extends GenericFilterBean {
      * @param response
      * @param chain
      * @throws IOException            if an I/O exception occurs.
+     * @throws NotAuthorizedException if the request doesn't contain the token in the header,
+     *                                then the user is not authenticated and not allowed to access to the application
      */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String token = ((HttpServletRequest) request).getHeader(org.springframework.http.HttpHeaders.AUTHORIZATION);
 
         if (token == null) {
-            ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "user is not authenticated");
-            return;
+            throw new NotAuthorizedException("user is not authenticated");
         }
 
         // if not we should throw an exception

@@ -5,6 +5,8 @@ import io.jsonwebtoken.*;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.crunchytorch.coddy.application.utils.AppUtils;
+import org.crunchytorch.coddy.security.exception.ForbiddenException;
+import org.crunchytorch.coddy.security.exception.NotAuthorizedException;
 import org.crunchytorch.coddy.user.data.IUser;
 import org.crunchytorch.coddy.security.data.JWTPrincipal;
 import org.crunchytorch.coddy.security.data.JWTToken;
@@ -15,8 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.ws.rs.ForbiddenException;
-import javax.ws.rs.NotAuthorizedException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;

@@ -1,6 +1,7 @@
 package org.crunchytorch.coddy.security.config;
 
 import org.crunchytorch.coddy.security.filter.AuthorizationRequestFilter;
+import org.crunchytorch.coddy.security.filter.CatchSecurityExceptionFilter;
 import org.crunchytorch.coddy.security.service.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 
 @Configuration
 @EnableGlobalMethodSecurity(jsr250Enabled = true)
@@ -33,10 +35,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 //.antMatchers("/user/search").hasAuthority("admin")
-                .anyRequest().authenticated();
+                .anyRequest().authenticated().and()
 
-        AuthorizationRequestFilter requestFilter = new AuthorizationRequestFilter(service);
-        http.addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class);
+                // configure filter
+                .addFilterBefore(new CatchSecurityExceptionFilter(), AbstractPreAuthenticatedProcessingFilter.class)
+                .addFilterBefore(new AuthorizationRequestFilter(service), UsernamePasswordAuthenticationFilter.class);
     }
 
 
