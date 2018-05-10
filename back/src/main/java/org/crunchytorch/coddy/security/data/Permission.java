@@ -33,12 +33,22 @@ public class Permission implements GrantedAuthority {
     }
 
     public static List<Permission> convertStringToPerm(List<String> permissions) {
+        List<Permission> perm = new ArrayList<>();
         if (permissions == null) {
-            return null;
+            return perm;
         }
 
-        List<Permission> perm = new ArrayList<>();
         permissions.forEach(permission -> perm.add(new Permission(permission)));
+        return perm;
+    }
+
+    public static List<String> convertPermToString(List<Permission> permissions) {
+        List<String> perm = new ArrayList<>();
+        if (permissions == null) {
+            return perm;
+        }
+
+        permissions.forEach(permission -> perm.add(permission.getAuthority()));
         return perm;
     }
 }

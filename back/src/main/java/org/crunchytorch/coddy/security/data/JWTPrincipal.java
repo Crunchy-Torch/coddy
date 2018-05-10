@@ -49,7 +49,7 @@ public class JWTPrincipal implements Principal, IUser {
 
     @Override
     public List<String> getPermissions() {
-        return null;
+        return Permission.convertPermToString(this.getAuthority());
     }
 
     public List<Permission> getAuthority() {
