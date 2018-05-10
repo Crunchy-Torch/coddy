@@ -1,6 +1,5 @@
 package org.crunchytorch.coddy.user.api;
 
-
 import com.shazam.shazamcrest.MatcherAssert;
 import com.shazam.shazamcrest.matcher.Matchers;
 import org.apache.commons.lang.StringUtils;
