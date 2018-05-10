@@ -14,6 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * This filter will only format response when a security exception
+ * is thrown by the next filter : {@link AuthorizationRequestFilter}
+ */
 public class CatchSecurityExceptionFilter extends OncePerRequestFilter {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();

@@ -35,7 +35,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // No session will be created or used by spring security
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                //.antMatchers("/user/search").hasAuthority("admin")
                 .anyRequest().authenticated().and()
 
                 // configure filter
@@ -47,6 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         for (Route route : this.getPublicRoute()) {
+            // the public route will be completely ignored by the previous rules configured in WebSecurityConfig#configure method
             web.ignoring().antMatchers(route.getMethod(), route.getPathMatcher());
         }
     }

@@ -35,9 +35,9 @@ public class AuthorizationRequestFilter extends GenericFilterBean {
      * If the key is valid, then it will extract the permission user from the token (see {@link JWTService#validateToken(String)}  validateToken()})
      * and put in {@link SecurityContextHolder}.
      *
-     * @param request
-     * @param response
-     * @param chain
+     * @param request  : The request incoming
+     * @param response : The future response that the client will receive
+     * @param chain    : the object need to call the next filter
      * @throws IOException            if an I/O exception occurs.
      * @throws NotAuthorizedException if the request doesn't contain the token in the header,
      *                                then the user is not authenticated and not allowed to access to the application
