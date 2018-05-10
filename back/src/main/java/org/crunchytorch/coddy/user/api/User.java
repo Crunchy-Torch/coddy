@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping(path = "/user", produces = MediaType.APPLICATION_JSON)
+@CrossOrigin
 public class User {
 
     @Autowired

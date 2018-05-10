@@ -29,6 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .cors().and()
                 // Disable CSRF (cross site request forgery)
                 .csrf().disable()
                 // No session will be created or used by spring security
@@ -57,9 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 new Route("/snippet", HttpMethod.GET),
                 new Route("/snippet/{id:\\w+}", HttpMethod.GET),
                 new Route("/snippet/search", HttpMethod.GET),
-                new Route("/user", HttpMethod.POST),
-                new Route("/user/auth", HttpMethod.POST),
-                new Route("/user/permission", HttpMethod.GET)
+                new Route("/user/auth", HttpMethod.POST)
         };
     }
 

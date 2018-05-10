@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/snippet", produces = MediaType.APPLICATION_JSON)
+@CrossOrigin
 public class Snippet {
 
     @Autowired
