@@ -4,14 +4,13 @@ package org.crunchytorch.coddy.security.service;
 import io.jsonwebtoken.*;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.crunchytorch.coddy.application.utils.AppUtils;
-import org.crunchytorch.coddy.security.exception.ForbiddenException;
-import org.crunchytorch.coddy.security.exception.NotAuthorizedException;
-import org.crunchytorch.coddy.user.data.IUser;
 import org.crunchytorch.coddy.security.data.JWTPrincipal;
 import org.crunchytorch.coddy.security.data.JWTToken;
-import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
+import org.crunchytorch.coddy.security.exception.ForbiddenException;
+import org.crunchytorch.coddy.security.exception.NotAuthorizedException;
 import org.crunchytorch.coddy.security.utils.SecurityUtils;
+import org.crunchytorch.coddy.user.data.IUser;
+import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,10 +34,10 @@ public class JWTService {
 
     private static final String JWT_TOKEN_ERROR = "Invalid JWT token";
 
-    @Value("${" + AppUtils.CONF_JWT_SECRET + ":}")
+    @Value("${org.crunchytorch.coddy.security.jwt.secret:}")
     private byte[] jwtSecret;
 
-    @Value("${" + AppUtils.CONF_JWT_SESSION_TIMEOUT_MINUTE + ":}")
+    @Value("${org.crunchytorch.coddy.security.jwt.session_timeout_minute:}")
     private String jwtTimeOut;
 
     /**

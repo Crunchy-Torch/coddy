@@ -4,7 +4,6 @@ import org.crunchytorch.coddy.application.data.MediaType;
 import org.crunchytorch.coddy.application.data.Page;
 import org.crunchytorch.coddy.application.exception.EntityExistsException;
 import org.crunchytorch.coddy.application.exception.EntityNotFoundException;
-import org.crunchytorch.coddy.application.utils.AppUtils;
 import org.crunchytorch.coddy.security.data.JWTToken;
 import org.crunchytorch.coddy.security.data.Permission;
 import org.crunchytorch.coddy.user.data.in.Credential;
@@ -61,7 +60,7 @@ public class User {
         return this.service.create(user);
     }
 
-    @RequestMapping(path = "{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON)
+    @RequestMapping(path = "{login}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON)
     @PreAuthorize("hasRole('" + Permission.ADMIN + "') or (hasRole('" + Permission.USER + "') and @userSecurityService.ownsAccount(#login))")
     public SimpleUser update(@PathVariable final String login, final UpdateUser user) {
         user.setLogin(login);
@@ -74,7 +73,7 @@ public class User {
      * @param login the user's login
      * @throws EntityNotFoundException if the given login is not associated to a {@link SimpleUser user}
      */
-    @RequestMapping(path = "{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}", method = RequestMethod.DELETE)
+    @RequestMapping(path = "{login}", method = RequestMethod.DELETE)
     @PreAuthorize("hasRole('" + Permission.ADMIN + "') or (hasRole('" + Permission.USER + "') and @userSecurityService.ownsAccount(#login))")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable final String login) {
@@ -103,7 +102,7 @@ public class User {
      * @return the {@link SimpleUser user} associated to the given login. All critical information such as his password
      * or the salt has been deleted previously
      */
-    @RequestMapping(path = "{" + AppUtils.API_USER_LOGIN_PATH_PARAM + "}", method = RequestMethod.GET)
+    @RequestMapping(path = "{login}", method = RequestMethod.GET)
     @PreAuthorize("hasRole('" + Permission.ADMIN + "') or (hasRole('" + Permission.USER + "') and @userSecurityService.ownsAccount(#login))")
     public SimpleUser getUserByLogin(@PathVariable final String login) {
         return this.service.getUserByLogin(login);

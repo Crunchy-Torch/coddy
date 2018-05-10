@@ -2,7 +2,6 @@ package org.crunchytorch.coddy.user.runner;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.crunchytorch.coddy.application.utils.AppUtils;
 import org.crunchytorch.coddy.security.data.Permission;
 import org.crunchytorch.coddy.user.data.in.UpdateUser;
 import org.crunchytorch.coddy.user.service.UserService;
@@ -25,13 +24,13 @@ public class AdminCreationOnStartup implements ApplicationRunner {
     @Autowired
     UserService service;
 
-    @Value("${" + AppUtils.CONF_ADMIN_LOGIN + ":}")
+    @Value("${org.crunchytorch.coddy.user.admin.login:}")
     private String adminUsername;
 
-    @Value("${" + AppUtils.CONF_ADMIN_PASSWORD + ":}")
+    @Value("${org.crunchytorch.coddy.user.admin.password:}")
     private char[] adminPassword;
 
-    @Value("${" + AppUtils.CONF_ADMIN_EMAIL + ":}")
+    @Value("${org.crunchytorch.coddy.user.admin.email:}")
     private String adminEmail;
 
     @Override

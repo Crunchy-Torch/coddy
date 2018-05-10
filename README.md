@@ -75,7 +75,7 @@ Environment variables can be pass through Coddy instance, either using `docker r
 
 Default value: `es:9300` (with `es` the service's name of your ElasticSearch instance, as defined in your docker-compose file)
 
-##### CODDY_JWT_SECRET
+##### CODDY_SECURITY_JWT_SECRET
 
 Allow you to specify the secret key which will be used to encrypt user's token. If this variable is unset, the secret will be randomly generated.
 
@@ -83,13 +83,13 @@ Default value: random
  
 Note: this variable must be set if you run multi instance of this image. Otherwise, generated tokens will not be valid from one instance to another.
 
-##### CODDY_JWT_SESSION_TIMEOUT_MIN
+##### CODDY_SECURITY_JWT_SESSION_TIMEOUT_MIN
 
 Allow you to specify the user's session duration (i.e how much time a generated token will remain valid). The session duration have to be set in minutes.
 
 Default value: 1440 (24 hours)
 
-##### CODDY_ADMIN_LOGIN, CODDY_ADMIN_PASSWORD, CODDY_ADMIN_EMAIL
+##### CODDY_USER_ADMIN_LOGIN, CODDY_USER_ADMIN_PASSWORD, CODDY_USER_ADMIN_EMAIL
 
 Allow you to specify credentials (login ,apssword and email) that will be used to inflate an admin user (with admin permission).
 

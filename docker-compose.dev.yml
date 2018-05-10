@@ -11,9 +11,9 @@ services:
     environment:
       - PROJECT_DIRECTORY=${DOCKER_PROJECT_DIRECTORY}
       - CODDY_CONF_DIRECTORY=/app/conf
-      - CODDY_ADMIN_LOGIN=admin
-      - CODDY_ADMIN_PASSWORD=admin
-      - CODDY_ADMIN_EMAIL=admin.coddy@crunchy-torch.org
+      - CODDY_USER_ADMIN_LOGIN=admin
+      - CODDY_USER_ADMIN_PASSWORD=admin
+      - CODDY_USER_ADMIN_EMAIL=admin.coddy@crunchy-torch.org
     ports:
       - 8080:8080
     volumes:
