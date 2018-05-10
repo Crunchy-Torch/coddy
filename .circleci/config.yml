@@ -45,7 +45,7 @@ jobs:
           - v2-dependencies-
 
       - run: cd back && gradle dependencies
-      - run: cd back && gradle test
+      - run: cd back && gradle test --info --stacktrace
 
       # run code-coverage generation
       - run: cd back && gradle jacocoTestReport
