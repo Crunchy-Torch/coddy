@@ -58,7 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 new Route("/snippet", HttpMethod.GET),
                 new Route("/snippet/{id:\\w+}", HttpMethod.GET),
                 new Route("/snippet/search", HttpMethod.GET),
-                new Route("/user/auth", HttpMethod.POST)
+                new Route("/user/auth", HttpMethod.POST),
+                new Route("/user", HttpMethod.POST)
         };
     }
 
