@@ -9,7 +9,7 @@ import org.crunchytorch.coddy.security.data.JWTToken;
 import org.crunchytorch.coddy.security.exception.ForbiddenException;
 import org.crunchytorch.coddy.security.exception.NotAuthorizedException;
 import org.crunchytorch.coddy.security.utils.SecurityUtils;
-import org.crunchytorch.coddy.user.data.IUser;
+import org.crunchytorch.coddy.security.data.IUser;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

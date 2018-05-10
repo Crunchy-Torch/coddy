@@ -1,4 +1,4 @@
-package org.crunchytorch.coddy.user.data;
+package org.crunchytorch.coddy.security.data;
 
 import java.util.List;
 

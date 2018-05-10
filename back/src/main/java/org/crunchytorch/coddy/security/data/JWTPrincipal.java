@@ -1,7 +1,5 @@
 package org.crunchytorch.coddy.security.data;
 
-import org.crunchytorch.coddy.user.data.IUser;
-
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
