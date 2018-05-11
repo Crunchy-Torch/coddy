@@ -45,7 +45,7 @@ public class User {
      *                   </p>
      */
     @RequestMapping(path = "/auth", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON)
-    public JWTToken authentication(@RequestBody final Credential credential) {
+    public JWTToken authenticate(@RequestBody final Credential credential) {
         return this.service.authenticate(credential);
     }
 

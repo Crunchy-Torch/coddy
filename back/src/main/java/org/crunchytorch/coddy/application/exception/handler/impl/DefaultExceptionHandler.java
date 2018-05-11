@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 @Order(Ordered.LOWEST_PRECEDENCE)
-public class ExceptHandler implements IExceptionHandler<Exception> {
+public class DefaultExceptionHandler implements IExceptionHandler<Exception> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExceptHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultExceptionHandler.class);
 
     @Override
     @ExceptionHandler(Exception.class)

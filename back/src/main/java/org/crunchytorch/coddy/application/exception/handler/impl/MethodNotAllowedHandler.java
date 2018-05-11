@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class NotAllowedHandler implements IExceptionHandler<HttpRequestMethodNotSupportedException> {
+public class MethodNotAllowedHandler implements IExceptionHandler<HttpRequestMethodNotSupportedException> {
 
     @Override
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)

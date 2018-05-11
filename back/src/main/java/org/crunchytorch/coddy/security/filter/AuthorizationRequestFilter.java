@@ -1,5 +1,6 @@
 package org.crunchytorch.coddy.security.filter;
 
+import org.crunchytorch.coddy.application.exception.BadRequestException;
 import org.crunchytorch.coddy.security.data.JWTPrincipal;
 import org.crunchytorch.coddy.security.exception.NotAuthorizedException;
 import org.crunchytorch.coddy.security.service.JWTService;
@@ -41,6 +42,8 @@ public class AuthorizationRequestFilter extends GenericFilterBean {
      * @throws IOException            if an I/O exception occurs.
      * @throws NotAuthorizedException if the request doesn't contain the token in the header,
      *                                then the user is not authenticated and not allowed to access to the application
+     * @throws BadRequestException    if the token is not prefixed by Bearer that indicated the type of the token
+     *                                (means that maybe the service {@link JWTService} will not be able to decode the token)
      */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -54,6 +57,8 @@ public class AuthorizationRequestFilter extends GenericFilterBean {
         if (token.startsWith(AuthorizationRequestFilter.HEADER_PREFIX)) {
             // Remove header prefix
             token = token.substring(AuthorizationRequestFilter.HEADER_PREFIX.length());
+        } else {
+            throw new BadRequestException("Token type not supported");
         }
 
         // if the token is valid, jwt returns an object Principal which contains the list of the user permissions
