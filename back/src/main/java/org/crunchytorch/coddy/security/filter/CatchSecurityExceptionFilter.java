@@ -3,6 +3,7 @@ package org.crunchytorch.coddy.security.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.crunchytorch.coddy.application.data.MediaType;
 import org.crunchytorch.coddy.application.data.Response;
+import org.crunchytorch.coddy.application.exception.BadRequestException;
 import org.crunchytorch.coddy.security.exception.ForbiddenException;
 import org.crunchytorch.coddy.security.exception.NotAuthorizedException;
 import org.springframework.http.HttpHeaders;
@@ -30,6 +31,8 @@ public class CatchSecurityExceptionFilter extends OncePerRequestFilter {
             this.injectResponse(response, HttpServletResponse.SC_FORBIDDEN, e);
         } catch (NotAuthorizedException e) {
             this.injectResponse(response, HttpServletResponse.SC_UNAUTHORIZED, e);
+        } catch (BadRequestException e) {
+            this.injectResponse(response, HttpServletResponse.SC_BAD_REQUEST, e);
         }
     }
 
