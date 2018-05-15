@@ -83,7 +83,7 @@ Default value: random
  
 Note: this variable must be set if you run multi instance of this image. Otherwise, generated tokens will not be valid from one instance to another.
 
-##### CODDY_SECURITY_JWT_SESSION_TIMEOUT_MIN
+##### CODDY_SECURITY_JWT_SESSION_TIMEOUT
 
 Allow you to specify the user's session duration (i.e how much time a generated token will remain valid). The session duration have to be set in minutes.
 
