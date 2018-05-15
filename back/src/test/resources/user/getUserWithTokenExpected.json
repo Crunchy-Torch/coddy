@@ -3,6 +3,6 @@
   "firstName": "Marcus",
   "lastName": "Cicero",
   "permissions": [
-    "personal_account"
+    "ROLE_USER"
   ]
 }

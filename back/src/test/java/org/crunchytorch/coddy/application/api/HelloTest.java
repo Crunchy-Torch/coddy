@@ -23,7 +23,7 @@ public class HelloTest {
     @Test
     public void health() {
         ResponseEntity<String> entity =
-                restTemplate.getForEntity(TestUtils.getUrl("/"), String.class);
+                restTemplate.getForEntity("/", String.class);
 
         Assert.assertEquals("Hello coddy!", entity.getBody());
         Assert.assertEquals(HttpStatus.OK, entity.getStatusCode());

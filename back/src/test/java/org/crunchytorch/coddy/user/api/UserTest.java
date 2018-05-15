@@ -1,15 +1,14 @@
 package org.crunchytorch.coddy.user.api;
 
-
 import com.shazam.shazamcrest.MatcherAssert;
 import com.shazam.shazamcrest.matcher.Matchers;
 import org.apache.commons.lang.StringUtils;
 import org.crunchytorch.coddy.Main;
 import org.crunchytorch.coddy.application.data.Response;
 import org.crunchytorch.coddy.application.utils.TestUtils;
+import org.crunchytorch.coddy.security.data.JWTToken;
 import org.crunchytorch.coddy.user.data.in.Credential;
 import org.crunchytorch.coddy.user.data.out.SimpleUser;
-import org.crunchytorch.coddy.user.data.security.JWTToken;
 import org.crunchytorch.coddy.user.elasticsearch.entity.UserEntity;
 import org.crunchytorch.coddy.user.elasticsearch.repository.UserRepository;
 import org.junit.After;
@@ -54,9 +53,9 @@ public class UserTest {
     @Test
     public void testGetUserWithoutToken() {
         ResponseEntity<Response> response =
-                restTemplate.getForEntity(TestUtils.getUrl(USER_ENDPOINT + "/napoleon"), Response.class);
+                restTemplate.getForEntity(USER_ENDPOINT + "/napoleon", Response.class);
 
-        Response expected = new Response("HTTP 401 Unauthorized");
+        Response expected = new Response("user is not authenticated");
 
         Assert.assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
         MatcherAssert.assertThat(response.getBody(), Matchers.sameBeanAs(expected));
@@ -66,7 +65,7 @@ public class UserTest {
     public void testGetUserWithToken() throws IOException {
         HttpEntity<String> entity = getHttpEntityWithToken("ciceron", "tutu");
 
-        ResponseEntity<SimpleUser> response = restTemplate.exchange(TestUtils.getUrl(USER_ENDPOINT + "/ciceron"), HttpMethod.GET, entity, SimpleUser.class);
+        ResponseEntity<SimpleUser> response = restTemplate.exchange(USER_ENDPOINT + "/ciceron", HttpMethod.GET, entity, SimpleUser.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
         MatcherAssert.assertThat(response.getBody(), Matchers.sameBeanAs(TestUtils.getObjectFromJson("user/getUserWithTokenExpected.json", SimpleUser.class)));
@@ -76,7 +75,7 @@ public class UserTest {
     public void testCreateUser() {
         final String login = "perlinpinpin";
         Credential credential = new Credential(login, "ratata".toCharArray());
-        ResponseEntity<SimpleUser> response = restTemplate.postForEntity(TestUtils.getUrl(USER_ENDPOINT), credential, SimpleUser.class);
+        ResponseEntity<SimpleUser> response = restTemplate.postForEntity(USER_ENDPOINT, credential, SimpleUser.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assert.assertEquals(login, response.getBody().getLogin());
@@ -88,7 +87,7 @@ public class UserTest {
     public void testDeleteUserWithToken() {
         final String login = "ciceron";
         HttpEntity<String> entity = getHttpEntityWithToken(login, "tutu");
-        ResponseEntity<String> response = restTemplate.exchange(TestUtils.getUrl(USER_ENDPOINT + "/ciceron"), HttpMethod.DELETE, entity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(USER_ENDPOINT + "/ciceron", HttpMethod.DELETE, entity, String.class);
 
         Assert.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
 
@@ -102,7 +101,7 @@ public class UserTest {
         final String login = "gulp";
         final String userToDelete = "ciceron";
         HttpEntity<String> entity = getHttpEntityWithToken(login, "toto");
-        ResponseEntity<String> response = restTemplate.exchange(TestUtils.getUrl(USER_ENDPOINT + "/" + userToDelete), HttpMethod.DELETE, entity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(USER_ENDPOINT + "/" + userToDelete, HttpMethod.DELETE, entity, String.class);
 
         Assert.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
 
@@ -116,7 +115,7 @@ public class UserTest {
         final String login = "napoleon";
         final String userToDelete = "ciceron";
         HttpEntity<String> entity = getHttpEntityWithToken(login, "toto");
-        ResponseEntity<String> response = restTemplate.exchange(TestUtils.getUrl(USER_ENDPOINT + "/" + userToDelete), HttpMethod.DELETE, entity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(USER_ENDPOINT + "/" + userToDelete, HttpMethod.DELETE, entity, String.class);
 
         Assert.assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
 
@@ -128,9 +127,9 @@ public class UserTest {
     @Test
     public void testDeleteWithoutToken() {
         ResponseEntity<Response> response =
-                restTemplate.exchange(TestUtils.getUrl(USER_ENDPOINT + "/napoleon"), HttpMethod.DELETE, null, Response.class);
+                restTemplate.exchange(USER_ENDPOINT + "/napoleon", HttpMethod.DELETE, null, Response.class);
 
-        Response expected = new Response("HTTP 401 Unauthorized");
+        Response expected = new Response("user is not authenticated");
 
         Assert.assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
         MatcherAssert.assertThat(response.getBody(), Matchers.sameBeanAs(expected));
@@ -165,14 +164,14 @@ public class UserTest {
     private HttpEntity<String> getHttpEntityWithToken(final String login, final String password) {
         JWTToken JWTToken = this.auth(login, password, JWTToken.class).getBody();
         HttpHeaders headers = new HttpHeaders();
-        headers.add(javax.ws.rs.core.HttpHeaders.AUTHORIZATION, JWTToken.getToken());
-        headers.add(javax.ws.rs.core.HttpHeaders.CONTENT_TYPE, javax.ws.rs.core.MediaType.APPLICATION_JSON);
+        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + JWTToken.getToken());
+        headers.add(HttpHeaders.CONTENT_TYPE, String.valueOf(MediaType.APPLICATION_JSON));
         return new HttpEntity<>("parameters", headers);
     }
 
     private <T> ResponseEntity<T> auth(final String login, final String password, Class<T> responseType) {
         Credential credential = new Credential(login, password.toCharArray());
 
-        return restTemplate.postForEntity(TestUtils.getUrl(USER_ENDPOINT + "/auth"), credential, responseType);
+        return restTemplate.postForEntity(USER_ENDPOINT + "/auth", credential, responseType);
     }
 }

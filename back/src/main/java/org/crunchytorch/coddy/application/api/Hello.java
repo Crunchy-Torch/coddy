@@ -1,15 +1,15 @@
 package org.crunchytorch.coddy.application.api;
 
-import org.springframework.stereotype.Component;
+import org.crunchytorch.coddy.application.data.MediaType;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-
-@Component
-@Path("/")
+@RestController
+@RequestMapping(path = "/", produces = MediaType.APPLICATION_JSON)
 public class Hello {
 
-    @GET
+    @RequestMapping(method = RequestMethod.GET)
     public String home() {
 
         return "Hello coddy!";

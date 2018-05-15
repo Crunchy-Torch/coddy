@@ -4,6 +4,7 @@ import io.jsonwebtoken.lang.Collections;
 import org.crunchytorch.coddy.application.data.Page;
 import org.crunchytorch.coddy.application.exception.EntityNotFoundException;
 import org.crunchytorch.coddy.application.service.AbstractService;
+import org.crunchytorch.coddy.security.data.JWTPrincipal;
 import org.crunchytorch.coddy.snippet.data.SearchBody;
 import org.crunchytorch.coddy.snippet.elasticsearch.entity.SnippetEntity;
 import org.crunchytorch.coddy.snippet.elasticsearch.query.SnippetQueryFieldBuilder;
@@ -12,14 +13,13 @@ import org.crunchytorch.coddy.snippet.elasticsearch.query.field.DescriptionField
 import org.crunchytorch.coddy.snippet.elasticsearch.query.field.KeywordsFieldBuilder;
 import org.crunchytorch.coddy.snippet.elasticsearch.query.field.TitleFieldBuilder;
 import org.crunchytorch.coddy.snippet.elasticsearch.repository.SnippetRepository;
-import org.crunchytorch.coddy.user.data.security.JWTPrincipal;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import javax.ws.rs.core.SecurityContext;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,14 +43,14 @@ public class SnippetService extends AbstractService<SnippetEntity> {
         return entity;
     }
 
-    public SnippetEntity create(SnippetEntity entity, SecurityContext securityContext) {
+    public SnippetEntity createSnippet(SnippetEntity entity) {
         entity.setId(null);
         // Set date to now
         Date now = new Date();
         entity.setCreated(now);
         entity.setLastModified(now);
         // Set author from token information
-        entity.setAuthor(((JWTPrincipal) securityContext.getUserPrincipal()).getLogin());
+        entity.setAuthor(((JWTPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getLogin());
         // Initiate rate
         entity.setRate(0);
         return super.create(entity);

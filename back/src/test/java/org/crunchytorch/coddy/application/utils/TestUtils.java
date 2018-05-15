@@ -1,5 +1,6 @@
 package org.crunchytorch.coddy.application.utils;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -9,16 +10,10 @@ public class TestUtils {
 
     private static final String API_PREFIX = "/api/v1";
 
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+
     private TestUtils() {
 
-    }
-
-    /**
-     * @param endpoint the endpoint you want to request
-     * @return the built url with the given endpoint
-     */
-    public static String getUrl(final String endpoint) {
-        return API_PREFIX + endpoint;
     }
 
     /**
@@ -33,14 +28,17 @@ public class TestUtils {
     public static <T> T getObjectFromJson(final String jsonFile, Class<T> object) throws IOException {
         InputStream stream = null;
         try {
-            ObjectMapper mapper = new ObjectMapper();
             stream = TestUtils.class.getClassLoader().getResourceAsStream(jsonFile);
-            return mapper.readValue(stream, object);
+            return MAPPER.readValue(stream, object);
         } finally {
             if (stream != null) {
                 stream.close();
             }
         }
+    }
+
+    public static <T> T getObjectFromString(final String s, TypeReference valueTypeRef) throws IOException {
+        return MAPPER.readValue(s, valueTypeRef);
     }
 
 }

@@ -1,24 +1,24 @@
 package org.crunchytorch.coddy.language.api;
 
+import org.crunchytorch.coddy.application.data.MediaType;
 import org.crunchytorch.coddy.language.service.LanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Component
-@Path("/language")
+@RestController
+@RequestMapping(path = "/language", produces = MediaType.APPLICATION_JSON)
+@CrossOrigin
 public class Language {
 
     @Autowired
     private LanguageService languageService;
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @RequestMapping(method = RequestMethod.GET)
     public List<String> getLanguages() {
         return this.languageService.getLanguages();
     }
