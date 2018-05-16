@@ -10,28 +10,35 @@
     </h2>
 
     <app-error [error]="error"></app-error>
-    <app-message *ngIf="tokenHasExpired" [message]="'Your session has expired.'" [details]="'Don\'t be sad: this had to happen eventually...'" [type]="MESSAGE_TYPE.WARNING"></app-message>
-    <app-message *ngIf="redirect" [message]="'This action requires to be logged in'" [details]="'Fill in the details: cheats\'s about to get real.'" [type]="MESSAGE_TYPE.INFO"></app-message>
+    <app-message *ngIf="tokenHasExpired" [message]="'Your session has expired.'"
+                 [details]="'Don\'t be sad: this had to happen eventually...'"
+                 [type]="MESSAGE_TYPE.WARNING"></app-message>
+    <app-message *ngIf="redirect" [message]="'This action requires to be logged in'"
+                 [details]="'Fill in the details: cheats\'s about to get real.'"
+                 [type]="MESSAGE_TYPE.INFO"></app-message>
 
-    <div class="ui form">
-      <div class="ui stacked segment">
-        <div class="field">
-          <div class="ui left icon input">
-            <input [(ngModel)]="login" type="text" placeholder="Username">
-            <i class="user icon"></i>
+    <form #loginForm="ngForm" (ngSubmit)="authenticate()">
+      <div class="ui form">
+        <div class="ui stacked segment">
+          <div class="field">
+            <div class="ui left icon input">
+              <input [(ngModel)]="login" #loginInput name="login" type="text" placeholder="Username" required>
+              <i class="user icon"></i>
+            </div>
           </div>
-        </div>
-        <div class="field">
-          <div class="ui left icon input">
-            <input [(ngModel)]="password" type="password" placeholder="Password">
-            <i class="lock icon"></i>
+          <div class="field">
+            <div class="ui left icon input">
+              <input [(ngModel)]="password" name="password" type="password" placeholder="Password" required>
+              <i class="lock icon"></i>
+            </div>
           </div>
+          <button [ngClass]="{'loading': isLoading }" type="submit" [disabled]="!loginForm.form.valid || isLoading"
+                  class="ui large fluid teal submit button">
+            Login
+          </button>
         </div>
-        <button (click)="authenticate()" [disabled]="!login || !password || isLoading" [ngClass]="{'loading': isLoading }" class="ui large fluid teal submit button">
-      Login
-    </button>
       </div>
-    </div>
+    </form>
 
   </div>
 </div>

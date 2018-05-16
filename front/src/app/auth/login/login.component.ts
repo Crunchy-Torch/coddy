@@ -2,16 +2,18 @@ import { MessageType } from '../../shared/message/message-type';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { TokenService } from '../token.service';
 import { LoginService } from './login.service';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
   MESSAGE_TYPE: typeof MessageType = MessageType;
+
+  @ViewChild('loginInput') private loginInput: ElementRef;
 
   login = '';
   password = '';
@@ -38,6 +40,10 @@ export class LoginComponent implements OnInit {
       this.redirect = params.redirect;
       this.tokenHasExpired = params.tokenHasExpired;
     });
+  }
+
+  ngAfterViewInit() {
+    this.loginInput.nativeElement.focus();
   }
 
   authenticate() {
