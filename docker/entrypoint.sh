@@ -12,7 +12,7 @@ build_app_conf(){
 
 start_supervisor() {
     echo ":: Running services with supervisord ::"
-    /usr/local/bin/supervisord -n -c /etc/supervisor/supervisord.conf
+    supervisord -n -c /etc/supervisor/supervisord.conf
 }
 
 build_app_conf
