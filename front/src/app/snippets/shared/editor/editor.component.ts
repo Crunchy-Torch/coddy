@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 declare var ace: any;
 
@@ -14,6 +14,7 @@ export class EditorComponent implements OnInit {
   aceTheme = 'textmate';
 
   @ViewChild('editor') editor;
+  @Output() contentChange: EventEmitter<any> = new EventEmitter();
 
   ngOnInit() {
     // ng2-ace-editor does not provide (yet) an elegant way to do this
@@ -32,5 +33,9 @@ export class EditorComponent implements OnInit {
     if (this.readOnly) {
       this.editor.getEditor().renderer.$cursorLayer.element.style.display = "none";
     }
+  }
+
+  onContentChange(content) {
+    this.contentChange.emit(content)
   }
 }

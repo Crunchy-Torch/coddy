@@ -80,6 +80,12 @@ export class SnippetFormComponent implements OnInit {
     setTimeout(() => jQuery('.menu .item').tab('change tab', 'tab' + (files.length - 1)), 50);
   }
 
+  updatePageContent(control: any, value: string) {
+    // control.value = value does not seem to work. We need to explicitly call the setter
+    // and therefore define a custom event
+    control.setValue(value);
+  }
+
   onSubmit() {
     if (this.snippetForm.valid) {
       this.isLoading = true;
@@ -93,6 +99,7 @@ export class SnippetFormComponent implements OnInit {
         },
         error => this.error = error
       );
+      this.isLoading = false;
     }
   }
 
