@@ -55,22 +55,22 @@ export class SnippetFormComponent implements OnInit {
 
   createForm() {
     this.snippetForm = this.formBuilder.group({
-      title: ['First snippet multi-file!', [Validators.required, Validators.minLength(5), Validators.maxLength(140)]],
-      description: ['First snippet multi-file, created through UI',
+      title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(140)]],
+      description: ['',
         [Validators.required, Validators.minLength(10), Validators.maxLength(400)]],
       language: this.formBuilder.group({
-        name: ['java', Validators.required],
-        version: '8',
+        name: ['', Validators.required],
+        version: '',
       }),
-      keywords: ['hello, world', Validators.required],
+      keywords: ['', Validators.required],
       files: this.formBuilder.array([this.createFile()])
     });
   }
 
   createFile() {
     return this.formBuilder.group({
-      filename: ['Main.java', Validators.required],
-      content: ['System.out.println("Hello world!");', Validators.required]
+      filename: ['', Validators.required],
+      content: ['', Validators.required]
     });
   }
 
