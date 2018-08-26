@@ -20,7 +20,6 @@
       "prefix": "app",
       "styles": [
         "../node_modules/semantic-ui-css/semantic.min.css",
-        "../node_modules/highlight.js/styles/solarized-light.css",
         "styles.scss"
       ],
       "scripts": [
