@@ -40,11 +40,10 @@
            class="ui bottom attached tab segment"
            [ngClass]="{ active: first }" [attr.data-tab]="'tab' + i">
         <div app-text-field class="field" [control]="file.get('filename')" [placeholder]="'Filename'"></div>
-        <ace-editor style="min-height: 400px"
-                    [(text)]="file.get('content').value"
-                    [mode]="snippetForm?.get('language')?.get('name').value"
-                    [theme]="aceTheme">
-        </ace-editor>
+        <app-editor
+            [content]="file.get('content').value"
+            [language]="snippetForm?.get('language')?.get('name').value"
+            [readOnly]="false"></app-editor>
       </div>
     </div>
 
