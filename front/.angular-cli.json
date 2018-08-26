@@ -25,7 +25,9 @@
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
-        "../node_modules/semantic-ui-css/semantic.min.js"
+        "../node_modules/semantic-ui-css/semantic.min.js",
+        "../node_modules/ace-builds/src-min-noconflict/ace.js",
+        "../node_modules/ace-builds/src-min-noconflict/theme-solarized_dark.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

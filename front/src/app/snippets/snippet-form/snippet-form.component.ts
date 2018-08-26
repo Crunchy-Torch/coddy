@@ -9,6 +9,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
 
 declare var jQuery: any;
+declare var ace: any;
 
 @Component({
   selector: 'app-snippet-form',
@@ -23,6 +24,7 @@ export class SnippetFormComponent implements OnInit {
   snippetForm: FormGroup;
   languages: string[];
   isLoading = false;
+  aceTheme = 'textmate';
 
   validationMessages = {
     'title': [
@@ -51,6 +53,9 @@ export class SnippetFormComponent implements OnInit {
         jQuery('.ui.dropdown').dropdown({placeholder: 'Select a language'});
       }
     );
+
+    // ng2-ace-editor does not provide (yet) an elegant way to do this
+    ace.config.set('basePath', '/assets/ace-builds/src-min-noconflict');
   }
 
   createForm() {
