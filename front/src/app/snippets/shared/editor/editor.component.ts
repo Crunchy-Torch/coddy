@@ -26,16 +26,16 @@ export class EditorComponent implements OnInit {
         enableBasicAutocompletion: true,
         highlightActiveLine: !this.readOnly,
         highlightGutterLine: !this.readOnly,
-        fontSize: "1.1em"
+        fontSize: '1.1em'
       }
     );
 
     if (this.readOnly) {
-      this.editor.getEditor().renderer.$cursorLayer.element.style.display = "none";
+      this.editor.getEditor().renderer.$cursorLayer.element.style.display = 'none';
     }
   }
 
   onContentChange(content) {
-    this.contentChange.emit(content)
+    this.contentChange.emit(content);
   }
 }
