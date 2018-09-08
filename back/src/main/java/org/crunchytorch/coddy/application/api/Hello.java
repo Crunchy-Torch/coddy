@@ -1,6 +1,7 @@
 package org.crunchytorch.coddy.application.api;
 
 import org.crunchytorch.coddy.application.data.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/", produces = MediaType.APPLICATION_JSON)
 public class Hello {
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping()
     public String home() {
 
         return "Hello coddy!";

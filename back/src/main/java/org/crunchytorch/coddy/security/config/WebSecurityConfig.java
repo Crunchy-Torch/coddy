@@ -30,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .cors().and()
-                // Disable CSRF (cross site request forgery)
+                // Disable CSRF (cross site request forgery) We don't need it since we don't use any cookie
                 .csrf().disable()
                 // No session will be created or used by spring security
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
