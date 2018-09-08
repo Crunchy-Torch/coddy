@@ -1,12 +1,9 @@
+import { throwError as observableThrowError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Error } from './error/error';
-import { Observable } from 'rxjs/Observable';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/finally';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+
 import { URL } from './structure/url';
 
 @Injectable()
@@ -26,7 +23,7 @@ export class BaseService {
       error.message = BaseService.DEFAULT_ERROR;
       error.details = res as string || BaseService.DEFAULT_DETAILS;
     }
-    return Observable.throw(error);
+    return observableThrowError(error);
   }
 
   protected buildUrl(endpoint: string): string {
