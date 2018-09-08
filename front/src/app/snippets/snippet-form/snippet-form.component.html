@@ -40,8 +40,11 @@
            class="ui bottom attached tab segment"
            [ngClass]="{ active: first }" [attr.data-tab]="'tab' + i">
         <div app-text-field class="field" [control]="file.get('filename')" [placeholder]="'Filename'"></div>
-        <div app-text-area class="field" [control]="file.get('content')" [placeholder]="'Write / paste your code here'"
-             [rows]="8"></div>
+        <app-editor
+            [content]="file.get('content').value"
+            (contentChange)="updatePageContent(file.get('content'), $event)"
+            [language]="snippetForm?.get('language')?.get('name').value"
+            [readOnly]="false"></app-editor>
       </div>
     </div>
 

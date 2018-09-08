@@ -55,22 +55,22 @@ export class SnippetFormComponent implements OnInit {
 
   createForm() {
     this.snippetForm = this.formBuilder.group({
-      title: ['First snippet multi-file!', [Validators.required, Validators.minLength(5), Validators.maxLength(140)]],
-      description: ['First snippet multi-file, created through UI',
+      title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(140)]],
+      description: ['',
         [Validators.required, Validators.minLength(10), Validators.maxLength(400)]],
       language: this.formBuilder.group({
-        name: ['java', Validators.required],
-        version: '8',
+        name: ['', Validators.required],
+        version: '',
       }),
-      keywords: ['hello, world', Validators.required],
+      keywords: ['', Validators.required],
       files: this.formBuilder.array([this.createFile()])
     });
   }
 
   createFile() {
     return this.formBuilder.group({
-      filename: ['Main.java', Validators.required],
-      content: ['System.out.println("Hello world!");', Validators.required]
+      filename: ['', Validators.required],
+      content: ['', Validators.required]
     });
   }
 
@@ -78,6 +78,12 @@ export class SnippetFormComponent implements OnInit {
     const files = this.snippetForm.get('files') as FormArray;
     files.push(this.createFile());
     setTimeout(() => jQuery('.menu .item').tab('change tab', 'tab' + (files.length - 1)), 50);
+  }
+
+  updatePageContent(control: any, value: string) {
+    // control.value = value does not seem to work. We need to explicitly call the setter
+    // and therefore define a custom event
+    control.setValue(value);
   }
 
   onSubmit() {
@@ -93,6 +99,7 @@ export class SnippetFormComponent implements OnInit {
         },
         error => this.error = error
       );
+      this.isLoading = false;
     }
   }
 

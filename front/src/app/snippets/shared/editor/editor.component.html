@@ -1,0 +1,6 @@
+<ace-editor #editor style="min-height: 400px"
+            [text]="content"
+            (textChange)="onContentChange($event)"
+            [mode]="language"
+            [readOnly]="readOnly">
+</ace-editor>

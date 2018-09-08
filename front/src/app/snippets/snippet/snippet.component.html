@@ -47,7 +47,7 @@
         </a>
       </div>
       <div *ngFor="let file of snippet.files; let first = first" class="ui bottom attached tab segment" [ngClass]="{ active: first }" [attr.data-tab]="file.filename">
-        <pre [innerHtml]="highlightCode(file.content)"></pre>
+        <app-editor [content]="file.content" [language]="snippet.language?.name"></app-editor>
       </div>
     </div>
 
