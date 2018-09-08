@@ -20,7 +20,7 @@ public class Snippet {
     @Autowired
     private SnippetService snippetService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping()
     public Page<SnippetEntity> getSnippets(@RequestParam(value = "from", defaultValue = "0") final int from,
                                            @RequestParam(value = "size", defaultValue = "10") final int size,
                                            @RequestParam(value = "query", required = false) final String query) {
@@ -30,31 +30,31 @@ public class Snippet {
         return snippetService.search(query, from, size);
     }
 
-    @RequestMapping(path = "/search", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON)
+    @GetMapping(path = "/search", consumes = MediaType.APPLICATION_JSON)
     public Page<SnippetEntity> search(@RequestParam(value = "from", defaultValue = "0") final int from,
                                       @RequestParam(value = "size", defaultValue = "10") final int size,
                                       @RequestBody SearchBody searchBody) {
         return snippetService.search(searchBody, from, size);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping()
     public SnippetEntity create(@RequestBody SnippetEntity snippet) {
         return snippetService.createSnippet(snippet);
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    @GetMapping(path = "/{id}")
     public SnippetEntity getSnippet(@PathVariable("id") String id) {
         return snippetService.getSnippet(id);
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON)
+    @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON)
     @PreAuthorize("hasRole('" + Permission.ADMIN + "') or (hasRole('" + Permission.USER + "') and @snippetSecurityService.ownsSnippet(#id))")
     public SnippetEntity updateSnippet(@PathVariable("id") String id, @RequestBody SnippetEntity snippet) {
         snippet.setId(id);
         return this.snippetService.update(snippet);
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(path = "/{id}")
     @PreAuthorize("hasRole('" + Permission.ADMIN + "') or (hasRole('" + Permission.USER + "') and @snippetSecurityService.ownsSnippet(#id))")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") String id) {

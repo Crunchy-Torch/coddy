@@ -44,7 +44,7 @@ public class User {
      *                   }
      *                   </p>
      */
-    @RequestMapping(path = "/auth", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON)
+    @PostMapping(path = "/auth", consumes = MediaType.APPLICATION_JSON)
     public JWTToken authenticate(@RequestBody final Credential credential) {
         return this.service.authenticate(credential);
     }
@@ -56,7 +56,7 @@ public class User {
      * @return the {@link SimpleUser user} created
      * @throws EntityExistsException if the given user already exists
      */
-    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON)
     public SimpleUser create(@RequestBody UpdateUser user) {
         return this.service.create(user);
     }
@@ -74,14 +74,14 @@ public class User {
      * @param login the user's login
      * @throws EntityNotFoundException if the given login is not associated to a {@link SimpleUser user}
      */
-    @RequestMapping(path = "{login}", method = RequestMethod.DELETE)
+    @DeleteMapping(path = "{login}")
     @PreAuthorize("hasRole('" + Permission.ADMIN + "') or (hasRole('" + Permission.USER + "') and @userSecurityService.ownsAccount(#login))")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable final String login) {
         this.service.delete(login);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping()
     @PreAuthorize("hasRole('" + Permission.ADMIN + "')")
     public Page<SimpleUser> getUsers(@RequestParam(value = "from", defaultValue = "0") final int from,
                                      @RequestParam(value = "size", defaultValue = "10") final int size) {
@@ -90,7 +90,7 @@ public class User {
                 oldPage.getTotalPage(), oldPage.getHits().stream().map(SimpleUser::new).collect(Collectors.toList()));
     }
 
-    @RequestMapping(path = "/search", method = RequestMethod.GET)
+    @GetMapping(path = "/search")
     @PreAuthorize("hasRole('" + Permission.ADMIN + "')")
     public List<SimpleUser> search(@RequestParam(value = "login") final String loginToSearch,
                                    @RequestParam(value = "from", defaultValue = "0") final int from,
@@ -103,7 +103,7 @@ public class User {
      * @return the {@link SimpleUser user} associated to the given login. All critical information such as his password
      * or the salt has been deleted previously
      */
-    @RequestMapping(path = "{login}", method = RequestMethod.GET)
+    @GetMapping(path = "{login}")
     @PreAuthorize("hasRole('" + Permission.ADMIN + "') or (hasRole('" + Permission.USER + "') and @userSecurityService.ownsAccount(#login))")
     public SimpleUser getUserByLogin(@PathVariable final String login) {
         return this.service.getUserByLogin(login);
