@@ -61,7 +61,7 @@ public class User {
         return this.service.create(user);
     }
 
-    @RequestMapping(path = "{login}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON)
+    @PutMapping(path = "{login}", consumes = MediaType.APPLICATION_JSON)
     @PreAuthorize("hasRole('" + Permission.ADMIN + "') or (hasRole('" + Permission.USER + "') and @userSecurityService.ownsAccount(#login))")
     public SimpleUser update(@PathVariable final String login, final UpdateUser user) {
         user.setLogin(login);
