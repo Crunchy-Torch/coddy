@@ -113,4 +113,10 @@ export class SnippetFormComponent implements OnInit {
   pushToast() {
     this.toastService.pushToast(new Toast('green', 'Snippet created!', 'Your snippet has been successfully pushed'));
   }
+
+  get snippetFormData() {
+    // Cast to FormArray required to prevent "unknown property" error while building
+    // https://github.com/angular/angular-cli/issues/6099
+    return <FormArray>this.snippetForm.get('files');
+  }
 }
