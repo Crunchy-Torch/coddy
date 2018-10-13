@@ -90,14 +90,13 @@ export class SnippetFormComponent implements OnInit {
     if (this.snippetForm.valid) {
       this.isLoading = true;
       this.snippet = this.buildSnippet();
-      this.snippetService.createSnippet(this.snippet).finally(() => {
-        this.isLoading = false;
-      }).subscribe(
-        res => {
+      this.snippetService.createSnippet(this.snippet).subscribe(
+        () => {
           this.pushToast();
           this.router.navigate(['/overview']);
         },
-        error => this.error = error
+        error => this.error = error,
+        () => this.isLoading = false
       );
       this.isLoading = false;
     }

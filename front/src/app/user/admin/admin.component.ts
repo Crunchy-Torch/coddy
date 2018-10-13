@@ -39,14 +39,13 @@ export class AdminComponent implements OnInit {
     this.isDeleteLoading = false;
     this.users = null;
     this.error = null;
-    this.adminService.getUsers().finally(
+    this.adminService.getUsers().subscribe(
+      users => this.users = users,
+      error => this.error = error,
       () => {
         this.isFirstLoading = false;
         this.isUserLoading = false;
       }
-    ).subscribe(
-      users => this.users = users,
-      error => this.error = error
     );
   }
 
@@ -58,12 +57,10 @@ export class AdminComponent implements OnInit {
     this.error = null;
 
     this.adminService.getUsers(this.pageNumber - 1, this.paginationSize)
-      .finally(
-        () => this.isUserLoading = false
-      )
       .subscribe(
         users => this.users = users,
-        error => this.error = error
+        error => this.error = error,
+        () => this.isUserLoading = false
       );
   }
 
@@ -77,7 +74,7 @@ export class AdminComponent implements OnInit {
   }
 
   nextPage() {
-    if (this.pageNumber + 1 > this.paginationArray[ this.paginationArray.length - 1 ]) {
+    if (this.pageNumber + 1 > this.paginationArray[this.paginationArray.length - 1]) {
       return;
     }
 
@@ -88,19 +85,21 @@ export class AdminComponent implements OnInit {
   deleteUser(login: string) {
     this.isDeleteLoading = true;
     this.error = null;
-    this.userService.deleteUser(login).finally(
+    this.userService.deleteUser(login).subscribe(
+      null,
+      error => this.error = error,
       () => {
         this.isDeleteLoading = false;
         this.users = this.users.filter(user => login !== user.login);
         this.countUser();
       }
-    ).subscribe(
-      error => this.error = error
     );
   }
 
   countUser() {
-    this.adminService.count().finally(
+    this.adminService.count().subscribe(
+      nbUser => this.nbUser = nbUser,
+      null,
       () => {
         let x = 1;
         let y = 1;
@@ -111,8 +110,6 @@ export class AdminComponent implements OnInit {
           x = this.paginationSize + x;
         }
       }
-    ).subscribe(
-      nbUser => this.nbUser = nbUser
     );
   }
 

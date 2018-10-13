@@ -26,10 +26,9 @@ export class SnippetService extends BaseService {
       url.addParameter('query', word);
     }
 
-    return this.http.get<Snippet[]>(url.buildUrl())
-      .pipe(
-        catchError(this.extractError)
-      );
+    return this.http.get<Page<Snippet>>(url.buildUrl()).pipe(
+      catchError(this.extractError)
+    );
   }
 
   getSnippet(id: string): Observable<Snippet> {

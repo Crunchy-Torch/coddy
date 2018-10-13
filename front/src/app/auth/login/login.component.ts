@@ -24,12 +24,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   redirectTo = '/overview';
 
-  constructor(
-    private loginService: LoginService,
-    private tokenService: TokenService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) { }
+  constructor(private loginService: LoginService,
+              private tokenService: TokenService,
+              private router: Router,
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -50,14 +49,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.isLoading = true;
     this.error = null;
 
-    this.loginService.authenticate(this.login, this.password).finally(
-      () => this.isLoading = false
-    ).subscribe(
+    this.loginService.authenticate(this.login, this.password).subscribe(
       token => {
         this.tokenService.setToken(token);
         this.router.navigate([this.redirectTo]);
       },
-      err => this.error = err
-      );
+      err => this.error = err,
+      () => this.isLoading = false
+    );
   }
 }

@@ -35,15 +35,14 @@ export class SnippetComponent implements OnInit {
     this.isLoading = true;
     this.error = null;
     this.snippet = null;
-    this.snippetService.getSnippet(this.id).finally(
-      () => this.isLoading = false
-    ).subscribe(
+    this.snippetService.getSnippet(this.id).subscribe(
       snippet => {
         this.snippet = snippet;
         // Wait DOM is fully updated before calling tab method.
         setTimeout(() => jQuery('.menu .item').tab(), 500);
       },
-      error => this.error = error
+      error => this.error = error,
+      () => this.isLoading = false
     );
   }
 
