@@ -7,7 +7,8 @@ import { ToastComponent } from '../../shared/toast/toast.component';
 
 @Component({
   selector: 'app-template',
-  templateUrl: 'template.component.html'
+  templateUrl: 'template.component.html',
+  styleUrls: ['template.component.scss'],
 })
 
 export class TemplateComponent implements OnInit {
@@ -15,7 +16,8 @@ export class TemplateComponent implements OnInit {
   @ViewChild(ToastComponent) toasts: ToastComponent;
 
   constructor(private tokenService: TokenService, private toastService: ToastService,
-    private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.toastService.get().subscribe(toast => {

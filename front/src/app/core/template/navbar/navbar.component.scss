@@ -1,78 +1,9 @@
-.white {
-  color: white;
+.fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
 }
 
-.button.white {
-  background-color: white !important;
+.mat-button.bold {
+  font-weight: bold;
 }
-
-.button.padded {
-  padding: 0.8rem 2rem !important;
-}
-
-.uppercase {
-  text-transform: uppercase !important;
-}
-
-.brand.logo {
-  .icon {
-    font-weight: bold;
-    font-size: 1rem !important;
-
-    &.white {
-      background-color: white !important;
-    }
-
-    &.white:before {
-      color: #363636;
-    }
-  }
-  padding: 0.8rem 0;
-}
-
-.ui.menu {
-
-  margin-bottom: 0;
-
-  .item {
-    &:before {
-      width: 0;
-    }
-  }
-
-  &.homepage {
-    background: transparent;
-    position: absolute;
-    width: 100%;
-    z-index: 10;
-    padding: 0 5%;
-  }
-
-  a {
-    font-weight: bold;
-  }
-}
-
-.ui.menu {
-
-  .item:first-child {
-    padding-left: 0;
-  }
-
-  .right.menu .item:last-child {
-    padding-right: 0;
-    a {
-      padding-right: 0;
-    }
-  }
-
-  .item.ui.search {
-    width: 30%;
-  }
-}
-
-.borderless {
-  border: none !important;
-  box-shadow: none !important;
-}
-
