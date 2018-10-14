@@ -1,5 +1,5 @@
 import { LanguageService } from '../shared/language.service';
-import { ToastService } from '../../core/template/toast.service';
+import { ToastService } from '../../core/toast.service';
 import { Router } from '@angular/router';
 import { Toast } from '../../shared/toast/toast';
 import { Error } from '../../shared/error/error';

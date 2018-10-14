@@ -1,7 +1,5 @@
-import { Permission } from '../../../auth/permission';
-import { Token } from '../../../auth/token';
-import { Router } from '@angular/router';
-import { TokenService } from '../../../auth/token.service';
+import { Permission } from '../../auth/permission';
+import { Token } from '../../auth/token';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
