@@ -28,7 +28,7 @@
 
     <div class="field">
       <div id="files" class="ui top attached tabular menu">
-        <a *ngFor="let file of snippetForm?.get('files').controls; let first = first; let i = index" class="item"
+        <a *ngFor="let file of snippetFormData.controls; let first = first; let i = index" class="item"
            [ngClass]="{ active: first }" [attr.data-tab]="'tab' + i">
           {{file.value.filename}}
         </a>
@@ -36,7 +36,7 @@
           <a class="ui small teal icon button" (click)="addFile()"><i class="plus icon"></i></a>
         </div>
       </div>
-      <div *ngFor="let file of snippetForm?.get('files').controls; let first = first; let i = index"
+      <div *ngFor="let file of snippetFormData.controls; let first = first; let i = index"
            class="ui bottom attached tab segment"
            [ngClass]="{ active: first }" [attr.data-tab]="'tab' + i">
         <div app-text-field class="field" [control]="file.get('filename')" [placeholder]="'Filename'"></div>

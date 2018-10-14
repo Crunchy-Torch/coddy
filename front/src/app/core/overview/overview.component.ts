@@ -6,7 +6,7 @@ import { Page } from '../../shared/structure/page';
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
-  styleUrls: [ './overview.component.scss' ]
+  styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit {
 
@@ -65,7 +65,9 @@ export class OverviewComponent implements OnInit {
     this.isLoading = true;
     this.pageSnippets = null;
     this.error = null;
-    this.snippetService.getSnippets(word, from, size).finally(
+    this.snippetService.getSnippets(word, from, size).subscribe(
+      pageSnippets => this.pageSnippets = pageSnippets,
+      error => this.error = error,
       () => {
         if (this.pageSnippets) {
           // build the pagination array
@@ -77,9 +79,6 @@ export class OverviewComponent implements OnInit {
         this.isLoading = false;
         this.isSearch = word && word !== '';
       }
-    ).subscribe(
-      pageSnippets => this.pageSnippets = pageSnippets,
-      error => this.error = error
     );
   }
 
