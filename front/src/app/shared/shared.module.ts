@@ -10,17 +10,20 @@ import { ToastComponent } from './toast/toast.component';
 import { TextAreaComponent } from './form/text-area/text-area.component';
 import { DropdownComponent } from './form/dropdown/dropdown.component';
 import { BasicFieldComponent } from './form/basic-field.component';
+import { SharedMaterialModule } from './shared-material.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedMaterialModule,
   ],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedMaterialModule,
     MessageComponent,
     ErrorComponent,
     TitleComponent,

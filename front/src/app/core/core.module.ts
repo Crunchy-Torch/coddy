@@ -9,11 +9,9 @@ import { OverviewComponent } from './overview/overview.component';
 import { NgModule } from '@angular/core';
 import { HeadersInterceptor } from './headers.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CoreMaterialModule } from './core-material.module';
 
 @NgModule({
   imports: [
-    CoreMaterialModule,
     SharedModule,
     CoreRoutingModule
   ],
