@@ -2,14 +2,16 @@ import { MessageType } from '../../shared/message/message-type';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { TokenService } from '../token.service';
 import { LoginService } from './login.service';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Error } from '../../shared/error/error';
+import { finalize } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements OnInit {
 
   MESSAGE_TYPE: typeof MessageType = MessageType;
 
@@ -41,21 +43,21 @@ export class LoginComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
-    this.loginInput.nativeElement.focus();
-  }
-
   authenticate() {
     this.isLoading = true;
     this.error = null;
 
-    this.loginService.authenticate(this.login, this.password).subscribe(
+    this.loginService.authenticate(this.login, this.password).pipe(
+      finalize(() => this.isLoading = false)
+    ).subscribe(
       token => {
         this.tokenService.setToken(token);
         this.router.navigate([this.redirectTo]);
       },
-      err => this.error = err,
-      () => this.isLoading = false
+      err => {
+        this.error = err;
+        this.isLoading = false
+      }
     );
   }
 }
