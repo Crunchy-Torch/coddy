@@ -1,31 +1,34 @@
-.inline {
-    display: inline;
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 25px 0;
 
-    &+ button {
-      margin-left: 1em;
-    }
+  button + button {
+    margin-left: 10px;
+  }
+
+  mat-form-field {
+    width: 40%;
+  }
 }
 
-.attached.header > .icon {
-    opacity: inherit;
-    font-size: inherit;
-    padding-top: inherit;
-    vertical-align: inherit;
+table {
+  width: 100%;
 }
 
-.inline.ui.search {
-    margin-left: 2rem;
+mat-spinner {
+  margin: 20px auto;
 }
 
 .no-result {
-    color: lightgrey;
-    text-align: center;
+  text-align: center;
 }
 
 #snippets-table {
-    -webkit-animation: fadein 0.8s; /* Safari, Chrome and Opera > 12.1 */
-    -moz-animation: fadein 0.8s; /* Firefox < 16 */
-    -ms-animation: fadein 0.8s; /* Internet Explorer */
-    -o-animation: fadein 0.8s; /* Opera < 12.1 */
-    animation: fadein 0.8s;
+  -webkit-animation: fadein 0.8s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 0.8s; /* Firefox < 16 */
+  -ms-animation: fadein 0.8s; /* Internet Explorer */
+  -o-animation: fadein 0.8s; /* Opera < 12.1 */
+  animation: fadein 0.8s;
 }

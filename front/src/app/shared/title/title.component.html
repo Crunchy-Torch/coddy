@@ -1,7 +1,9 @@
-<button *ngIf="back" (click)="goBack()" class="ui small basic icon back button">
-  <i class="left arrow icon"></i>
-  Back
-</button>
-<div class="ui huge header" [ngClass]="{'inline': inline}">
-  {{text}}
+<div class="title-container">
+  <button mat-button *ngIf="back" (click)="goBack()">
+    <mat-icon>arrow_left</mat-icon>
+    Back
+  </button>
+  <h1 class="mat-h1">
+    {{text}}
+  </h1>
 </div>

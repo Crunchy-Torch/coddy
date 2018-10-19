@@ -2,6 +2,8 @@ import { SnippetService } from '../../snippets/shared/snippet.service';
 import { Snippet } from '../../snippets/shared/snippet';
 import { Component, OnInit } from '@angular/core';
 import { Page } from '../../shared/structure/page';
+import { PageEvent } from '@angular/material';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-overview',
@@ -11,18 +13,16 @@ import { Page } from '../../shared/structure/page';
 export class OverviewComponent implements OnInit {
 
   isLoading: boolean;
-  isSearch: boolean;
   query: string;
   pastQuery: string;
+  displayedColumns: string[] = ['name', 'description', 'language', 'author'];
   pageSnippets: Page<Snippet>;
   error: Error;
 
   timeout: any;
 
-  // pagination
-  size = 10;
-  pageNumber = 1;
-  pageArray: number[];
+  pageSize = 5;
+  pageIndex = 0;
 
   constructor(private snippetService: SnippetService) {
   }
@@ -50,52 +50,32 @@ export class OverviewComponent implements OnInit {
     if (this.query) {
       this.query = this.query.trim();
     }
-    this.pageNumber = 1;
+    this.pageIndex = 0;
     this.getSnippets(this.query);
     this.pastQuery = this.query;
   }
 
   reloadSnippets() {
-    this.pageNumber = 1;
+    this.pageIndex = 0;
     this.query = null;
     this.getSnippets();
   }
 
-  getSnippets(word?: string, from: number = 0, size: number = 10) {
+  getSnippets(word?: string, from: number = 0, size: number = this.pageSize) {
     this.isLoading = true;
     this.pageSnippets = null;
     this.error = null;
-    this.snippetService.getSnippets(word, from, size).subscribe(
+    this.snippetService.getSnippets(word, from, size).pipe(
+      finalize(() => this.isLoading = false)
+    ).subscribe(
       pageSnippets => this.pageSnippets = pageSnippets,
-      error => this.error = error,
-      () => {
-        if (this.pageSnippets) {
-          // build the pagination array
-          this.pageArray = [];
-          for (let i = 1; i <= this.pageSnippets.totalPage; i++) {
-            this.pageArray.push(i);
-          }
-        }
-        this.isLoading = false;
-        this.isSearch = word && word !== '';
-      }
+      error => this.error = error
     );
   }
 
-  getSnippetsByPage(page: number) {
-    this.pageNumber = page;
-    this.getSnippets(this.query, this.pageNumber - 1, this.size);
-  }
-
-  previousPage() {
-    if (this.pageNumber > 1) {
-      this.getSnippetsByPage(this.pageNumber - 1);
-    }
-  }
-
-  nextPage() {
-    if (this.pageNumber < this.pageSnippets.totalPage) {
-      this.getSnippetsByPage(this.pageNumber + 1);
-    }
+  paginatorChange(pageEvent: PageEvent) {
+    this.pageSize = pageEvent.pageSize;
+    this.pageIndex = pageEvent.pageIndex;
+    this.getSnippets(this.query, this.pageIndex, this.pageSize);
   }
 }

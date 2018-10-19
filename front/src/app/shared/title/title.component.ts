@@ -13,9 +13,6 @@ export class TitleComponent {
   text: string;
 
   @Input()
-  inline = false;
-
-  @Input()
   back = false;
 
   constructor(private location: Location) { }

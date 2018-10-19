@@ -1,7 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MatButtonModule, MatCardModule, MatFormFieldModule, MatGridListModule, MatIconModule, MatInputModule,
+  MatBadgeModule,
+  MatButtonModule,
+  MatCardModule,
+  MatChipsModule,
+  MatFormFieldModule,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
+  MatTableModule,
   MatToolbarModule
 } from '@angular/material';
 
@@ -15,6 +23,11 @@ import {
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
+    MatTableModule,
+    MatChipsModule,
+    MatBadgeModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     BrowserAnimationsModule,
@@ -25,6 +38,11 @@ import {
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
+    MatTableModule,
+    MatChipsModule,
+    MatBadgeModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
   ]
 })
 export class SharedMaterialModule {
