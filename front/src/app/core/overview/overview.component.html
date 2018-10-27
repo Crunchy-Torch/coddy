@@ -1,5 +1,6 @@
 <app-title [text]="'Overview'" [back]="true"></app-title>
 <div class="container">
+  <app-error [error]="error"></app-error>
   <div class="header">
     <mat-form-field>
       <input matInput #query
@@ -19,9 +20,9 @@
   </div>
 
   <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <h3 class="no-result" *ngIf="!isLoading && pageSnippets.hits.length == 0">No result found for "{{pastQuery}}"</h3>
+  <h3 class="no-result" *ngIf="!isLoading && pageSnippets?.hits.length == 0">No result found for "{{pastQuery}}"</h3>
 
-  <table mat-table id="snippets-table" *ngIf="!isLoading && pageSnippets.hits.length > 0"
+  <table mat-table id="snippets-table" *ngIf="!isLoading && pageSnippets?.hits.length > 0"
          [dataSource]="pageSnippets.hits">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Title</th>
@@ -51,7 +52,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <mat-paginator *ngIf="!isLoading && pageSnippets.hits.length > 0"
+  <mat-paginator *ngIf="!isLoading && pageSnippets?.hits.length > 0"
                  (page)="paginatorChange($event)"
                  [length]="pageSnippets.totalElement"
                  [pageIndex]="pageIndex"
