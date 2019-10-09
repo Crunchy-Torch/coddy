@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
+  MatAutocompleteModule,
   MatBadgeModule,
   MatButtonModule,
   MatCardModule,
@@ -8,9 +9,12 @@ import {
   MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
-  MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
+  MatInputModule,
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
   MatTableModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatTabsModule
 } from '@angular/material';
 
 @NgModule({
@@ -28,6 +32,8 @@ import {
     MatBadgeModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatAutocompleteModule,
+    MatTabsModule,
   ],
   exports: [
     BrowserAnimationsModule,
@@ -43,6 +49,8 @@ import {
     MatBadgeModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatAutocompleteModule,
+    MatTabsModule,
   ]
 })
 export class SharedMaterialModule {

@@ -1,9 +1,16 @@
-form.ui.form {
-  padding-top: 2rem;
-  padding-bottom: 3rem;
+form {
+  padding: 20px 0;
 }
 
-div.padded {
-  padding-left: .5rem;
-  padding-bottom: .5rem;
+mat-form-field {
+  display: block;
+}
+
+mat-tab-group {
+  margin-bottom: 20px;
+}
+
+:host ::ng-deep .mat-tab-disabled {
+  padding: 0;
+  min-width: 50px;
 }

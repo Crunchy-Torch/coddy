@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { SnippetFormComponent } from './snippet-form/snippet-form.component';
 import { AceEditorModule } from 'ng2-ace-editor';
 import { EditorComponent } from './shared/editor/editor.component';
+import { LanguageFilterPipe } from './snippet-form/language-filter.pipe';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { EditorComponent } from './shared/editor/editor.component';
     AceEditorModule,
   ],
   exports: [],
-  declarations: [EditorComponent, SnippetComponent, SnippetFormComponent],
+  declarations: [EditorComponent, SnippetComponent, SnippetFormComponent, LanguageFilterPipe],
   providers: [SnippetService, LanguageService],
 })
-export class SnippetsModule { }
+export class SnippetsModule {
+}

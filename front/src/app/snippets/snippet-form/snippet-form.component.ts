@@ -7,6 +7,7 @@ import { Snippet } from '../shared/snippet';
 import { SnippetService } from '../shared/snippet.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 declare var jQuery: any;
 
@@ -21,21 +22,18 @@ export class SnippetFormComponent implements OnInit {
 
   error: Error;
   snippetForm: FormGroup;
-  languages: string[];
+  languages: Observable<string[]>;
+  selectedIndex = 0;
   isLoading = false;
 
-  validationMessages = {
-    'title': [
-      'Must be at least 4 characters long.',
-      'Must be at most 140 characters long.'
-    ],
-    'description': [
-      'Must be at least 10 characters long.',
-      'Must be at most 400 characters long.'
-    ],
-    'keywords': [
-      'Provide a coma separated list of keywords'
-    ]
+  errorMessages = {
+    'title': 'Must be between 5 and 140 characters',
+    'description': 'Must be between 10 and 400 characters',
+    'keywords': 'You must enter a value'
+  };
+
+  hintMessages = {
+    'keywords': 'Provide a coma separated list of keywords'
   };
 
   constructor(private formBuilder: FormBuilder, private snippetService: SnippetService,
@@ -45,12 +43,7 @@ export class SnippetFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.languageService.getLanguages().subscribe(
-      res => {
-        this.languages = res;
-        jQuery('.ui.dropdown').dropdown({placeholder: 'Select a language'});
-      }
-    );
+    this.languages = this.languageService.getLanguages();
   }
 
   createForm() {
@@ -77,7 +70,7 @@ export class SnippetFormComponent implements OnInit {
   addFile() {
     const files = this.snippetForm.get('files') as FormArray;
     files.push(this.createFile());
-    setTimeout(() => jQuery('.menu .item').tab('change tab', 'tab' + (files.length - 1)), 50);
+    this.selectedIndex = files.length - 1;
   }
 
   updatePageContent(control: any, value: string) {
