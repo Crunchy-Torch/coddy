@@ -14,7 +14,10 @@ import {
   MatProgressSpinnerModule,
   MatTableModule,
   MatToolbarModule,
-  MatTabsModule
+  MatTabsModule,
+  MatDividerModule,
+  MatExpansionModule,
+  MatListModule,
 } from '@angular/material';
 
 @NgModule({
@@ -34,6 +37,9 @@ import {
     MatProgressSpinnerModule,
     MatAutocompleteModule,
     MatTabsModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatListModule,
   ],
   exports: [
     BrowserAnimationsModule,
@@ -51,6 +57,9 @@ import {
     MatProgressSpinnerModule,
     MatAutocompleteModule,
     MatTabsModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatListModule,
   ]
 })
 export class SharedMaterialModule {
