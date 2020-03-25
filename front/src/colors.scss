@@ -1,2 +1,14 @@
-$primary: #673ab7;
-$accent: #ffd740;
+@import '~@angular/material/theming';
+
+// Declare palettes
+$primary-palette: mat-palette($mat-blue-grey, 700, 500, 900);
+$accent-palette: mat-palette($mat-lime, 500, 300, 700);
+
+// Declare colors
+$primary: mat-color($primary-palette);
+$primary-lighter: mat-color($primary-palette, lighter);
+$primary-darker: mat-color($primary-palette, darker);
+
+$accent: mat-color($accent-palette);
+$accent-lighter: mat-color($accent-palette, lighter);
+$accent-darker: mat-color($accent-palette, darker);
