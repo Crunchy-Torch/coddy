@@ -1,12 +1,14 @@
-<div class="container" *ngIf="error">
-  <div class="ui red icon message">
-    <div *ngIf="hasStatus()" class="icon">{{error.status}}</div>
-    <i *ngIf="!hasStatus()" class="warning icon"></i>
-    <div class="content">
-      <h2 class="header">
+<mat-toolbar *ngIf="error" class="mat-warn">
+  <div class="content">
+    <div *ngIf="hasStatus()" class="status">
+      <h1>{{error.status}}</h1>
+    </div>
+    <div class="text-content">
+      <h1 class="header">
         {{error.message}}
-      </h2>
+      </h1>
       <p *ngIf="error.details">{{error.details}}</p>
     </div>
   </div>
-</div>
+  <mat-icon>error_outline</mat-icon>
+</mat-toolbar>

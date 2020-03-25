@@ -1,12 +1,17 @@
-.header {
-  margin-top: 0;
+@import '../../../colors';
+
+.title-container {
+  background: $primary;
+  padding: 15px 30px;
+  color: white;
+  display: flex;
 }
 
-.inline {
-  display: inline;
+h1 {
+  font-weight: 300;
+  font-size: 25px;
 }
 
-.back.button {
-  display: block;
-  margin-bottom: 1.5rem;
+button {
+  margin-right: 5px;
 }

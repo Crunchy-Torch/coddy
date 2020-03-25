@@ -1,0 +1,13 @@
+<app-navbar *ngIf="!isLoginPage()"
+            [isLogged]="isLogged()"
+            [isHomepage]="isHomepage()"
+            [token]="getToken()"
+            (logout)="logout()">
+</app-navbar>
+
+<app-toast></app-toast>
+
+<div style="overflow-y: auto">
+  <router-outlet></router-outlet>
+</div>
+

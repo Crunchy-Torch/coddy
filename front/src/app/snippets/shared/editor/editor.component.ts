@@ -13,7 +13,7 @@ export class EditorComponent implements OnInit {
   @Input() readOnly = true;
   aceTheme = 'textmate';
 
-  @ViewChild('editor') editor;
+  @ViewChild('editor', { static: true }) editor;
   @Output() contentChange: EventEmitter<any> = new EventEmitter();
 
   ngOnInit() {

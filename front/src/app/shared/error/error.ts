@@ -7,5 +7,8 @@ export class Error {
   constructor(status?: number, message?: string, details?: string) {
     this.status = status;
     this.message = message;
+    if(details) {
+      this.details = details;
+    }
   }
 }

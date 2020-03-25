@@ -1,66 +1,104 @@
-.white {
+@import '../../../colors';
+
+$block-margin: 60px;
+$block-margin-small: 15px;
+
+.blinker {
+  background-color: $accent;
+}
+
+.header-background {
+  overflow: hidden;
+  background-color: $primary;
+}
+
+.header-section {
   color: white;
-}
+  text-align: center;
+  padding-top: $block-margin;
 
-.emphasis {
-  color: #fbbd08;
-  font-weight: bold;
-
-  .blinker {
-    background: #fbbd08;
+  .accent {
+    color: $accent;
   }
 }
 
-.uppercase {
-  text-transform: uppercase;
-}
+.header-headline {
+  h1 {
+    font-size: 56px;
+    font-weight: 300;
+    line-height: 56px;
+    margin: 15px 5px;
+  }
 
-h1.ui.header {
-  font-size: 4rem;
-  font-weight: lighter;
-  margin: 0;
-}
-
-h2.ui.header {
-  margin: 0 0 1rem 0;
-}
-
-.ui.attached.segment {
-
-  &.top {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    background-repeat: round;
-
-    .text.container {
-      position: absolute;
-      left: 5%;
-      bottom: 20%;
-    }
+  h2 {
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 28px;
+    margin: 15px 0 25px 0;
   }
 }
 
-.ui.horizontal.segments {
-  padding: 0 4rem;
-  border: none;
-  box-shadow: none;
+.header-start {
+  text-align: center;
+  margin: $block-margin 0;
+}
 
-  .segment {
-    border: none;
-    padding: 2rem;
+/**
+  * Rules for when the device is detected to be a small screen.
+  */
+@media (max-width: 720px) {
+  .header-section {
+    padding-top: $block-margin-small;
+  }
 
-    .content {
-      text-transform: uppercase;
-    }
+  .header-start,
+  .homepage-bottom-start {
+    margin: $block-margin-small 0;
+  }
 
-    .sub.header {
-      text-transform: none;
-      font-size: 1.3rem;
-    }
+  .homepage-row {
+    margin: $block-margin-small 0;
   }
 }
 
-.icon.no.margin {
-  margin-right: 0 !important;
+.content-row {
+  width: 100%;
+  padding: 50px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .center {
+    display: flex;
+    width: 600px;
+  }
+}
+
+.content-image {
+  display: flex;
+  width: 50%;
+  height: 250px;
+}
+
+.content-text {
+  width: 50%;
+  line-height: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: rgba(0,0,0,.54);
+
+  h1 {
+    font-size: 25px;
+    line-height: 56px;
+    margin-bottom: 0;
+  }
+
+  p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 28px;
+    margin: 0 0 24px;
+    padding: 0;
+  }
 }

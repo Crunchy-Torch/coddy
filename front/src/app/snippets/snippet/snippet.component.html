@@ -1,96 +1,47 @@
-<div class="ui container">
-  <div *ngIf="isLoading" class="ui active centered inline loader"></div>
+<app-title [back]="true"></app-title>
+<div class="container">
 
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
   <app-error [error]="error"></app-error>
 
-  <div *ngIf="!isLoading && snippet" class="ui items">
+  <ng-container *ngIf="!isLoading && snippet">
 
-    <div class="item">
-      <app-title [text]="snippet.title" [inline]="true" [back]="true"></app-title>
-      <button class="ui tiny red right floated icon button">
-        <i class="trash icon"></i>
-        Delete
-      </button>
-      <button class="ui tiny yellow right floated icon button">
-        <i class="edit icon"></i>
-        Edit
-      </button>
-      <button (click)="getSnippet()" class="ui tiny basic right floated icon button">
-        <i class="refresh icon"></i>
-      </button>
-    </div>
+    <h3>{{snippet.title}}</h3>
 
-    <div class="item">
-      <h4 class="ui inline header">Language:</h4>
-      <div class="ui orange label" tabindex="0">{{snippet.language?.name}}</div>
-      <div class="ui basic left pointing label" *ngIf="snippet.language?.version">{{snippet.language?.version}}</div>
-    </div>
+    <mat-chip-list>
+      <mat-chip color="primary" selected>{{snippet.language.name}}</mat-chip>
+      <mat-chip *ngIf="snippet.language.version">{{snippet.language.version}}</mat-chip>
+    </mat-chip-list>
 
-    <div class="item">
-      <h4 class="ui inline header">Keywords:</h4>
-      <div *ngFor="let keyword of snippet.keywords" class="ui label">{{keyword}}</div>
-    </div>
+    <mat-divider></mat-divider>
 
-    <div class="item">
-      <div class="ui right floated">
-        <button class="ui tiny right labeled icon teal button">
-        <i class="code icon"></i>
-        Copy        
-      </button>
-      </div>
-    </div>
+    <mat-chip-list>
+      <mat-chip *ngFor="let keyword of snippet.keywords">{{keyword}}</mat-chip>
+    </mat-chip-list>
 
-    <div class="item extra margin bottom">
-      <div class="ui top attached tabular menu">
-        <a *ngFor="let file of snippet.files; let first = first" class="item" [ngClass]="{ active: first }" [attr.data-tab]="file.filename">
-            {{file.filename}}
-        </a>
-      </div>
-      <div *ngFor="let file of snippet.files; let first = first" class="ui bottom attached tab segment" [ngClass]="{ active: first }" [attr.data-tab]="file.filename">
-        <app-editor [content]="file.content" [language]="snippet.language?.name"></app-editor>
-      </div>
-    </div>
+    <mat-card>{{snippet.description}}</mat-card>
 
-    <div class="item">
-      <h4 class="ui header">Description:</h4>
-      <div class="ui message">
-        {{snippet.description}}
-      </div>
-    </div>
+    <mat-tab-group>
+      <ng-container *ngFor="let file of snippet.files">
+        <mat-tab [label]="file.filename">
+          <app-editor [content]="file.content" [language]="snippet.language?.name"></app-editor>
+        </mat-tab>
+      </ng-container>
+    </mat-tab-group>
 
-    <div class="item">
-      <h4 class="ui header">Associated links:</h4>
-      <div class="ui list">
-        <div *ngFor="let link of snippet.associatedLinks" class="item">
-          <i [class]="linkTypeClass(link.type)"></i>
-          <a class="content" [href]="link.value" target="blank">
-          {{link.description}}
-        </a>
-        </div>
-      </div>
-    </div>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>More information</mat-panel-title>
+      </mat-expansion-panel-header>
 
-    <div class="item">
-      <h4 class="ui inline header">Rate:</h4>
-      <div class="ui star rating">
-        <i *ngFor="let i of intToArray(snippet.rate)" class="icon active"></i>
-      </div>
-    </div>
-
-    <div class="item">
-      <h4 class="ui no margin header">Author:</h4>
+      <h4>Author:</h4>
       <p>{{snippet.author}}</p>
-    </div>
 
-    <div class="item">
-      <h4 class="ui no margin header">Created:</h4>
+      <h4>Created:</h4>
       <p>{{snippet.created}}</p>
-    </div>
 
-    <div class="item">
-      <h4 class="ui no margin header">Last modified:</h4>
-      <p>{{snippet.lastModified}}</p>
-    </div>
+      <h4>Last modified:</h4>
+    </mat-expansion-panel>
 
-  </div>
+  </ng-container>
 </div>

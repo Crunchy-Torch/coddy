@@ -1,13 +1,11 @@
-<div class="ui middle aligned center aligned grid">
-  <div class="column">
-
-    <h2 class="ui header">
-      <i class="circular large ui icon inverted teal code icon"></i>
-      <div class="content">
-        Coddy
-        <div class="sub header">Log-in to your account</div>
-      </div>
-    </h2>
+<div class="centered">
+  <mat-card class="login-container mat-elevation-z6">
+    <mat-card-header class="mat-primary">
+      <mat-card-title>
+        <mat-icon>code</mat-icon>
+        <h1 class="mat-h1">Coddy</h1>
+      </mat-card-title>
+    </mat-card-header>
 
     <app-error [error]="error"></app-error>
     <app-message *ngIf="tokenHasExpired" [message]="'Your session has expired.'"
@@ -18,27 +16,17 @@
                  [type]="MESSAGE_TYPE.INFO"></app-message>
 
     <form #loginForm="ngForm" (ngSubmit)="authenticate()">
-      <div class="ui form">
-        <div class="ui stacked segment">
-          <div class="field">
-            <div class="ui left icon input">
-              <input [(ngModel)]="login" #loginInput name="login" type="text" placeholder="Username" required>
-              <i class="user icon"></i>
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui left icon input">
-              <input [(ngModel)]="password" name="password" type="password" placeholder="Password" required>
-              <i class="lock icon"></i>
-            </div>
-          </div>
-          <button [ngClass]="{'loading': isLoading }" type="submit" [disabled]="!loginForm.form.valid || isLoading"
-                  class="ui large fluid teal submit button">
-            Login
-          </button>
-        </div>
-      </div>
+      <mat-form-field>
+        <mat-icon matPrefix>person</mat-icon>
+        <input matInput [(ngModel)]="login" #loginInput name="login" type="text" placeholder="Username" required>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-icon matPrefix>lock</mat-icon>
+        <input matInput [(ngModel)]="password" name="password" type="password" placeholder="Password" required>
+      </mat-form-field>
+      <button mat-raised-button class="mat-accent" type="submit" [disabled]="!loginForm.form.valid || isLoading">
+        Login
+      </button>
     </form>
-
-  </div>
+  </mat-card>
 </div>

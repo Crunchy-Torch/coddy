@@ -159,7 +159,7 @@ jobs:
 
   build-front:
     docker:
-      - image: circleci/node:9.4.0
+      - image: circleci/node:10.19.0
     working_directory: ~/repo
 
     steps:
@@ -185,7 +185,7 @@ jobs:
             - ./front/node_modules
   test-front:
     docker:
-      - image: circleci/node:9.4.0
+      - image: circleci/node:10.19.0
     working_directory: ~/repo
 
     steps:
@@ -211,7 +211,7 @@ jobs:
 
   lint-front:
     docker:
-      - image: circleci/node:9.4.0
+      - image: circleci/node:10.19.0
     working_directory: ~/repo
 
     steps:

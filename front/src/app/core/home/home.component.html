@@ -1,60 +1,43 @@
-<div class="ui top attached no-padding segment" style="background-image: url('assets/images/homepage.jpg')">
-  <div class="ui text container">
-    <h1 class="ui white uppercase header">Saveyour<span class="emphasis">code.<span class="blinker"></span></span></h1>
-    <h2 class="ui white uppercase header">You might need it again along your journey</h2>
-    <a [routerLink]="['/overview']" class="ui uppercase huge inverted yellow button">Start now</a>
+<header class="header-background">
+  <div class="header-section">
+    <div class="header-headline">
+      <h1 class="mat-h1">SAVEYOUR<span class="accent">CODE</span>.<span class="blinker"></span></h1>
+      <h2>You might need it again along your journey</h2>
+    </div>
+    <div class="header-start">
+      <button mat-raised-button routerLink="/overview">Get started</button>
+    </div>
   </div>
-</div>
+</header>
 
-<div id="coddy-presentation" class="ui attached center aligned padding segment">
-  <div class="ui horizontal segments">
-    <div class="ui segment">
-      <div class="ui yellow huge icon header">
-        <i class="rocket icon"></i>
-        <div class="content">
-          Create
-          <div class="sub header">Create your code snippet and tag metadata on it, so you can find it later.</div>
-        </div>
+<div class="content-grid">
+  <div class="content-row">
+    <div class="center">
+      <div class="content-image" [style.background]="'grey'">
       </div>
-    </div>
-    <div class="ui segment">
-      <div class="ui teal huge icon header">
-        <i class="search icon"></i>
-        <div class="content">
-          Search
-          <div class="sub header">Find and manage your snippets using a powerful and intuitive search engine.</div>
-        </div>
-      </div>
-    </div>
-    <div class="ui segment">
-      <div class="ui yellow huge icon header">
-        <i class="users icon"></i>
-        <div class="content">
-          Share
-          <div class="sub header">Share your snippets and access to code written by the community.</div>
-        </div>
+      <div class="content-text">
+        <h1 class="mat-h1">Create</h1>
+        <p>Create your code snippet and tag metadata on it, so you can find it later.</p>
       </div>
     </div>
   </div>
-</div>
-
-<div class="ui attached center aligned padding segment">
-  <img class="image logo" src="assets/images/spring-boot-logo.png" />
-  <img class="image logo" src="assets/images/angular-logo.png" />
-  <img class="image logo" src="assets/images/docker-logo.png" />
-  <img class="image logo" src="assets/images/elastic-logo.png" />
-  <img class="image logo" src="assets/images/java-logo.png" />
-  <img class="image logo" src="assets/images/typescript-logo.png" />
-  <img class="image logo" src="assets/images/gradle-logo.png" />
-</div>
-
-<div class="ui bottom attached center aligned segment">
-  <div class="ui container">
-    <div class="footer">
-      <div class="ui centered small header">
-        Made with
-        <span><i class="red heart icon no margin"></i></span> on
-        <a href="https://github.com/Crunchy-Torch/coddy" target="blank">Github</a>
+  <div class="content-row">
+    <div class="center">
+      <div class="content-image" [style.background]="'grey'">
+      </div>
+      <div class="content-text">
+        <h1>Search</h1>
+        <p>Find and manage your snippets using a powerful and intuitive search engine.</p>
+      </div>
+    </div>
+  </div>
+  <div class="content-row">
+    <div class="center">
+      <div class="content-image" [style.background]="'grey'">
+      </div>
+      <div class="content-text">
+        <h1>Share</h1>
+        <p>Share your snippets and access to code written by the community.</p>
       </div>
     </div>
   </div>

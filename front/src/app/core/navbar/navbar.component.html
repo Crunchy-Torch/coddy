@@ -1,0 +1,10 @@
+<mat-toolbar color="primary" role="toolbar" class="mat-elevation-z6">
+  <button mat-button class="bold" [routerLink]="['/']">
+    <mat-icon>code</mat-icon>
+    Coddy
+  </button>
+  <button mat-button routerLink="/overview">Overview</button>
+  <span class="fill-remaining-space"></span>
+  <button *ngIf="!isLogged || token == null" mat-button routerLink="/login">Login</button>
+  <button *ngIf="isLogged && token !== null" mat-button (click)="signout()">Logout</button>
+</mat-toolbar>

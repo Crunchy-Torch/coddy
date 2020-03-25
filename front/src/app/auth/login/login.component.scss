@@ -1,13 +1,34 @@
-.grid {
-  height: 100%;
+@import '../../../colors';
+
+.centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px 0;
+  background-color: $primary;
 }
 
-.column {
-  max-width: 450px;
+.login-container {
+  width: 450px;
 }
 
-.ui.header {
-  text-align: left;
-  display: inline-block;
-  vertical-align: middle;
+mat-card-header, mat-card-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+mat-icon {
+  margin-right: 5px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+form {
+  button {
+    width: 100%;
+    margin-top: 15px;
+  }
 }

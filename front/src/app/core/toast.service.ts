@@ -1,4 +1,4 @@
-import { Toast } from '../../shared/toast/toast';
+import { Toast } from '../shared/toast/toast';
 import { Injectable, EventEmitter } from '@angular/core';
 
 @Injectable()
