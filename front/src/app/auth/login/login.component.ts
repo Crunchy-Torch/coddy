@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   MESSAGE_TYPE: typeof MessageType = MessageType;
 
-  @ViewChild('loginInput') private loginInput: ElementRef;
+  @ViewChild('loginInput', { static: true }) private loginInput: ElementRef;
 
   login = '';
   password = '';

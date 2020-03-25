@@ -2,7 +2,7 @@ import { SnippetService } from '../../snippets/shared/snippet.service';
 import { Snippet } from '../../snippets/shared/snippet';
 import { Component, OnInit } from '@angular/core';
 import { Page } from '../../shared/structure/page';
-import { PageEvent } from '@angular/material';
+import { PageEvent } from '@angular/material/paginator';
 import { finalize } from 'rxjs/operators';
 
 @Component({

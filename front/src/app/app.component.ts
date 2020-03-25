@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  @ViewChild(ToastComponent) toasts: ToastComponent;
+  @ViewChild(ToastComponent, { static: true }) toasts: ToastComponent;
 
   constructor(private tokenService: TokenService, private toastService: ToastService,
               private router: Router) {
