@@ -9,8 +9,6 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-declare var jQuery: any;
-
 @Component({
   selector: 'app-snippet-form',
   templateUrl: './snippet-form.component.html',
@@ -21,7 +19,8 @@ export class SnippetFormComponent implements OnInit {
   @Input() snippet: Snippet;
 
   error: Error;
-  snippetForm: FormGroup;
+  generalInformationForm: FormGroup;
+  codeForm: FormGroup;
   languages: Observable<string[]>;
   selectedIndex = 0;
   isLoading = false;
@@ -47,15 +46,17 @@ export class SnippetFormComponent implements OnInit {
   }
 
   createForm() {
-    this.snippetForm = this.formBuilder.group({
+    this.generalInformationForm = this.formBuilder.group({
       title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(140)]],
       description: ['',
         [Validators.required, Validators.minLength(10), Validators.maxLength(400)]],
+      keywords: ['', Validators.required]
+    });
+    this.codeForm = this.formBuilder.group({
       language: this.formBuilder.group({
         name: ['', Validators.required],
         version: '',
       }),
-      keywords: ['', Validators.required],
       files: this.formBuilder.array([this.createFile()])
     });
   }
@@ -68,7 +69,7 @@ export class SnippetFormComponent implements OnInit {
   }
 
   addFile() {
-    const files = this.snippetForm.get('files') as FormArray;
+    const files = this.codeForm.get('files') as FormArray;
     files.push(this.createFile());
     this.selectedIndex = files.length - 1;
   }
@@ -79,8 +80,8 @@ export class SnippetFormComponent implements OnInit {
     control.setValue(value);
   }
 
-  onSubmit() {
-    if (this.snippetForm.valid) {
+  submit() {
+    if (this.generalInformationForm.valid && this.codeForm.valid) {
       this.isLoading = true;
       this.snippet = this.buildSnippet();
       this.snippetService.createSnippet(this.snippet).subscribe(
@@ -96,11 +97,12 @@ export class SnippetFormComponent implements OnInit {
   }
 
   buildSnippet(): Snippet {
-    const formModel = this.snippetForm.value;
-    if (!(formModel.keywords instanceof Array)) {
-      formModel.keywords = formModel.keywords.split(',');
+    const generalInformation = this.generalInformationForm.value;
+    const codeInformation = this.codeForm.value;
+    if (!(generalInformation.keywords instanceof Array)) {
+      generalInformation.keywords = generalInformation.keywords.split(',');
     }
-    return Snippet.toObject(formModel);
+    return Snippet.toObject({...generalInformation, ...codeInformation});
   }
 
   pushToast() {
@@ -110,6 +112,6 @@ export class SnippetFormComponent implements OnInit {
   get snippetFormData() {
     // Cast to FormArray required to prevent "unknown property" error while building
     // https://github.com/angular/angular-cli/issues/6099
-    return <FormArray>this.snippetForm.get('files');
+    return <FormArray>this.codeForm.get('files');
   }
 }

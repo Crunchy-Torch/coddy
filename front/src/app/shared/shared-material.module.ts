@@ -17,6 +17,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatStepperModule } from '@angular/material/stepper';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatDividerModule,
     MatExpansionModule,
     MatListModule,
+    MatStepperModule
   ],
   exports: [
     BrowserAnimationsModule,
@@ -58,6 +60,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatDividerModule,
     MatExpansionModule,
     MatListModule,
+    MatStepperModule
   ]
 })
 export class SharedMaterialModule {
