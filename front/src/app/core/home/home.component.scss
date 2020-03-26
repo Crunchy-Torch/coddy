@@ -41,11 +41,12 @@ $block-margin-small: 15px;
 .header-start {
   text-align: center;
   margin: $block-margin 0;
+  button {
+    padding: 0.5em 1em;
+    text-transform: uppercase;
+  }
 }
 
-/**
-  * Rules for when the device is detected to be a small screen.
-  */
 @media (max-width: 720px) {
   .header-section {
     padding-top: $block-margin-small;
@@ -61,44 +62,35 @@ $block-margin-small: 15px;
   }
 }
 
-.content-row {
-  width: 100%;
-  padding: 50px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .center {
-    display: flex;
-    width: 600px;
-  }
+mat-grid-list {
+  margin-top: 5em;
 }
 
-.content-image {
-  display: flex;
-  width: 50%;
-  height: 250px;
+mat-grid-tile {
+  text-align: center;
 }
 
-.content-text {
-  width: 50%;
-  line-height: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: rgba(0,0,0,.54);
+mat-icon {
+  width: inherit;
+  height: inherit;
+  font-size: 5em;
+  color: $primary;
+}
 
-  h1 {
-    font-size: 25px;
-    line-height: 56px;
-    margin-bottom: 0;
-  }
+mat-card {
+  position: absolute;
+  top: 0;
+  box-shadow: none !important;
+}
 
-  p {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 28px;
-    margin: 0 0 24px;
-    padding: 0;
-  }
+mat-card-title {
+  font-size: 2em;
+  font-weight: bold;
+  color: $primary;
+  margin-bottom: 0.5em;
+}
+
+mat-card-content {
+  font-size: 1.2em;
+  font-weight: lighter;
 }
