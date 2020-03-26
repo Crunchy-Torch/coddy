@@ -4,7 +4,12 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'languageFilter'
 })
 export class LanguageFilterPipe implements PipeTransform {
-  public transform(languages: string[], value: string) {
+
+  public transform(languages: string[], value: string): string[] {
+
+    if (languages == null || languages.length === 0) {
+      return [];
+    }
 
     const filterValue = value.toLowerCase();
 
