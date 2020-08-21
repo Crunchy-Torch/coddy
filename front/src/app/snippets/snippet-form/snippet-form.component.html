@@ -2,68 +2,81 @@
 <div class="container">
   <app-error [error]="error"></app-error>
 
-  <form [formGroup]="snippetForm" (ngSubmit)="onSubmit()">
+  <mat-vertical-stepper [linear]="true">
+    <mat-step [stepControl]="generalInformationForm">
+      <form [formGroup]="generalInformationForm">
+        <ng-template matStepLabel>General information</ng-template>
 
-    <mat-form-field>
-      <input matInput #titleInput [formControl]="snippetForm?.get('title')" type="text" placeholder="Title" required>
-      <mat-hint align="end">{{titleInput.value?.length || 0}}/140</mat-hint>
-      <mat-error *ngIf="snippetForm?.get('title').invalid">{{errorMessages.title}}</mat-error>
-    </mat-form-field>
+        <mat-form-field>
+          <input matInput #titleInput [formControl]="generalInformationForm?.get('title')" type="text" placeholder="Title" required>
+          <mat-hint align="end">{{titleInput.value?.length || 0}}/140</mat-hint>
+          <mat-error *ngIf="generalInformationForm?.get('title').invalid">{{errorMessages.title}}</mat-error>
+        </mat-form-field>
 
-    <mat-form-field [hintLabel]="hintMessages.keywords">
-      <input matInput [formControl]="snippetForm?.get('keywords')" type="text" placeholder="Keywords" required>
-      <mat-error *ngIf="snippetForm?.get('keywords').invalid">{{errorMessages.keywords}}</mat-error>
-    </mat-form-field>
+        <mat-form-field [hintLabel]="hintMessages.keywords">
+          <input matInput [formControl]="generalInformationForm?.get('keywords')" type="text" placeholder="Keywords" required>
+          <mat-error *ngIf="generalInformationForm?.get('keywords').invalid">{{errorMessages.keywords}}</mat-error>
+        </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Description</mat-label>
-      <textarea matInput #descriptionInput [formControl]="snippetForm?.get('description')" type="text" required
-                cdkTextareaAutosize="true" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"
-                placeholder="Write a few words to describe your snippet">
-      </textarea>
-      <mat-hint align="end">{{descriptionInput.value?.length || 0}}/400</mat-hint>
-      <mat-error *ngIf="snippetForm?.get('description').invalid">{{errorMessages.description}}</mat-error>
-    </mat-form-field>
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea matInput #descriptionInput [formControl]="generalInformationForm?.get('description')" type="text" required
+                    cdkTextareaAutosize="true" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"
+                    placeholder="Write a few words to describe your snippet">
+          </textarea>
+          <mat-hint align="end">{{descriptionInput.value?.length || 0}}/400</mat-hint>
+          <mat-error *ngIf="generalInformationForm?.get('description').invalid">{{errorMessages.description}}</mat-error>
+        </mat-form-field>
 
-    <mat-form-field>
-      <input matInput #language [formControl]="snippetForm?.get('language')?.get('name')" type="text"
-             placeholder="Language" [matAutocomplete]="completeLanguage" required>
-      <mat-autocomplete #completeLanguage="matAutocomplete">
-        <mat-option
-            *ngFor="let language of languages | async | languageFilter:snippetForm?.get('language')?.get('name').value"
-            [value]="language">
-          {{language}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
+      </form>
+    </mat-step>
 
-    <mat-form-field>
-      <input matInput [formControl]="snippetForm?.get('language')?.get('version')" type="text" placeholder="Version">
-    </mat-form-field>
+    <mat-step [stepControl]="codeForm">
+      <ng-template matStepLabel>Source code</ng-template>
 
-    <mat-tab-group [selectedIndex]="selectedIndex">      
-      <ng-container *ngFor="let file of snippetFormData.controls; let first = first; let i = index" >
-        <mat-tab [label]="file.value.filename">
-          <mat-form-field>
-            <input matInput [formControl]="file.get('filename')" type="text" placeholder="Filename">
-          </mat-form-field>
-          <app-editor
-            [content]="file.get('content').value"
-            (contentChange)="updatePageContent(file.get('content'), $event)"
-            [language]="snippetForm?.get('language')?.get('name').value"
-            [readOnly]="false">
-          </app-editor>
-        </mat-tab>
-      </ng-container> 
-      <mat-tab [ngClass]="'plus-button'" disabled>
+      <mat-form-field>
+        <input matInput #language [formControl]="codeForm?.get('language')?.get('name')" type="text" placeholder="Language"
+               [matAutocomplete]="completeLanguage" required>
+        <mat-autocomplete #completeLanguage="matAutocomplete">
+          <mat-option *ngFor="let language of languages | async | languageFilter:codeForm?.get('language')?.get('name').value"
+                      [value]="language">
+            {{language}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [formControl]="codeForm?.get('language')?.get('version')" type="text" placeholder="Version">
+      </mat-form-field>
+
+      <mat-tab-group [selectedIndex]="selectedIndex">
+        <ng-container *ngFor="let file of snippetFormData.controls; let first = first; let i = index">
+          <mat-tab [label]="file.value.filename">
+            <mat-form-field>
+              <input matInput [formControl]="file.get('filename')" type="text" placeholder="Filename">
+            </mat-form-field>
+            <app-editor
+                [content]="file.get('content').value"
+                (contentChange)="updatePageContent(file.get('content'), $event)"
+                [language]="codeForm?.get('language')?.get('name').value"
+                [readOnly]="false">
+            </app-editor>
+          </mat-tab>
+        </ng-container>
+        <mat-tab [ngClass]="'plus-button'" disabled>
           <ng-template mat-tab-label>
-              <button mat-icon-button type="button" (click)="addFile()">
-                  <mat-icon color="accent">add_circle</mat-icon>
-              </button>
+            <button mat-icon-button type="button" (click)="addFile()">
+              <mat-icon color="accent">add_circle</mat-icon>
+            </button>
           </ng-template>
-      </mat-tab>  
-    </mat-tab-group>
+        </mat-tab>
+      </mat-tab-group>
 
-    <button mat-raised-button type="submit" [disabled]="!snippetForm.valid">Submit</button>
-  </form>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Submit</ng-template>
+      <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+    </mat-step>
+  </mat-vertical-stepper>
 </div>
